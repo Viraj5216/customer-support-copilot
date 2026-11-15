@@ -39,7 +39,7 @@ These captures show example conversations using the local demo data, plus an opt
 
 When Langfuse is configured, each request can be inspected as a trace with workflow steps, model-call timing, token usage, and cost. This example uses a demo customer and sample support question.
 
-![A Langfuse trace showing the request tree, workflow-node timings, model-call usage, and the sample request and response.](docs/screenshots/langfuse-trace.png)
+![A Langfuse trace showing the workflow tree, selected-order input and output, retrieved policy evidence, model-call timing, tokens, and cost.](docs/screenshots/langfuse-trace.png)
 
 ## At a glance
 
