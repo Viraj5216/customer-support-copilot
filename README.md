@@ -217,8 +217,11 @@ All settings are read from `.env`; `.env.example` contains the supported startin
 | `GEMINI_API_KEY` | Required key for Gemini model calls |
 | `GEMINI_MODEL` | Primary model (example default: `gemini-3.5-flash-lite`) |
 | `GEMINI_FALLBACK_MODEL` | Optional fallback model (example default: `gemini-3.1-flash-lite`) |
-| `LLM_PRIMARY_TIMEOUT_SECONDS`, `LLM_TIMEOUT_SECONDS`, `LLM_STREAM_TIMEOUT_SECONDS` | Per-call and streaming timeouts |
+| `LLM_PRIMARY_TIMEOUT_SECONDS`, `LLM_TIMEOUT_SECONDS`, `LLM_STREAM_TIMEOUT_SECONDS` | Primary and streaming timeouts |
+| `LLM_FALLBACK_TIMEOUT_SECONDS`, `LLM_FALLBACK_STREAM_TIMEOUT_SECONDS` | Fallback model timeouts |
 | `LLM_MAX_ATTEMPTS_PER_MODEL`, `LLM_TOTAL_DEADLINE_SECONDS` | Retry bound and total request deadline |
+| `LLM_RETRY_INITIAL_BACKOFF_SECONDS`, `LLM_RETRY_MAX_BACKOFF_SECONDS` | Bounded exponential backoff for retryable errors |
+| `LLM_MODEL_FAILURE_THRESHOLD`, `LLM_MODEL_COOLDOWN_SECONDS` | Transient-failure circuit breaker threshold and cooldown |
 | `RETRIEVAL_MAX_DISTANCE`, `RETRIEVAL_HIGH_CONFIDENCE_DISTANCE` | Retrieval relevance thresholds |
 | `RAG_SECTION_AWARE_EMBEDDINGS` | Include section context in embedding text when enabled |
 | `RAG_HYBRID_ENABLED` | Combine semantic results with BM25 keyword ranking |

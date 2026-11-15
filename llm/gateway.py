@@ -16,9 +16,7 @@ from langchain_core.runnables.config import merge_configs
 TRANSIENT_HTTP_STATUSES = {408, 500, 502, 503, 504}
 FATAL_HTTP_STATUSES = {400, 401, 403, 404}
 
-MIN_GEMINI_TIMEOUT_SECONDS = 10.0
-MODEL_COOLDOWN_SECONDS = 60.0
-GEMINI_SETUP_BUFFER_SECONDS = 1.0
+MIN_ATTEMPT_TIMEOUT_SECONDS = 0.05
 
 
 class LLMDeadlineExceeded(TimeoutError):
@@ -225,7 +223,7 @@ def classify_error(error):
     if number == 429 or normalized == "RESOURCE_EXHAUSTED":
         return "fallback"
 
-    if number in {502, 503, 504} or normalized in {
+    if number in {408, 502, 503, 504} or normalized in {
         "UNAVAILABLE",
         "DEADLINE_EXCEEDED",
     }:
@@ -234,10 +232,12 @@ def classify_error(error):
     if number in FATAL_HTTP_STATUSES:
         return "fail_fast"
 
+    if _is_timeout_or_connection(error):
+        return "fallback"
+
     if (
-        number in {408, 500}
+        number == 500
         or normalized in {"INTERNAL", "UNKNOWN"}
-        or _is_timeout_or_connection(error)
     ):
         return "retry"
 
@@ -326,31 +326,60 @@ class LLMGateway:
         self.sleep = sleep
         self.random_value = random_value
 
-        self._availability_lock = threading.Lock()
-        self._unavailable_until = {}
+        self._health_lock = threading.Lock()
+        self._model_health = {}
 
-    def _model_is_available(self, name):
-        with self._availability_lock:
-            unavailable_until = self._unavailable_until.get(name, 0.0)
+    def _health(self, name):
+        return self._model_health.setdefault(name, {
+            "failures": 0,
+            "successes": 0,
+            "ewma_latency": None,
+            "cooldown_until": 0.0,
+            "probe_in_flight": False,
+        })
 
-        return self.clock() >= unavailable_until
+    def _claim_model(self, name):
+        """Claim a normal call or the single half-open recovery probe."""
+        now = self.clock()
+        with self._health_lock:
+            health = self._health(name)
+            if health["cooldown_until"] <= now:
+                if health["failures"] >= int(
+                    self.settings.llm_model_failure_threshold
+                ):
+                    if health["probe_in_flight"]:
+                        return None
+                    health["probe_in_flight"] = True
+                    return True
+                return False
+            return None
 
-    def _mark_model_unavailable(self, name):
-        with self._availability_lock:
-            self._unavailable_until[name] = (
-                self.clock() + MODEL_COOLDOWN_SECONDS
-            )
-
-    def _mark_model_available(self, name):
-        with self._availability_lock:
-            self._unavailable_until.pop(name, None)
-
-    def _available_models(self, models):
-        return [
-            name
-            for name in models
-            if self._model_is_available(name)
-        ]
+    def _mark_model_result(
+        self, name, success, latency, transient=False, probe=False
+    ):
+        with self._health_lock:
+            health = self._health(name)
+            if probe:
+                health["probe_in_flight"] = False
+            if latency is not None:
+                previous = health["ewma_latency"]
+                health["ewma_latency"] = (
+                    latency if previous is None
+                    else 0.7 * previous + 0.3 * latency
+                )
+            if success:
+                health["successes"] += 1
+                health["failures"] = 0
+                health["cooldown_until"] = 0.0
+            elif transient:
+                health["failures"] += 1
+                if health["failures"] >= int(
+                    self.settings.llm_model_failure_threshold
+                ):
+                    health["cooldown_until"] = (
+                        self.clock()
+                        + float(self.settings.llm_model_cooldown_seconds)
+                    )
 
     def invoke(
         self,
@@ -412,63 +441,46 @@ class LLMGateway:
                 error, [], (0, 0), primary, False, started, None
             ) from error
 
-        timeout = float(
-            self.settings.llm_stream_timeout_seconds
-            if streaming
-            else self.settings.llm_timeout_seconds
-        )
-
         configured_models = [primary]
         if fallback:
             configured_models.append(fallback)
-
-        models = self._available_models(configured_models)
 
         attempts = []
         usage = [0, 0]
         fallback_used = False
         fallback_reason = None
         last_error = None
+        original_error = None
 
-        if primary not in models:
-            fallback_reason = "primary_model_cooldown"
-
-        if not models:
-            error = LLMDeadlineExceeded(
-                "All configured models are temporarily unavailable. "
-                "Retry after their cooldown."
-            )
-            raise self._terminal(
-                error,
-                attempts,
-                tuple(usage),
-                primary,
-                False,
-                started,
-                None,
-                fallback_reason="all_models_in_cooldown",
-            ) from error
-
-        for name in models:
+        for name in configured_models:
             is_primary = name == primary
+            probe_call = self._claim_model(name)
+            if probe_call is None:
+                if is_primary:
+                    fallback_reason = "primary_model_cooldown"
+                continue
             fallback_used = not is_primary
 
-            if not self._model_is_available(name):
-                continue
+            timeout = float(
+                (
+                    self.settings.llm_stream_timeout_seconds
+                    if streaming and is_primary
+                    else self.settings.llm_primary_timeout_seconds
+                    if fallback and is_primary
+                    else self.settings.llm_timeout_seconds
+                    if is_primary
+                    else self.settings.llm_fallback_stream_timeout_seconds
+                    if streaming
+                    else self.settings.llm_fallback_timeout_seconds
+                )
+            )
 
             model_deadline = None
 
             if is_primary and fallback:
-                primary_budget = (
-                    max(
-                        float(self.settings.llm_primary_timeout_seconds),
-                        MIN_GEMINI_TIMEOUT_SECONDS,
-                    )
-                    + GEMINI_SETUP_BUFFER_SECONDS
-                )
                 model_deadline = min(
                     deadline,
-                    started + primary_budget,
+                    started + timeout,
                 )
 
             try:
@@ -486,8 +498,16 @@ class LLMGateway:
                     model_deadline,
                 )
 
-                self._mark_model_available(name)
-
+                self._mark_model_result(
+                    name,
+                    success=True,
+                    latency=sum(
+                        row["duration_seconds"]
+                        for row in attempts
+                        if row["model"] == name
+                    ),
+                    probe=probe_call,
+                )
                 record = self._record(
                     attempts,
                     primary,
@@ -502,13 +522,24 @@ class LLMGateway:
 
             except _ModelFailed as failure:
                 last_error = failure.original
-
-                if _is_model_unavailable(failure.original):
-                    self._mark_model_unavailable(name)
+                if original_error is None:
+                    original_error = failure.original
+                self._mark_model_result(
+                    name,
+                    success=False,
+                    latency=sum(
+                        row["duration_seconds"]
+                        for row in attempts
+                        if row["model"] == name
+                    ),
+                    transient=_is_model_unavailable(failure.original),
+                    probe=probe_call,
+                )
 
                 if failure.emitted or failure.disposition == "fail_fast":
+                    terminal_error = original_error or failure.original
                     raise self._terminal(
-                        failure.original,
+                        terminal_error,
                         attempts,
                         tuple(usage),
                         primary,
@@ -517,7 +548,7 @@ class LLMGateway:
                         name,
                         emitted=failure.emitted,
                         fallback_reason=fallback_reason,
-                    ) from failure.original
+                    ) from terminal_error
 
                 if is_primary and fallback:
                     fallback_reason = _fallback_reason(
@@ -527,8 +558,9 @@ class LLMGateway:
                 if self.clock() >= deadline:
                     break
 
-        error = last_error or LLMDeadlineExceeded(
-            "Total LLM deadline exceeded or no model was available."
+        error = original_error or last_error or LLMDeadlineExceeded(
+            "All configured models are temporarily unavailable or the "
+            "request deadline was reached."
         )
 
         raise self._terminal(
@@ -572,22 +604,17 @@ class LLMGateway:
 
             remaining = attempt_deadline - self.clock()
 
-            if remaining < MIN_GEMINI_TIMEOUT_SECONDS:
+            if remaining < MIN_ATTEMPT_TIMEOUT_SECONDS:
                 raise _ModelFailed(
                     LLMDeadlineExceeded(
-                        "Not enough time remains for another valid Gemini request."
+                        "Not enough time remains for another model request."
                     ),
                     "fallback",
                 )
 
-            # Keep a one-second buffer for setup and scheduling.
-            available_request_time = max(
-                MIN_GEMINI_TIMEOUT_SECONDS,
-                remaining - GEMINI_SETUP_BUFFER_SECONDS,
-            )
             attempt_timeout = max(
-                MIN_GEMINI_TIMEOUT_SECONDS,
-                min(timeout, available_request_time),
+                MIN_ATTEMPT_TIMEOUT_SECONDS,
+                min(timeout, remaining),
             )
 
             attempt_started = self.clock()
@@ -651,15 +678,21 @@ class LLMGateway:
                         "fallback",
                     ) from error
 
-                delay = min(
-                    2.0,
-                    self.random_value()
-                    * min(2.0, 0.25 * (2 ** (number - 1))),
+                initial_backoff = float(
+                    self.settings.llm_retry_initial_backoff_seconds
                 )
+                maximum_backoff = float(
+                    self.settings.llm_retry_max_backoff_seconds
+                )
+                exponential_cap = min(
+                    maximum_backoff,
+                    initial_backoff * (2 ** (number - 1)),
+                )
+                delay = self.random_value() * exponential_cap
 
                 remaining = attempt_deadline - self.clock()
 
-                if remaining < delay + MIN_GEMINI_TIMEOUT_SECONDS:
+                if remaining < delay + MIN_ATTEMPT_TIMEOUT_SECONDS:
                     raise _ModelFailed(
                         LLMDeadlineExceeded(
                             "Insufficient time for another valid model attempt."
