@@ -19,6 +19,22 @@ It can combine both sources—for example, identify a customer's purchase, then 
 
 The application provides **information and guidance**. It does not execute refunds, cancellations, address changes, account deletion, or other sensitive actions.
 
+## Screenshots
+
+These captures show example conversations using the local demo data: policy guidance, an order clarification, and a return-window check.
+
+### Policy answer
+
+![The assistant explains standard return eligibility and refund timing.](docs/screenshots/return-policy-answer.png)
+
+### Clarifying which order the customer means
+
+![The assistant asks the customer to choose between matching coffee maker orders before checking return eligibility.](docs/screenshots/order-clarification.png)
+
+### Checking a specific order against the return window
+
+![The assistant compares a demo order's delivery date with the 30-day return window and explains the manual-review exception.](docs/screenshots/return-window-check.png)
+
 ## At a glance
 
 | Area | Implementation |
