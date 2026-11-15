@@ -21,7 +21,7 @@ The application provides **information and guidance**. It does not execute refun
 
 ## Screenshots
 
-These captures show example conversations using the local demo data: policy guidance, an order clarification, and a return-window check.
+These captures show example conversations using the local demo data, plus an optional Langfuse trace for a request.
 
 ### Policy answer
 
@@ -34,6 +34,12 @@ These captures show example conversations using the local demo data: policy guid
 ### Checking a specific order against the return window
 
 ![The assistant compares a demo order's delivery date with the 30-day return window and explains the manual-review exception.](docs/screenshots/return-window-check.png)
+
+### Langfuse trace
+
+When Langfuse is configured, each request can be inspected as a trace with workflow steps, model-call timing, token usage, and cost. This example uses a demo customer and sample support question.
+
+![A Langfuse trace showing the request tree, workflow-node timings, model-call usage, and the sample request and response.](docs/screenshots/langfuse-trace.png)
 
 ## At a glance
 
