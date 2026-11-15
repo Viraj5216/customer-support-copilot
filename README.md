@@ -239,6 +239,7 @@ The project was developed with local regression tests and synthetic evaluation d
 - **Resolver behavior and boundaries:** local tests cover explicit order IDs, list fast paths, relative positions, sorting/filtering, clarification limits, stale or invalid selections, malformed structured output, model failures, and fallback to safe results. They also check that customer/account identifiers and sensitive fields are omitted from resolver prompts and that clarification cannot escape the options already shown to the customer.
 - **Gateway resilience:** fake-provider checks cover primary-model rate limiting, cooldown behavior, recovery to the primary, and immediate fallback on a simulated HTTP 503. These tests make no live Gemini calls.
 - **Evaluation safety:** local checks validate the synthetic dataset, ensure review exports include expected outcomes without order IDs, and require an explicit flag before the live evaluation runner can make model calls.
+- **Separate Langfuse experiment:** a local exploratory script targets a 70-item support dataset and retrieval-context / response-quality evaluators. It is an external evaluation workflow, not an offline regression test; neither the script nor its evaluation artifacts are included in this repository.
 - **Fresh-install smoke checks previously completed:** database seeding produced four users and 13 orders, and a second run was idempotent; the migration wrapper ran; a fresh Chroma collection was created; and 71 policy chunks were indexed.
 
 ## Local files and Git hygiene
