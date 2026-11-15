@@ -231,16 +231,55 @@ All settings are read from `.env`; `.env.example` contains the supported startin
 
 BM25 hybrid retrieval, section-aware embeddings, and reranking are disabled by default. Enabling a reranker may download its model on first use.
 
-## Local validation coverage
+## Project Test Cases and Verification
 
-The project was developed with local regression tests and synthetic evaluation data. They are intentionally **not included in this cleaned GitHub repository**, along with the evaluation artifacts; this section documents the coverage used during development, not a test suite available to run from a fresh clone.
+Testing focused on the real risks in this support workflow: getting a customer's order right, handling ambiguity safely, protecting customer data, and recovering when a model is unavailable.
 
-- **50 synthetic order-resolution scenarios:** the expected outcomes comprise 35 `FOUND`, 10 `CLARIFY`, and 5 `NO_MATCH` cases. Scenarios include product aliases and typos, variants and status, exact and relative dates, follow-up references, ambiguous matches, unsupported products, and hostile instruction-like text in a query or product name. These counts describe expected dataset labels, not a claim of live-model accuracy.
-- **Resolver behavior and boundaries:** local tests cover explicit order IDs, list fast paths, relative positions, sorting/filtering, clarification limits, stale or invalid selections, malformed structured output, model failures, and fallback to safe results. They also check that customer/account identifiers and sensitive fields are omitted from resolver prompts and that clarification cannot escape the options already shown to the customer.
-- **Gateway resilience:** fake-provider checks cover primary-model rate limiting, cooldown behavior, recovery to the primary, and immediate fallback on a simulated HTTP 503. These tests make no live Gemini calls.
-- **Evaluation safety:** local checks validate the synthetic dataset, ensure review exports include expected outcomes without order IDs, and require an explicit flag before the live evaluation runner can make model calls.
-- **Separate Langfuse experiment:** a local exploratory script targets a 70-item support dataset and retrieval-context / response-quality evaluators. It is an external evaluation workflow, not an offline regression test; neither the script nor its evaluation artifacts are included in this repository.
-- **Fresh-install smoke checks previously completed:** database seeding produced four users and 13 orders, and a second run was idempotent; the migration wrapper ran; a fresh Chroma collection was created; and 71 policy chunks were indexed.
+### Fresh-install checks
+
+The fresh-install checks passed:
+
+- Database seeding created four demo users and 13 sample orders.
+- Running the seed process a second time did not create duplicates.
+- The migration entry point correctly reused the seeding logic.
+- A fresh ChromaDB collection was created successfully.
+- The policy indexer processed 71 policy chunks.
+
+### Order-resolution cases
+
+The project-specific resolver cases cover:
+
+- Finding orders by product, variant, status, date, and order ID.
+- Interpreting typos, partial product names, relative dates, and follow-up references such as “the older one.”
+- Listing, filtering, sorting, and selecting relative positions such as the latest or third-oldest matching order.
+- Returning `FOUND`, `CLARIFY`, or `NO_MATCH` when a request is clear, ambiguous, or unsupported.
+- Capping clarification choices at four and requiring confirmation when a candidate is still ambiguous.
+- Ignoring duplicate or out-of-range model selections and using fast paths for clear requests.
+
+### Safety and failure cases
+
+Regression cases also check that:
+
+- A clarification can select only an option already shown and validated for the signed-in customer.
+- Order IDs and account identifiers are kept out of the resolver-matching prompt.
+- Instruction-like text in a user message or product name cannot expand the server-side order mapping.
+- Malformed structured output and model failures do not produce an unsafe order selection.
+- Date resolution requires a timezone-aware clock.
+
+### Model fallback scenarios
+
+Offline fake-provider cases exercise four gateway paths:
+
+1. A rate-limited primary model falls back to the secondary model.
+2. A primary model in cooldown is skipped.
+3. The gateway switches back to the primary after recovery.
+4. A simulated HTTP 503 triggers fallback.
+
+### 50-case order scenario set
+
+A synthetic 50-case set covers product aliases and typos, order variants and statuses, exact and relative dates, follow-up references, ambiguity, unsupported products, and instruction-like text. Its expected outcomes are 35 `FOUND`, 10 `CLARIFY`, and 5 `NO_MATCH`. These are scenario labels, not a live-model accuracy score.
+
+The test and evaluation files remain local and are not included in this source-only repository; this section summarizes the project-specific coverage used during development.
 
 ## Local files and Git hygiene
 
