@@ -1,0 +1,613 @@
+ACME COMMERCE
+CUSTOMER SUPPORT KNOWLEDGE BASE
+
+Policy Version: 3.2
+Last Updated: January 2026
+
+==================================================
+1. REFUND POLICY
+==================================================
+
+1.1 Standard Refund Eligibility
+
+Customers may request a refund within 30 calendar days of receiving a physical product.
+
+To qualify for a standard refund:
+
+- The product must be returned within the applicable refund window.
+- The product must be in its original condition.
+- The product must include all major accessories supplied with the original order.
+- The customer must provide the original order number.
+- The product must not show signs of intentional damage or misuse.
+
+Refund eligibility is determined based on the date the customer received the product, not the date the order was placed.
+
+1.2 Products Not Normally Eligible for Refunds
+
+The following products are normally not eligible for a standard refund:
+
+- Digital products after download or activation.
+- Gift cards after purchase.
+- Products that have been intentionally damaged.
+- Products with significant signs of misuse.
+- Items specifically marked as "final sale."
+
+Exceptions may be considered by a support manager when the customer reports a manufacturing defect or fulfillment error.
+
+1.3 Damaged Products
+
+Customers who receive a damaged product should contact support within 7 calendar days of delivery.
+
+The customer may be asked to provide photographs showing:
+
+- The product damage.
+- The packaging.
+- The shipping label.
+
+If the damage is confirmed to have occurred before or during delivery, the customer may be offered:
+
+- A replacement.
+- A full refund.
+- A partial refund where appropriate.
+
+A damaged-product case reported after 7 days requires manual review.
+
+1.4 Wrong or Missing Items
+
+If a customer receives an incorrect product, they should contact support within 14 calendar days of delivery.
+
+If an item is missing from an order, the customer should report the missing item within 14 calendar days.
+
+Confirmed fulfillment errors are eligible for replacement or refund.
+
+1.5 Sale and Discounted Products
+
+Products purchased during a promotional sale are eligible for refunds unless the product was explicitly marked as final sale.
+
+The refund amount is based on the amount actually paid by the customer rather than the product's original list price.
+
+1.6 Partial Refunds
+
+A partial refund may be considered when:
+
+- A product has a minor defect that does not prevent normal use.
+- An accessory is missing but the customer chooses to keep the product.
+- A manager approves compensation for a service failure.
+
+The amount of a partial refund is determined by the support team.
+
+1.7 Shipping Cost Refunds
+
+Standard outbound shipping charges are normally non-refundable for voluntary returns.
+
+Shipping charges may be refunded when:
+
+- The wrong product was shipped.
+- The product arrived damaged.
+- The product has a confirmed manufacturing defect.
+- The return was caused by an error made by the company.
+
+1.8 Refund Processing
+
+After the returned product has been received and inspected, approved refunds are normally initiated within 5–7 business days.
+
+The actual time for funds to appear depends on the customer's bank or payment provider.
+
+Support must not promise an exact date for receiving funds.
+
+1.9 Refund Payment Method
+
+Refunds are normally issued to the original payment method.
+
+Refunds cannot normally be redirected to another payment method without manager approval.
+
+If the original payment method is unavailable, the case requires manual review.
+
+1.10 Refund Requests After 30 Days
+
+Requests submitted after the standard 30-day refund period are normally not eligible.
+
+A support manager may approve an exception when there is a documented:
+
+- Manufacturing defect.
+- Fulfillment error.
+- Delivery problem.
+- Other exceptional circumstance.
+
+The AI must not promise an exception before manager approval.
+
+1.11 Duplicate Charges
+
+If a customer reports being charged more than once for the same order, support must verify the transaction information before promising a refund.
+
+Confirmed duplicate charges should be escalated to the billing workflow.
+
+The AI must not claim that a duplicate charge has been confirmed unless transaction data has been verified.
+
+1.12 Fraud and Abuse Indicators
+
+The following situations require manual review:
+
+- Multiple unusual refund requests from the same customer.
+- Repeated claims of damaged products without supporting evidence.
+- Suspicious payment activity.
+- Attempts to obtain refunds outside policy through repeated claims.
+
+The AI must not accuse a customer of fraud. It should route the case for human review.
+
+1.13 Manager Approval
+
+Manager approval is required for:
+
+- Refunds outside the standard eligibility period.
+- Exceptions to final-sale restrictions.
+- Refunds to an alternative payment method.
+- High-value exceptions.
+- Cases involving suspected fraud or unusual refund patterns.
+
+The AI may recommend escalation but must not represent manager approval as already having occurred.
+
+
+==================================================
+2. RETURN POLICY
+==================================================
+
+2.1 Standard Returns
+
+Customers may return eligible physical products within 30 calendar days of receiving the order.
+
+Returned products should be:
+
+- In their original condition.
+- Packed securely.
+- Accompanied by the original order information where available.
+
+2.2 Return Shipping
+
+For voluntary returns, the customer may be responsible for return shipping costs.
+
+Return shipping may be covered by Acme Commerce when the return is caused by:
+
+- A damaged product.
+- A wrong product.
+- A confirmed manufacturing defect.
+- A fulfillment error.
+
+2.3 Non-Returnable Products
+
+The following are normally non-returnable:
+
+- Digital products after activation.
+- Gift cards.
+- Items explicitly marked final sale.
+- Products damaged through customer misuse.
+
+2.4 Inspection
+
+Returned products may be inspected before a refund is approved.
+
+If inspection identifies significant damage or misuse, the refund may be denied or adjusted.
+
+2.5 Return Exceptions
+
+Returns outside the standard return period require manual review.
+
+Support agents must not guarantee an exception before approval.
+
+
+==================================================
+3. SHIPPING POLICY
+==================================================
+
+3.1 Standard Shipping
+
+Standard shipping normally takes 5–7 business days after dispatch.
+
+Delivery estimates are not guaranteed and may be affected by:
+
+- Weather.
+- Carrier delays.
+- Public holidays.
+- Customs processing.
+- Other circumstances outside company control.
+
+3.2 Express Shipping
+
+Express shipping normally takes 1–2 business days after dispatch.
+
+The estimate does not include order-processing time before dispatch.
+
+3.3 Order Processing
+
+Orders are normally processed within 1–2 business days.
+
+During major sales, holidays, or unusually high demand, processing may take longer.
+
+Customers receive a shipping confirmation email once their order has been dispatched.
+
+3.4 Order Tracking
+
+Customers can track orders using the tracking link in the shipping confirmation email.
+
+Tracking information may take up to 24 hours to appear after dispatch.
+
+3.5 Delayed Orders
+
+If an order has not arrived within 10 business days after dispatch, the customer should contact support.
+
+Support should verify current carrier tracking information before promising a delivery date.
+
+The AI must not invent a delivery date.
+
+3.6 Lost Shipments
+
+A shipment may be treated as potentially lost when:
+
+- Tracking has not updated for an extended period.
+- The carrier reports that the package may be lost.
+- The expected delivery period has passed significantly.
+
+Potentially lost shipments require verification before replacement or refund.
+
+3.7 Damaged Shipments
+
+Customers who receive damaged packages should contact support as soon as possible.
+
+The customer may be asked to provide photographs of:
+
+- The package.
+- Shipping label.
+- Damaged product.
+
+Confirmed damage may qualify for replacement or refund under the Refund Policy.
+
+3.8 Shipping Address Changes
+
+Customers may request an address change before dispatch.
+
+Once an order has been dispatched, the address normally cannot be changed.
+
+Address changes after dispatch require manual review.
+
+3.9 Delivered but Not Received
+
+If tracking shows an order as delivered but the customer states they did not receive it, support must verify delivery information.
+
+The AI must not automatically declare a shipment lost or stolen.
+
+3.10 International Shipping
+
+International deliveries may take longer because of customs processing, carrier delays, and local regulations.
+
+Customers may be responsible for customs duties, taxes, or import charges unless otherwise stated at checkout.
+
+3.11 Shipping Escalation
+
+Shipping cases should normally be escalated when:
+
+- Tracking is unavailable or contradictory.
+- The shipment may be lost.
+- Delivery appears to be to the wrong address.
+- The order is significantly delayed.
+- A refund or replacement requires an exception.
+- The customer is highly distressed and the issue remains unresolved.
+
+
+==================================================
+4. CANCELLATION POLICY
+==================================================
+
+4.1 Order Cancellation
+
+Customers may request cancellation before an order has been dispatched.
+
+Cancellation requests after dispatch cannot normally be processed.
+
+4.2 Cancellation After Payment
+
+Payment does not guarantee that an order can still be cancelled.
+
+If the order has already entered fulfillment, cancellation may no longer be possible.
+
+4.3 Cancelled Orders
+
+If cancellation is approved before dispatch, the customer is normally refunded to the original payment method.
+
+4.4 Subscription Cancellation
+
+Subscription cancellation rules are described in the Subscription Policy.
+
+4.5 Cancellation Exceptions
+
+Requests to cancel an order after dispatch require manual review.
+
+Support must not promise cancellation before confirming the order status.
+
+
+==================================================
+5. DAMAGED PRODUCT POLICY
+==================================================
+
+5.1 Reporting Damage
+
+Customers should report damaged products within 7 calendar days of delivery.
+
+Customers may be required to provide photographs of:
+
+- Product damage.
+- Packaging.
+- Shipping label.
+
+5.2 Available Resolutions
+
+Depending on the circumstances, Acme Commerce may offer:
+
+- Replacement.
+- Full refund.
+- Partial refund.
+
+5.3 Manufacturing Defects
+
+A manufacturing defect may qualify for replacement or refund even when the standard return period has expired, subject to review.
+
+5.4 Customer-Caused Damage
+
+Damage caused by misuse, accidents, unauthorized modifications, or intentional actions is normally not covered.
+
+5.5 Escalation
+
+Cases involving disputed responsibility for damage should be escalated for human review.
+
+
+==================================================
+6. WARRANTY POLICY
+==================================================
+
+6.1 Warranty Period
+
+Eligible products include a standard limited warranty of 12 months from the original purchase date unless the product listing specifies a different warranty period.
+
+6.2 Warranty Coverage
+
+The warranty may cover manufacturing defects that occur during normal intended use.
+
+6.3 Warranty Exclusions
+
+The warranty normally does not cover:
+
+- Accidental damage.
+- Liquid damage.
+- Unauthorized modifications.
+- Normal cosmetic wear.
+- Damage caused by misuse.
+- Damage caused by improper installation.
+
+6.4 Warranty Claims
+
+Customers may be asked to provide:
+
+- Order number.
+- Product serial number.
+- Description of the problem.
+- Photos or diagnostic information when appropriate.
+
+6.5 Warranty Resolution
+
+Depending on the issue, the company may provide:
+
+- Troubleshooting.
+- Repair.
+- Replacement.
+- Other approved resolution.
+
+6.6 Warranty Escalation
+
+Warranty cases involving disputed eligibility or unusual circumstances require manual review.
+
+
+==================================================
+7. PAYMENT AND BILLING POLICY
+==================================================
+
+7.1 Accepted Payment Methods
+
+Acme Commerce accepts supported payment methods displayed at checkout.
+
+Available methods may vary depending on location and product.
+
+7.2 Failed Payments
+
+If a payment fails, the order may not be confirmed.
+
+Customers should verify their payment details or use another supported payment method.
+
+The AI must not claim that an order was successfully paid unless transaction information confirms it.
+
+7.3 Duplicate Charges
+
+Customers reporting duplicate charges require transaction verification.
+
+A refund should not be promised until the duplicate transaction has been confirmed.
+
+7.4 Pending Transactions
+
+A pending payment may represent an authorization rather than a completed charge.
+
+Customers should not automatically be told that a pending authorization is a completed payment.
+
+If the status remains unresolved, the case should be escalated.
+
+7.5 Refunds
+
+Approved refunds are normally returned to the original payment method.
+
+Alternative payment methods require manual approval.
+
+7.6 Billing Disputes
+
+Billing disputes involving unusual transactions, payment inconsistencies, or potentially fraudulent activity require human review.
+
+Support must not accuse customers of fraud.
+
+
+==================================================
+8. ACCOUNT AND SECURITY POLICY
+==================================================
+
+8.1 Password Reset
+
+Customers who forget their password should use the official password-reset process.
+
+Support agents must never ask customers to provide their password.
+
+8.2 Account Verification
+
+Certain account actions require identity verification.
+
+Support must follow the approved verification process before making sensitive account changes.
+
+8.3 Account Lockout
+
+Repeated failed login attempts may temporarily lock an account.
+
+Customers should follow the account recovery process.
+
+If recovery fails, the case should be escalated.
+
+8.4 Personal Information
+
+Support agents must not request unnecessary sensitive information.
+
+Customers should not send passwords, authentication codes, or complete payment-card information through support messages.
+
+8.5 Suspicious Account Activity
+
+Reports of unauthorized access, compromised accounts, or suspicious transactions require priority handling and human review.
+
+8.6 Security Escalation
+
+The following should be escalated immediately:
+
+- Suspected account compromise.
+- Unauthorized transactions.
+- Exposure of authentication credentials.
+- Repeated failed recovery attempts.
+
+
+==================================================
+9. SUBSCRIPTION POLICY
+==================================================
+
+9.1 Subscription Plans
+
+Subscription plans renew according to the billing interval selected by the customer.
+
+The applicable price is displayed before subscription confirmation.
+
+9.2 Automatic Renewal
+
+Subscriptions normally renew automatically unless cancelled before the next renewal date.
+
+9.3 Subscription Cancellation
+
+Customers may cancel future renewals through the account subscription settings.
+
+Cancellation normally prevents future renewal but does not automatically refund previously completed billing periods.
+
+9.4 Subscription Refunds
+
+Refund requests for completed subscription periods are evaluated according to the Refund Policy and may require manual review.
+
+9.5 Free Trials
+
+Free trials may automatically convert into paid subscriptions if the customer does not cancel before the trial ends, when clearly disclosed during signup.
+
+9.6 Billing Problems
+
+Unexpected subscription charges should be verified against subscription and payment records.
+
+The AI must not promise a refund without sufficient information.
+
+9.7 Subscription Escalation
+
+Escalate cases involving:
+
+- Repeated unexpected charges.
+- Cancellation failures.
+- Conflicting billing information.
+- Requests outside standard policy.
+- Suspected unauthorized account access.
+
+
+==================================================
+10. ESCALATION AND SUPPORT POLICY
+==================================================
+
+10.1 Purpose
+
+The AI support system is designed to assist human support teams. It must not automatically resolve cases when the available information is insufficient or when company policy requires human judgment.
+
+10.2 Human Escalation Conditions
+
+A ticket should normally be escalated when:
+
+- The issue falls outside documented policy.
+- The customer requests an exception.
+- Manager approval is required.
+- Transaction information must be verified.
+- Security or account compromise is suspected.
+- Fraud indicators are present.
+- The retrieved policy information is insufficient.
+- Policies appear to conflict.
+- The customer is highly distressed.
+- The case has already failed to resolve through previous support interactions.
+
+10.3 Sentiment and Escalation
+
+A highly distressed or severely frustrated customer should normally receive human review when the underlying issue remains unresolved.
+
+Sentiment alone does not determine whether a refund or other business action is approved.
+
+10.4 Priority Levels
+
+LOW:
+General questions and minor issues with no immediate business impact.
+
+MEDIUM:
+Standard issues that require assistance but are not time-sensitive.
+
+HIGH:
+Issues involving significant customer impact, repeated failures, serious delays, or urgent business consequences.
+
+CRITICAL:
+Security incidents, suspected account compromise, major payment issues, or situations requiring immediate human intervention.
+
+10.5 AI Limitations
+
+The AI must not:
+
+- Invent company policies.
+- Invent transaction information.
+- Claim that a refund was approved when it was not.
+- Claim that a manager approved an exception when no approval exists.
+- Accuse a customer of fraud.
+- Promise an exact delivery date without verified information.
+- Request a customer's password or authentication code.
+
+10.6 Insufficient Information
+
+If the system cannot determine the correct resolution from the available ticket information and knowledge base, it should ask for the necessary information or escalate to a human.
+
+10.7 Response Tone
+
+Responses should be:
+
+- Professional.
+- Clear.
+- Concise.
+- Respectful.
+- Appropriate to the customer's emotional state.
+
+Highly frustrated customers should receive empathetic language without making unsupported promises.
+
+END OF CUSTOMER SUPPORT KNOWLEDGE BASE
