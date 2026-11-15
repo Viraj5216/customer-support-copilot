@@ -167,7 +167,7 @@ class ChromaRetrieverService:
         n_results: int = 5,
         history: list[dict] | None = None,
     ) -> list[dict[str, Any]]:
-        """Retrieve relevant policy chunks using vector and optional hybrid search."""
+        """Retrieve policy candidates and optionally rerank them."""
         if (
             not isinstance(n_results, int)
             or isinstance(n_results, bool)
@@ -192,12 +192,18 @@ class ChromaRetrieverService:
 
         use_hybrid = self.settings.rag_hybrid_enabled
         use_reranker = self.settings.rag_reranker_enabled
+        use_advanced_retrieval = use_hybrid or use_reranker
 
-        candidate_count = (
-            max(n_results, 10)
-            if use_hybrid or use_reranker
-            else n_results
-        )
+        # Hybrid retrieval and reranking need a broad candidate pool.
+        # The previous fixed pool of ten could exclude useful candidates
+        # before BM25 fusion or cross-encoder ranking had a chance to help.
+        if use_advanced_retrieval:
+            candidate_count = max(
+                n_results,
+                int(self.collection.count()),
+            )
+        else:
+            candidate_count = n_results
 
         results = self.collection.query(
             query_embeddings=[embedding],
@@ -205,10 +211,6 @@ class ChromaRetrieverService:
         )
 
         documents = (results.get("documents") or [[]])[0]
-
-        if not documents:
-            return []
-
         ids = (results.get("ids") or [[]])[0]
         metadatas = (results.get("metadatas") or [[]])[0]
         distances = (results.get("distances") or [[]])[0]
@@ -226,16 +228,20 @@ class ChromaRetrieverService:
                 else None
             )
 
-            if threshold is not None:
-                if distance is None:
-                    continue
-
+            if distance is not None:
                 try:
                     distance = float(distance)
-                except (TypeError, ValueError):
+                except (TypeError, ValueError, OverflowError):
                     continue
 
-                if not math.isfinite(distance) or distance > threshold:
+                if not math.isfinite(distance):
+                    continue
+
+            # Keep the existing distance filter for vector-only retrieval.
+            # Do not apply it before hybrid fusion or reranking: doing so
+            # removes potentially relevant candidates prematurely.
+            if not use_advanced_retrieval and threshold is not None:
+                if distance is None or distance > threshold:
                     continue
 
             metadata = (
@@ -249,16 +255,20 @@ class ChromaRetrieverService:
                 "text": metadata.get("original_text") or document,
                 "section": metadata.get("section", "Unknown"),
                 "subsection": metadata.get("subsection", "Unknown"),
-                "distance": (
-                    float(distance) if distance is not None else None
-                ),
+                "distance": distance,
             })
 
-        if use_hybrid and chunks:
+        if use_hybrid:
             chunks = self._apply_hybrid(
-                query, chunks, candidate_count
+                query,
+                chunks,
+                candidate_count,
+                embedding,
             )
 
+        # Important: there is deliberately no second distance filter here.
+        # Hybrid candidates have already been ranked using vector and lexical
+        # rankings. A vector-distance cutoff here would undo that improvement.
         if use_reranker and chunks:
             chunks = self._rerank(query, chunks, n_results)
 
@@ -269,7 +279,9 @@ class ChromaRetrieverService:
         query: str,
         chunks: list[dict],
         candidate_count: int,
+        query_embedding: list[float],
     ) -> list[dict]:
+        """Combine vector and BM25 candidates using reciprocal rank fusion."""
         lexical_ids = self._bm25_rank(query, candidate_count)
 
         if not lexical_ids:
@@ -285,48 +297,91 @@ class ChromaRetrieverService:
 
         by_id = {item["id"]: item for item in chunks}
 
-        # Do not add lexical-only chunks when a vector-distance
-        # threshold is configured. Their relevance has not been
-        # verified against that threshold.
-        if self.settings.retrieval_max_distance is None:
-            missing = [
-                identifier
-                for identifier, _ in ranked
-                if identifier not in by_id
-            ]
+        missing = [
+            identifier
+            for identifier, _ in ranked
+            if identifier not in by_id
+        ]
 
-            if missing:
+        if missing:
+            try:
                 extra = self.collection.get(
                     ids=missing,
-                    include=["documents", "metadatas"],
+                    include=[
+                        "documents",
+                        "metadatas",
+                        "embeddings",
+                    ],
                 )
+            except Exception as exc:
+                logger.warning(
+                    "Could not fetch lexical candidates (%s)",
+                    type(exc).__name__,
+                )
+                return [
+                    {**by_id[identifier], "hybrid_score": score}
+                    for identifier, score in ranked
+                    if identifier in by_id
+                ]
 
-                extra_ids = extra.get("ids", [])
-                documents = extra.get("documents", [])
-                metadatas = extra.get("metadatas", [])
+            extra_ids = extra.get("ids") or []
+            extra_documents = extra.get("documents") or []
+            extra_metadatas = extra.get("metadatas") or []
+            extra_embeddings = extra.get("embeddings")
 
-                for index, identifier in enumerate(extra_ids):
-                    if index >= len(documents) or not documents[index]:
+            for index, identifier in enumerate(extra_ids):
+                if (
+                    index >= len(extra_documents)
+                    or not extra_documents[index]
+                ):
+                    continue
+
+                if (
+                    extra_embeddings is None
+                    or index >= len(extra_embeddings)
+                ):
+                    continue
+
+                candidate_embedding = extra_embeddings[index]
+
+                try:
+                    if len(candidate_embedding) != len(query_embedding):
                         continue
 
-                    metadata = (
-                        metadatas[index]
-                        if index < len(metadatas)
-                        else {}
-                    ) or {}
+                    distance = math.fsum(
+                        (
+                            float(query_value)
+                            - float(candidate_value)
+                        ) ** 2
+                        for query_value, candidate_value in zip(
+                            query_embedding,
+                            candidate_embedding,
+                        )
+                    )
+                except (TypeError, ValueError, OverflowError):
+                    continue
 
-                    by_id[identifier] = {
-                        "id": identifier,
-                        "text": (
-                            metadata.get("original_text")
-                            or documents[index]
-                        ),
-                        "section": metadata.get("section", "Unknown"),
-                        "subsection": metadata.get(
-                            "subsection", "Unknown"
-                        ),
-                        "distance": None,
-                    }
+                if not math.isfinite(distance):
+                    continue
+
+                metadata = (
+                    extra_metadatas[index]
+                    if index < len(extra_metadatas)
+                    else {}
+                ) or {}
+
+                by_id[identifier] = {
+                    "id": identifier,
+                    "text": (
+                        metadata.get("original_text")
+                        or extra_documents[index]
+                    ),
+                    "section": metadata.get("section", "Unknown"),
+                    "subsection": metadata.get(
+                        "subsection", "Unknown"
+                    ),
+                    "distance": distance,
+                }
 
         return [
             {**by_id[identifier], "hybrid_score": score}
@@ -465,7 +520,8 @@ class ChromaRetrieverService:
 
         except Exception as exc:
             logger.warning(
-                "Local reranker unavailable (%s)",
+                "Local reranker unavailable (%s); "
+                "using the existing retrieval ranking.",
                 type(exc).__name__,
             )
             return chunks[:limit]
