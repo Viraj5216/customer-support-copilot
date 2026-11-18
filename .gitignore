@@ -20,7 +20,9 @@ htmlcov/
 
 # Generated evaluation artifacts
 .deepeval/
-evaluation/
+evaluation/results/runs/
+evaluation/*
+!evaluation/run_customer_support_eval.py
 
 # Local databases and vector stores
 data/*.db
@@ -49,7 +51,6 @@ Thumbs.db
 .agents/
 
 # Local test and evaluation files
-tests/
 scripts/test_gateway_failover.py
 scripts/timing_test.py
 

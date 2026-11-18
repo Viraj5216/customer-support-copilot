@@ -304,11 +304,46 @@ Offline fake-provider cases exercise four gateway paths:
 
 A synthetic 50-case set covers product aliases and typos, order variants and statuses, exact and relative dates, follow-up references, ambiguity, unsupported products, and instruction-like text. Its expected outcomes are 35 `FOUND`, 10 `CLARIFY`, and 5 `NO_MATCH`. These are scenario labels, not a live-model accuracy score.
 
-The test and evaluation files remain local and are not included in this source-only repository; this section summarizes the project-specific coverage used during development.
+The repository includes the focused order-ID test and Core 30 evaluation materials. Other local test and evaluation artifacts remain excluded.
+
+## Core 30 Evaluation
+
+Core 30 contains 30 end-to-end cases run sequentially against the actual LangGraph workflow with Gemini. The run used a fixed clock of 2026-10-15 12:00 Asia/Kolkata, isolated synthetic accounts, a temporary database, and a copy of the policy index. The run completed on 2026-11-18 using primary model `gemini-3.5-flash-lite` and fallback model `gemini-3.1-flash-lite`: 28 passed, 2 failed, 0 were inconclusive, and 0 were unrun.
+
+| Area | Cases | Passed | Failed |
+| --- | ---: | ---: | ---: |
+| Order lookup | 5 | 5 | 0 |
+| Filtering and sorting | 5 | 5 | 0 |
+| Multi-turn | 3 | 3 | 0 |
+| Auth | 2 | 2 | 0 |
+| Return eligibility | 5 | 5 | 0 |
+| Policy and policy rules | 4 | 3 | 1 |
+| No-answer and out-of-scope | 2 | 2 | 0 |
+| Security | 4 | 3 | 1 |
+| **Overall** | **30** | **28** | **2** |
+
+### What the evaluation found and fixed
+
+- Customer-typed order IDs such as `7002` are normalized only against the authenticated customer's own orders.
+- Case E04 showed that an explicit owned order ID could be defeated by extra product or issue filters. The resolver now gives that ID priority for a normal lookup while preserving selected-order and clarification flows.
+- Action requests now receive safe next steps: anonymous customers are asked to sign in, and authenticated requests for a customer's own order are directed to human support or billing review. The anonymous cancellation case passed. Case P03 did not reach this reply path because the gatekeeper returned invalid structured output, so its authenticated action response remains unverified in this run.
+
+### Known limitations
+
+This is a small 30-case evaluation with heuristic regex checks, a synthetic knowledge base containing 71 chunks, and 13 seeded orders. It covers one configured primary/fallback model pair in one live run. Cases P03 and X03 failed: P03 ended with a gatekeeper `OutputParserException`; X03 was classified as unsafe because the password-reset request included a supplied password, so the expected reset guidance was not returned. Review the [full Core 30 report](evals/results/core_30_report.md) before treating this run as a baseline.
+
+### Reproduce
+
+With the project environment configured and `GEMINI_API_KEY` set:
+
+```bash
+python evals/validate_dataset.py
+python evaluation/run_customer_support_eval.py --core-30 --core-case-delay-seconds 17.5
+```
 
 ## Local files and Git hygiene
 
-The repository tracks application code, setup scripts, requirements, `.env.example`, and the policy source. It intentionally excludes `.env`, demo credentials, SQLite databases, Chroma stores, caches, tests, evaluation datasets/results/scripts, and OS metadata. These files are generated or kept locally and must not be committed.
+The repository tracks application code, setup scripts, requirements, `.env.example`, the policy source, and the Core 30 runner, dataset, validator, and report. It excludes `.env`, demo credentials, SQLite databases, Chroma stores, caches, generated run results, unrelated evaluation experiments, and OS metadata. The focused order-ID test is included; other local tests are not staged.
 
 The old Git history is preserved separately from the working project. The current GitHub repository starts with the reviewed source-only snapshot.
 

@@ -22,9 +22,9 @@ from agents.responses import (
     OUT_OF_SCOPE_RESPONSE,
     SAFE_ERROR_RESPONSE,
     SIGN_IN_REQUIRED_MESSAGE,
-    UNSAFE_RESPONSE,
     _fixed_response_node,
     _order_status_response,
+    unsafe_action_response,
 )
 from agents.schemas import CopilotState, FILTER_FIELD_METADATA, GatekeeperResult
 from agents.text import content_text, format_history, model_safe_text
@@ -414,6 +414,30 @@ def build_nodes(*, app_settings, model_name, model, gateway, retriever, clock):
                 llm_called=called,
             )
 
+    def unsafe_response_text(state):
+        user_id = state.get("user_id")
+        try:
+            owned_order_ids = [
+                order.get("order_id")
+                for order in customer_orders(user_id, app_settings)
+                if order.get("order_id")
+            ] if user_id else []
+        except OrderStoreError:
+            owned_order_ids = []
+        return unsafe_action_response(state, owned_order_ids)
+
+    def unsafe_response_evidence(state):
+        if not state.get("user_id") or retriever is None:
+            return {"evidence": []}
+        try:
+            evidence = retriever.retrieve(state.get("user_message", ""))
+            return {
+                "evidence": evidence,
+                "retrieval_status": "SUCCESS" if evidence else "NO_RELEVANT_POLICY_FOUND",
+            }
+        except Exception:
+            return {"evidence": [], "retrieval_status": "ERROR"}
+
     fixed_responses = {
         "sign_in_required_response": (
             SIGN_IN_REQUIRED_MESSAGE,
@@ -426,11 +450,11 @@ def build_nodes(*, app_settings, model_name, model, gateway, retriever, clock):
             },
         ),
         "unsafe_response": (
-            UNSAFE_RESPONSE,
+            unsafe_response_text,
             "DETERMINISTIC",
             "COMPLETED",
             "Deterministic safety response returned",
-            None,
+            unsafe_response_evidence,
         ),
         "out_of_scope_response": (
             OUT_OF_SCOPE_RESPONSE,

@@ -1184,6 +1184,12 @@ To evaluate a time-based rule:
 7. If a required event date or current_date is unavailable, do not
    guess whether the period has expired. Explain what cannot be verified.
 
+For a refund request after the supplied evidence shows the standard
+30-day window has expired, state that it is not normally eligible for
+a standard refund. Do not open with "yes" or describe the customer as
+eligible. If the policy allows exceptions, explain that a support
+manager may consider one after manual review; never promise approval.
+
 Apply these rules consistently. Do not hardcode a particular policy
 topic, deadline, event date, or eligibility outcome.
 

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import re
 from datetime import date, datetime
 from math import isfinite
 from typing import Any
@@ -31,6 +32,40 @@ def _text(value: Any) -> str:
 
 def _order_id(value: Any) -> str:
     return str(value).strip().upper().replace(" ", "") if value is not None else ""
+
+
+def _canonical_order_id(requested: str, known_ids) -> str:
+    """Map what a customer typed ("7002", "ord-7002", "#7002") to a stored ID.
+
+    Only ever maps onto IDs in ``known_ids`` (the authenticated customer's own
+    orders). Ambiguous or unknown input is returned unchanged, so it still
+    resolves to NOT_FOUND instead of guessing.
+    """
+    if not requested or requested in known_ids:
+        return requested
+
+    def squash(value: str) -> str:
+        return re.sub(r"[^A-Z0-9]", "", value)
+
+    wanted = squash(requested)
+    if not wanted:
+        return requested
+
+    exact = [known for known in known_ids if squash(known) == wanted]
+    if len(exact) == 1:
+        return exact[0]
+
+    if wanted.isdigit():
+        # A bare number may omit an alphabetic prefix such as "ORD".
+        suffix = [
+            known for known in known_ids
+            if squash(known).endswith(wanted)
+            and squash(known)[: -len(wanted)].isalpha()
+        ]
+        if len(suffix) == 1:
+            return suffix[0]
+
+    return requested
 
 
 def _date(value: Any) -> date | None:
@@ -725,7 +760,11 @@ def resolve_order_reference(
         else orders
     )
 
-    requested = _order_id(reference.get("order_id"))
+    requested = _canonical_order_id(
+        _order_id(reference.get("order_id")), by_id
+    )
+    if requested in by_id and reference.get("order_id") is not None:
+        reference = {**reference, "order_id": requested}
     selected = _order_id(selected_order_id)
 
     if not selected and clarification_options is not None:
@@ -734,6 +773,9 @@ def resolve_order_reference(
         if isinstance(choice, int) and not isinstance(choice, bool):
             if 1 <= choice <= len(displayed):
                 selected = displayed[choice - 1]
+
+    if requested in by_id and not selected and clarification_options is None:
+        return _result("FOUND", [by_id[requested]])
 
     if requested:
         if requested not in by_id:

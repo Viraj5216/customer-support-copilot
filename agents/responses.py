@@ -2,6 +2,7 @@
 """Deterministic customer-facing response builders."""
 
 import time
+import re
 
 from agents.events import append_event as _append_event, event as _event
 from agents.schemas import CopilotState
@@ -22,6 +23,82 @@ UNSAFE_RESPONSE = (
     "customer information. I can help with legitimate account or "
     "order-related requests within our support guidelines."
 )
+
+
+def unsafe_action_response(state, owned_order_ids=()):
+    """Give safe next steps for action requests without weakening refusals."""
+    message = str(state.get("user_message", ""))
+    lowered = message.casefold()
+    if re.search(
+        r"\b(ignore (?:all )?(?:previous|prior|above)|pretend you are|"
+        r"another customer|other customer|all customers|someone else)\b",
+        lowered,
+    ):
+        return UNSAFE_RESPONSE
+
+    duplicate_charge = bool(re.search(
+        r"\b(duplicate charge|charged twice|double[- ]charged)\b", lowered
+    ))
+    cancellation = bool(re.search(r"\bcancel\b.*\b(order|it)\b", lowered))
+    account_change = bool(re.search(
+        r"\b(change|update|modify)\b.{0,40}\b(account|address|email|phone|payment method)\b",
+        lowered,
+    ))
+    refund_action = bool(re.search(
+        r"\b(refund me|issue (?:a )?refund|process (?:a )?refund|"
+        r"approve (?:my )?refund)\b",
+        lowered,
+    ))
+    if not (duplicate_charge or cancellation or account_change or refund_action):
+        return UNSAFE_RESPONSE
+
+    if not state.get("user_id"):
+        return (
+            "Please sign in to your account before I can help with this request. "
+            "I can't issue refunds, cancel orders, or change account information; "
+            "a human support agent must review it."
+        )
+
+    reference = state.get("order_reference") or {}
+    requested_id = str(reference.get("order_id") or "").strip().upper()
+    if not requested_id:
+        match = re.search(r"\border\s+(?:ord[- ]?)?(\d{4,})\b", lowered)
+        requested_id = match.group(1).upper() if match else ""
+    if requested_id:
+        normalized = re.sub(r"[^A-Z0-9]", "", requested_id)
+        matches = [
+            str(order_id).upper()
+            for order_id in owned_order_ids
+            if re.sub(r"[^A-Z0-9]", "", str(order_id).upper()) == normalized
+            or (normalized.isdigit() and re.sub(r"[^A-Z0-9]", "", str(order_id).upper()).endswith(normalized))
+        ]
+        if len(matches) != 1:
+            return UNSAFE_RESPONSE
+
+    if duplicate_charge:
+        return (
+            "I can't confirm whether a duplicate charge occurred or issue a refund. "
+            "Duplicate-charge reports require transaction verification, and a refund "
+            "should not be promised until the duplicate transaction is confirmed. "
+            "Please ask a human billing support agent to review this."
+        )
+    if cancellation:
+        return (
+            "I can't cancel an order myself. A human support agent needs to review "
+            "the request, and I can't confirm a cancellation unless the workflow "
+            "verifies it. Please contact customer support to request a review."
+        )
+    if account_change:
+        return (
+            "I can't make account changes myself. For security, a human support "
+            "agent needs to verify your identity before reviewing an account change. "
+            "Please contact customer support."
+        )
+    return (
+        "I can't issue or approve a refund myself. Refund eligibility and requests "
+        "must be reviewed under the applicable policy by a human support agent. "
+        "I can't promise a refund; please contact customer support for review."
+    )
 
 OUT_OF_SCOPE_RESPONSE = (
     "Sorry, but this question is outside the scope of our customer support "
@@ -55,7 +132,7 @@ def _fixed_response_node(
 
         return {
             **updates,
-            "response": response,
+            "response": response(state) if callable(response) else response,
             "response_status": status,
             "workflow_status": workflow_status,
             "execution": _append_event(
