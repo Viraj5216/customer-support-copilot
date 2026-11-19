@@ -1,6 +1,8 @@
 
 """Named conditional routes for the support workflow."""
 
+import re
+
 from agents.schemas import CopilotState
 
 
@@ -37,6 +39,31 @@ _ORDER_LOOKUP_STATUSES = {
 }
 
 
+def _has_safe_information_question(state: CopilotState) -> bool:
+    """Allow an independent information question through an overbroad refusal."""
+    message = str(state.get("user_message", ""))
+    if not re.search(
+        r"\?|\b(?:how do i|how can i|what is|what are|why is|why are|"
+        r"when is|where can i|explain|tell me about)\b",
+        message,
+        re.I,
+    ):
+        return False
+
+    security_request = re.search(
+        r"\b(?:ignore (?:all )?(?:previous|prior|above)|pretend you are|"
+        r"impersonate|bypass|hack|steal|all customers|every customer|"
+        r"another customer|other customer|another user|other user|"
+        r"someone else|someone else's|another person's|other people's|"
+        r"my friend|my spouse|their (?:order|account|address|billing|payment|"
+        r"password|email|phone|private information|data)|"
+        r"system prompt|hidden instructions)\b",
+        message,
+        re.I,
+    )
+    return security_request is None
+
+
 def route_from_start(state: CopilotState) -> str:
     return "gatekeeper_agent"
 
@@ -49,6 +76,8 @@ def route_after_gatekeeper(state: CopilotState) -> str:
         return "error_response"
 
     if state.get("safety") != "SAFE":
+        if _has_safe_information_question(state):
+            return "rag_agent"
         return "unsafe_response"
 
     scope = state.get("scope")

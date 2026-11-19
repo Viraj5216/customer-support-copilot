@@ -330,7 +330,7 @@ Core 30 contains 30 end-to-end cases run sequentially against the actual LangGra
 
 ### Known limitations
 
-This is a small 30-case evaluation with heuristic regex checks, a synthetic knowledge base containing 71 chunks, and 13 seeded orders. It covers one configured primary/fallback model pair in one live run. Cases P03 and X03 failed: P03 ended with a gatekeeper `OutputParserException`; X03 was classified as unsafe because the password-reset request included a supplied password, so the expected reset guidance was not returned.
+This is a small 30-case evaluation with heuristic regex checks, a synthetic knowledge base containing 71 chunks, and 13 seeded orders. The full run covers one configured primary/fallback model pair. P03 failed with a gatekeeper `OutputParserException`. X03 initially failed because the password-reset question was classified as unsafe; a later focused five-case regression run passed X03 while retaining the X01 and X04 security refusals. The complete 30-case suite has not been rerun after that routing change.
 
 ### Reproduce
 

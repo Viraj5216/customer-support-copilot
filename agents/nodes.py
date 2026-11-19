@@ -200,11 +200,17 @@ def build_nodes(*, app_settings, model_name, model, gateway, retriever, clock):
                 state.get("clarification_original_question")
                 or state.get("user_message")
             )
+            query = model_safe_text(query)
+            safe_history = [
+                {**item, "content": model_safe_text(item.get("content", ""))}
+                if isinstance(item, dict) else item
+                for item in state.get("conversation_history", [])
+            ]
 
             chunks = service.retrieve(
                 query,
                 n_results=5,
-                history=state.get("conversation_history", []),
+                history=safe_history,
             )
 
             evidence = [
