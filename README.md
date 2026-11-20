@@ -418,4 +418,4 @@ The old Git history is preserved separately from the working project. The curren
 
 ## License
 
-No license has been added yet. Contact the repository owner before reusing or redistributing this project.
+Released under the MIT License. See LICENSE.
