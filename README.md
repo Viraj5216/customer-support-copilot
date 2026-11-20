@@ -381,10 +381,11 @@ Hybrid and reranker modes skip the distance cutoff, so they return results even 
 ### Findings
 
 - The reranker configuration raised hit@3 from 20/25 to 23/25, hit@1 from 16/25 to 18/25, and MRR from 0.723 to 0.800. The hit@3 gain was mostly on paraphrases (5/9 to 7/9); median retrieval time was about 260 ms per query versus 6 ms for the default.
+- The reranker's +3 questions at hit@3 is the only difference here that reaches three questions; with 25 author-written questions it is evidence for this knowledge base, not proof that it generalizes.
 - BM25 hybrid tied the default at hit@3 (20/25) and scored lower at hit@1 (14/25 versus 16/25) and hit@5 (21/25 versus 22/25). Section-aware embeddings had mixed results: hit@1 was 17/25 and MRR was 0.739, while hit@3 was 19/25 and hit@5 was 21/25. Neither configuration provided a consistent retrieval gain on this KB.
 - Configurations 4, 5, and 6 had identical per-question ranks and hit counts. The retriever passes the whole 71-chunk collection to the reranker, so the upstream retrieval stage does not change the final reranked order in this evaluation.
 - Hybrid and reranker configurations returned results for 0/5 unanswerable questions, while the default abstained correctly on 5/5. The default remains unchanged.
-- R02 and R05 were missed by every configuration at hit@5.
+- R05 was missed by every configuration. R02 was missed by every configuration except BM25 hybrid alone, which found it but missed R11, R14, and R25.
 - Hybrid fell back to the plain ranking for one question: N05, which is unanswerable and has no BM25 keyword match. No rerank fallback occurred in configurations 4, 5, or 6.
 
 ### Known limitations
@@ -396,12 +397,11 @@ This uses a small synthetic KB and 25 answerable questions, so one question is 4
 With the project environment active, run:
 
 ```bash
-export HF_HOME=/tmp/hf_cache_eval
 python evals/run_retrieval_eval.py --validate-only
 python evals/run_retrieval_eval.py
 ```
 
-The embedding and cross-encoder models are downloaded on first use. The app itself loads its reranker with `local_files_only=True`, so that model must already be cached in the same Hugging Face cache when launching the app. Full run details are in the [retrieval evaluation report](evals/results/retrieval_eval.md).
+The embedding and cross-encoder models are downloaded on first use to the default Hugging Face cache. The app also looks in that cache when its reranker is enabled: it loads the model with `local_files_only=True`, so the model must already be cached. Full run details are in the [retrieval evaluation report](evals/results/retrieval_eval.md).
 
 ## Local files and Git hygiene
 
