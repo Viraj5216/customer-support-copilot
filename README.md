@@ -341,6 +341,68 @@ python evals/validate_dataset.py
 python evaluation/run_customer_support_eval.py --core-30 --core-case-delay-seconds 17.5
 ```
 
+## Retrieval evaluation
+
+The retrieval-only evaluation compares six retrieval configurations on the project's own 71-chunk policy file using 30 questions (25 answerable and 5 unanswerable). It measures retrieved policy sections only: no LLM is called, and these results do not score generated answers.
+
+| Configuration | hit@1 | hit@3 | hit@5 | MRR | median ms |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Semantic only (current default) | 16/25 | 20/25 | 22/25 | 0.723 | 6 |
+| + section-aware embeddings | 17/25 | 19/25 | 21/25 | 0.739 | 6 |
+| + BM25 hybrid | 14/25 | 20/25 | 21/25 | 0.668 | 7 |
+| + reranker (no BM25) | 18/25 | 23/25 | 23/25 | 0.800 | 259 |
+| BM25 hybrid + reranker | 18/25 | 23/25 | 23/25 | 0.800 | 264 |
+| All three | 18/25 | 23/25 | 23/25 | 0.800 | 263 |
+
+### hit@3 by question type
+
+| Configuration | Direct | Paraphrase | Scenario |
+| --- | ---: | ---: | ---: |
+| Semantic only (current default) | 6/7 | 5/9 | 9/9 |
+| + section-aware embeddings | 7/7 | 4/9 | 8/9 |
+| + BM25 hybrid | 7/7 | 5/9 | 8/9 |
+| + reranker (no BM25) | 7/7 | 7/9 | 9/9 |
+| BM25 hybrid + reranker | 7/7 | 7/9 | 9/9 |
+| All three | 7/7 | 7/9 | 9/9 |
+
+### Abstention
+
+| Configuration | Correctly returned nothing (unanswerable) | Answerable questions returning nothing |
+| --- | ---: | ---: |
+| Semantic only (current default) | 5/5 | 1/25 |
+| + section-aware embeddings | 5/5 | 1/25 |
+| + BM25 hybrid | 0/5 | 0/25 |
+| + reranker (no BM25) | 0/5 | 0/25 |
+| BM25 hybrid + reranker | 0/5 | 0/25 |
+| All three | 0/5 | 0/25 |
+
+Hybrid and reranker modes skip the distance cutoff, so they return results even for unanswerable questions; the semantic default correctly abstained for all unanswerable questions in this run.
+
+### Findings
+
+- The reranker configuration raised hit@3 from 20/25 to 23/25, hit@1 from 16/25 to 18/25, and MRR from 0.723 to 0.800. The hit@3 gain was mostly on paraphrases (5/9 to 7/9); median retrieval time was about 260 ms per query versus 6 ms for the default.
+- BM25 hybrid tied the default at hit@3 (20/25) and scored lower at hit@1 (14/25 versus 16/25) and hit@5 (21/25 versus 22/25). Section-aware embeddings had mixed results: hit@1 was 17/25 and MRR was 0.739, while hit@3 was 19/25 and hit@5 was 21/25. Neither configuration provided a consistent retrieval gain on this KB.
+- Configurations 4, 5, and 6 had identical per-question ranks and hit counts. The retriever passes the whole 71-chunk collection to the reranker, so the upstream retrieval stage does not change the final reranked order in this evaluation.
+- Hybrid and reranker configurations returned results for 0/5 unanswerable questions, while the default abstained correctly on 5/5. The default remains unchanged.
+- R02 and R05 were missed by every configuration at hit@5.
+- Hybrid fell back to the plain ranking for one question: N05, which is unanswerable and has no BM25 keyword match. No rerank fallback occurred in configurations 4, 5, or 6.
+
+### Known limitations
+
+This uses a small synthetic KB and 25 answerable questions, so one question is 4 percentage points and differences of 1–2 questions are not meaningful. The gold labels were written by the project author. Hit@k checks whether the retrieved policy section is present, not whether a final answer is correct. The reranker scores the whole collection for each query; that will not scale to a large KB without a candidate cap.
+
+### Reproduce
+
+With the project environment active, run:
+
+```bash
+export HF_HOME=/tmp/hf_cache_eval
+python evals/run_retrieval_eval.py --validate-only
+python evals/run_retrieval_eval.py
+```
+
+The embedding and cross-encoder models are downloaded on first use. The app itself loads its reranker with `local_files_only=True`, so that model must already be cached in the same Hugging Face cache when launching the app. Full run details are in the [retrieval evaluation report](evals/results/retrieval_eval.md).
+
 ## Local files and Git hygiene
 
 The repository tracks application code, setup scripts, requirements, `.env.example`, the policy source, and the Core 30 runner, dataset, validator, and report. It excludes `.env`, demo credentials, SQLite databases, Chroma stores, caches, generated run results, unrelated evaluation experiments, and OS metadata. The focused order-ID test is included; other local tests are not staged.

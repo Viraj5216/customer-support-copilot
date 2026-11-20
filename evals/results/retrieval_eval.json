@@ -1,0 +1,2664 @@
+{
+  "meta": {
+    "kb": "data/company_knowledge_base.txt",
+    "chunks": 71,
+    "embedder": "all-MiniLM-L6-v2",
+    "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+    "answerable": 25,
+    "unanswerable": 5
+  },
+  "results": {
+    "1. Semantic only (current default)": {
+      "rows": [
+        {
+          "id": "R01",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 8.018499999707274,
+          "top3": [
+            "1.1 Standard Refund Eligibility",
+            "1.8 Refund Processing",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R02",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": null,
+          "returned": 8,
+          "ms": 6.114458999945782,
+          "top3": [
+            "3.5 Delayed Orders",
+            "3.3 Order Processing",
+            "3.4 Order Tracking"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R03",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.075833999602764,
+          "top3": [
+            "1.2 Products Not Normally Eligible for Refunds",
+            "2.3 Non-Returnable Products",
+            "1.9 Refund Payment Method"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R04",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 5,
+          "ms": 6.648165999649791,
+          "top3": [
+            "1.3 Damaged Products",
+            "5.1 Reporting Damage",
+            "3.7 Damaged Shipments"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R05",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": null,
+          "returned": 0,
+          "ms": 5.681333000211453,
+          "top3": [],
+          "stage_missing": []
+        },
+        {
+          "id": "R06",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 3,
+          "returned": 4,
+          "ms": 5.949875000624161,
+          "top3": [
+            "2.3 Non-Returnable Products",
+            "3.7 Damaged Shipments",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R07",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.530499999826134,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.2 Products Not Normally Eligible for Refunds",
+            "5.2 Available Resolutions"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R08",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 5,
+          "returned": 10,
+          "ms": 6.557917000463931,
+          "top3": [
+            "5.2 Available Resolutions",
+            "1.7 Shipping Cost Refunds",
+            "3.7 Damaged Shipments"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R09",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.316875000266009,
+          "top3": [
+            "1.9 Refund Payment Method",
+            "7.5 Refunds",
+            "1.2 Products Not Normally Eligible for Refunds"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R10",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 3,
+          "returned": 10,
+          "ms": 6.284416000198689,
+          "top3": [
+            "5.2 Available Resolutions",
+            "1.1 Standard Refund Eligibility",
+            "1.10 Refund Requests After 30 Days"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R11",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 6,
+          "ms": 5.951125000137836,
+          "top3": [
+            "1.11 Duplicate Charges",
+            "7.3 Duplicate Charges",
+            "7.2 Failed Payments"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R12",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.414916999347042,
+          "top3": [
+            "3.2 Express Shipping",
+            "3.3 Order Processing",
+            "3.1 Standard Shipping"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R13",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.028916999639478,
+          "top3": [
+            "3.9 Delivered but Not Received",
+            "3.4 Order Tracking",
+            "3.5 Delayed Orders"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R14",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 3,
+          "ms": 6.883000000016182,
+          "top3": [
+            "3.8 Shipping Address Changes",
+            "1.3 Damaged Products",
+            "3.5 Delayed Orders"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R15",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 1,
+          "ms": 6.107958000029612,
+          "top3": [
+            "3.10 International Shipping"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R16",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 2,
+          "returned": 10,
+          "ms": 6.30229199941823,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "4.1 Order Cancellation",
+            "4.3 Cancelled Orders"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R17",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 6,
+          "ms": 5.499916999724519,
+          "top3": [
+            "6.1 Warranty Period",
+            "6.3 Warranty Exclusions",
+            "6.2 Warranty Coverage"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R18",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.111084000622213,
+          "top3": [
+            "6.3 Warranty Exclusions",
+            "6.2 Warranty Coverage",
+            "1.3 Damaged Products"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R19",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.2972080004328745,
+          "top3": [
+            "7.4 Pending Transactions",
+            "9.6 Billing Problems",
+            "1.11 Duplicate Charges"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R20",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 3,
+          "ms": 6.466708000516519,
+          "top3": [
+            "8.3 Account Lockout",
+            "8.1 Password Reset",
+            "8.6 Security Escalation"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R21",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 2,
+          "returned": 4,
+          "ms": 5.6682499998714775,
+          "top3": [
+            "8.3 Account Lockout",
+            "8.6 Security Escalation",
+            "8.2 Account Verification"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R22",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 5.729333000090264,
+          "top3": [
+            "9.2 Automatic Renewal",
+            "9.1 Subscription Plans",
+            "9.3 Subscription Cancellation"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R23",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.27562499994383,
+          "top3": [
+            "9.5 Free Trials",
+            "9.6 Billing Problems",
+            "9.7 Subscription Escalation"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R24",
+          "type": "direct",
+          "answerable": true,
+          "rank": 5,
+          "returned": 7,
+          "ms": 5.958749999990687,
+          "top3": [
+            "10.2 Human Escalation Conditions",
+            "8.5 Suspicious Account Activity",
+            "10.6 Insufficient Information"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R25",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": null,
+          "returned": 5,
+          "ms": 6.591708999621915,
+          "top3": [
+            "8.4 Personal Information",
+            "10.1 Purpose",
+            "10.7 Response Tone"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N01",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 0,
+          "ms": 5.963957999483682,
+          "top3": [],
+          "stage_missing": []
+        },
+        {
+          "id": "N02",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 0,
+          "ms": 5.843500000082713,
+          "top3": [],
+          "stage_missing": []
+        },
+        {
+          "id": "N03",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 0,
+          "ms": 6.175707999318547,
+          "top3": [],
+          "stage_missing": []
+        },
+        {
+          "id": "N04",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 0,
+          "ms": 5.449749999570486,
+          "top3": [],
+          "stage_missing": []
+        },
+        {
+          "id": "N05",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 0,
+          "ms": 5.607791000329598,
+          "top3": [],
+          "stage_missing": []
+        }
+      ],
+      "summary": {
+        "n_answerable": 25,
+        "hit1": 16,
+        "hit3": 20,
+        "hit5": 22,
+        "mrr": 0.7226666666666667,
+        "false_abstain": 1,
+        "n_unanswerable": 5,
+        "abstained": 5,
+        "median_ms": 6.112771500283998,
+        "stage_fallbacks": 0,
+        "hit3_by_type": {
+          "direct": [
+            6,
+            7
+          ],
+          "paraphrase": [
+            5,
+            9
+          ],
+          "scenario": [
+            9,
+            9
+          ]
+        }
+      }
+    },
+    "2. + section-aware embeddings": {
+      "rows": [
+        {
+          "id": "R01",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.4023330005511525,
+          "top3": [
+            "1.1 Standard Refund Eligibility",
+            "1.8 Refund Processing",
+            "1.10 Refund Requests After 30 Days"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R02",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": null,
+          "returned": 6,
+          "ms": 6.631082999774662,
+          "top3": [
+            "3.5 Delayed Orders",
+            "3.3 Order Processing",
+            "3.4 Order Tracking"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R03",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 7.149916000344092,
+          "top3": [
+            "1.2 Products Not Normally Eligible for Refunds",
+            "2.3 Non-Returnable Products",
+            "1.5 Sale and Discounted Products"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R04",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 4,
+          "ms": 6.508208000013838,
+          "top3": [
+            "5.1 Reporting Damage",
+            "1.3 Damaged Products",
+            "3.7 Damaged Shipments"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R05",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": null,
+          "returned": 0,
+          "ms": 6.540667000081157,
+          "top3": [],
+          "stage_missing": []
+        },
+        {
+          "id": "R06",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": null,
+          "returned": 2,
+          "ms": 6.372167000336049,
+          "top3": [
+            "3.9 Delivered but Not Received",
+            "2.3 Non-Returnable Products"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R07",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.066208000447659,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.2 Products Not Normally Eligible for Refunds",
+            "7.5 Refunds"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R08",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 4,
+          "returned": 10,
+          "ms": 6.821334000051138,
+          "top3": [
+            "1.7 Shipping Cost Refunds",
+            "3.7 Damaged Shipments",
+            "1.3 Damaged Products"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R09",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.109625000135566,
+          "top3": [
+            "7.5 Refunds",
+            "1.9 Refund Payment Method",
+            "1.2 Products Not Normally Eligible for Refunds"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R10",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.005542000821151,
+          "top3": [
+            "1.10 Refund Requests After 30 Days",
+            "1.1 Standard Refund Eligibility",
+            "5.3 Manufacturing Defects"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R11",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 4,
+          "ms": 6.469957999797771,
+          "top3": [
+            "1.11 Duplicate Charges",
+            "7.3 Duplicate Charges",
+            "7.2 Failed Payments"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R12",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.305375000010827,
+          "top3": [
+            "3.2 Express Shipping",
+            "3.3 Order Processing",
+            "3.1 Standard Shipping"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R13",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.150125000203843,
+          "top3": [
+            "3.9 Delivered but Not Received",
+            "3.4 Order Tracking",
+            "3.5 Delayed Orders"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R14",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 3,
+          "ms": 6.543666999277775,
+          "top3": [
+            "3.8 Shipping Address Changes",
+            "3.5 Delayed Orders",
+            "3.7 Damaged Shipments"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R15",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 1,
+          "ms": 6.142625000393309,
+          "top3": [
+            "3.10 International Shipping"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R16",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 2,
+          "returned": 10,
+          "ms": 6.208416999470501,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "4.1 Order Cancellation",
+            "4.3 Cancelled Orders"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R17",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.097041999964858,
+          "top3": [
+            "6.1 Warranty Period",
+            "6.5 Warranty Resolution",
+            "6.3 Warranty Exclusions"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R18",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 7,
+          "returned": 10,
+          "ms": 5.91233400064084,
+          "top3": [
+            "1.3 Damaged Products",
+            "5.3 Manufacturing Defects",
+            "3.7 Damaged Shipments"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R19",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 8,
+          "ms": 6.634916999246343,
+          "top3": [
+            "7.4 Pending Transactions",
+            "7.2 Failed Payments",
+            "9.6 Billing Problems"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R20",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 3,
+          "ms": 6.309124999461346,
+          "top3": [
+            "8.3 Account Lockout",
+            "8.1 Password Reset",
+            "8.6 Security Escalation"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R21",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 2,
+          "ms": 6.133417000455665,
+          "top3": [
+            "8.5 Suspicious Account Activity",
+            "8.2 Account Verification"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R22",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 5.555124999773398,
+          "top3": [
+            "9.2 Automatic Renewal",
+            "9.1 Subscription Plans",
+            "9.3 Subscription Cancellation"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R23",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 3,
+          "returned": 7,
+          "ms": 6.888083000376355,
+          "top3": [
+            "9.7 Subscription Escalation",
+            "9.6 Billing Problems",
+            "9.5 Free Trials"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R24",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 6,
+          "ms": 5.920833999880415,
+          "top3": [
+            "10.4 Priority Levels",
+            "10.2 Human Escalation Conditions",
+            "10.6 Insufficient Information"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R25",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 4,
+          "returned": 9,
+          "ms": 6.2084999999569845,
+          "top3": [
+            "10.1 Purpose",
+            "10.7 Response Tone",
+            "10.6 Insufficient Information"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N01",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 0,
+          "ms": 5.643708000206971,
+          "top3": [],
+          "stage_missing": []
+        },
+        {
+          "id": "N02",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 0,
+          "ms": 5.956291999609675,
+          "top3": [],
+          "stage_missing": []
+        },
+        {
+          "id": "N03",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 0,
+          "ms": 6.091582999943057,
+          "top3": [],
+          "stage_missing": []
+        },
+        {
+          "id": "N04",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 0,
+          "ms": 6.097749999753432,
+          "top3": [],
+          "stage_missing": []
+        },
+        {
+          "id": "N05",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 0,
+          "ms": 6.782792000194604,
+          "top3": [],
+          "stage_missing": []
+        }
+      ],
+      "summary": {
+        "n_answerable": 25,
+        "hit1": 17,
+        "hit3": 19,
+        "hit5": 21,
+        "mrr": 0.739047619047619,
+        "false_abstain": 1,
+        "n_unanswerable": 5,
+        "abstained": 5,
+        "median_ms": 6.208458499713743,
+        "stage_fallbacks": 0,
+        "hit3_by_type": {
+          "direct": [
+            7,
+            7
+          ],
+          "paraphrase": [
+            4,
+            9
+          ],
+          "scenario": [
+            8,
+            9
+          ]
+        }
+      }
+    },
+    "3. + BM25 hybrid": {
+      "rows": [
+        {
+          "id": "R01",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 13.943165999990015,
+          "top3": [
+            "1.1 Standard Refund Eligibility",
+            "1.8 Refund Processing",
+            "2.1 Standard Returns"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R02",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 5,
+          "returned": 10,
+          "ms": 8.59633300024143,
+          "top3": [
+            "3.5 Delayed Orders",
+            "3.9 Delivered but Not Received",
+            "3.2 Express Shipping"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R03",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 8.017500000278233,
+          "top3": [
+            "1.2 Products Not Normally Eligible for Refunds",
+            "2.3 Non-Returnable Products",
+            "1.5 Sale and Discounted Products"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R04",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 3,
+          "returned": 10,
+          "ms": 6.967708999582101,
+          "top3": [
+            "3.5 Delayed Orders",
+            "1.7 Shipping Cost Refunds",
+            "1.3 Damaged Products"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R05",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": null,
+          "returned": 10,
+          "ms": 6.967499999518623,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "9.5 Free Trials",
+            "7.2 Failed Payments"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R06",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 7.642999999916356,
+          "top3": [
+            "1.4 Wrong or Missing Items",
+            "3.7 Damaged Shipments",
+            "2.3 Non-Returnable Products"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R07",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.81166599952121,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "9.1 Subscription Plans",
+            "1.9 Refund Payment Method"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R08",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 7.87804099945788,
+          "top3": [
+            "1.6 Partial Refunds",
+            "1.7 Shipping Cost Refunds",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R09",
+          "type": "direct",
+          "answerable": true,
+          "rank": 3,
+          "returned": 10,
+          "ms": 7.36662500003149,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.2 Products Not Normally Eligible for Refunds",
+            "1.9 Refund Payment Method"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R10",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 7.626167000125861,
+          "top3": [
+            "1.10 Refund Requests After 30 Days",
+            "1.1 Standard Refund Eligibility",
+            "1.3 Damaged Products"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R11",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 6,
+          "returned": 10,
+          "ms": 7.4717919997056015,
+          "top3": [
+            "7.2 Failed Payments",
+            "4.2 Cancellation After Payment",
+            "7.5 Refunds"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R12",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 7.8923749997557024,
+          "top3": [
+            "3.2 Express Shipping",
+            "3.1 Standard Shipping",
+            "3.3 Order Processing"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R13",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 7.335584000429662,
+          "top3": [
+            "3.9 Delivered but Not Received",
+            "3.4 Order Tracking",
+            "3.5 Delayed Orders"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R14",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": null,
+          "returned": 10,
+          "ms": 7.619582999723207,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "1.1 Standard Refund Eligibility",
+            "3.6 Lost Shipments"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R15",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 7.056791000650264,
+          "top3": [
+            "3.10 International Shipping",
+            "1.7 Shipping Cost Refunds",
+            "1.9 Refund Payment Method"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R16",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 2,
+          "returned": 10,
+          "ms": 7.317582999348815,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "4.1 Order Cancellation",
+            "4.5 Cancellation Exceptions"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R17",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 7.763124999655702,
+          "top3": [
+            "6.1 Warranty Period",
+            "6.3 Warranty Exclusions",
+            "6.2 Warranty Coverage"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R18",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 7.024541999271605,
+          "top3": [
+            "6.3 Warranty Exclusions",
+            "6.2 Warranty Coverage",
+            "6.1 Warranty Period"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R19",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 7.426000000123167,
+          "top3": [
+            "7.4 Pending Transactions",
+            "1.11 Duplicate Charges",
+            "7.2 Failed Payments"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R20",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 2,
+          "returned": 10,
+          "ms": 7.847875000152271,
+          "top3": [
+            "8.1 Password Reset",
+            "8.3 Account Lockout",
+            "8.4 Personal Information"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R21",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 3,
+          "returned": 10,
+          "ms": 7.8616669998154975,
+          "top3": [
+            "8.3 Account Lockout",
+            "8.2 Account Verification",
+            "8.6 Security Escalation"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R22",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.821957999818551,
+          "top3": [
+            "9.2 Automatic Renewal",
+            "9.3 Subscription Cancellation",
+            "9.1 Subscription Plans"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R23",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.9217090003803605,
+          "top3": [
+            "9.5 Free Trials",
+            "1.11 Duplicate Charges",
+            "6.1 Warranty Period"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R24",
+          "type": "direct",
+          "answerable": true,
+          "rank": 3,
+          "returned": 10,
+          "ms": 7.09416700010479,
+          "top3": [
+            "8.5 Suspicious Account Activity",
+            "10.2 Human Escalation Conditions",
+            "10.4 Priority Levels"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R25",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": null,
+          "returned": 10,
+          "ms": 7.256958000652958,
+          "top3": [
+            "8.4 Personal Information",
+            "10.1 Purpose",
+            "10.7 Response Tone"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N01",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 7.2675000001254375,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "9.1 Subscription Plans",
+            "1.2 Products Not Normally Eligible for Refunds"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N02",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 6.952916999580339,
+          "top3": [
+            "6.4 Warranty Claims",
+            "3.4 Order Tracking",
+            "1.1 Standard Refund Eligibility"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N03",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 7.078916999489593,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "5.2 Available Resolutions",
+            "1.3 Damaged Products"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N04",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 7.023957999990671,
+          "top3": [
+            "2.3 Non-Returnable Products",
+            "1.2 Products Not Normally Eligible for Refunds",
+            "2.1 Standard Returns"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N05",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 7.423292000567017,
+          "top3": [
+            "9.5 Free Trials",
+            "1.2 Products Not Normally Eligible for Refunds",
+            "2.1 Standard Returns"
+          ],
+          "stage_missing": [
+            "hybrid"
+          ]
+        }
+      ],
+      "summary": {
+        "n_answerable": 25,
+        "hit1": 14,
+        "hit3": 20,
+        "hit5": 21,
+        "mrr": 0.6679999999999999,
+        "false_abstain": 0,
+        "n_unanswerable": 5,
+        "abstained": 0,
+        "median_ms": 7.351104500230576,
+        "stage_fallbacks": 1,
+        "hit3_by_type": {
+          "direct": [
+            7,
+            7
+          ],
+          "paraphrase": [
+            5,
+            9
+          ],
+          "scenario": [
+            8,
+            9
+          ]
+        }
+      }
+    },
+    "4. + reranker (no BM25)": {
+      "rows": [
+        {
+          "id": "R01",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 348.1411669999943,
+          "top3": [
+            "1.1 Standard Refund Eligibility",
+            "1.10 Refund Requests After 30 Days",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R02",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": null,
+          "returned": 10,
+          "ms": 274.9526669995248,
+          "top3": [
+            "3.5 Delayed Orders",
+            "3.3 Order Processing",
+            "3.2 Express Shipping"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R03",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 263.2237919997351,
+          "top3": [
+            "1.2 Products Not Normally Eligible for Refunds",
+            "2.3 Non-Returnable Products",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R04",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 272.6692500000354,
+          "top3": [
+            "5.1 Reporting Damage",
+            "1.3 Damaged Products",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R05",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": null,
+          "returned": 10,
+          "ms": 258.66995900014444,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "7.2 Failed Payments",
+            "1.9 Refund Payment Method"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R06",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 3,
+          "returned": 10,
+          "ms": 254.3785409998236,
+          "top3": [
+            "3.9 Delivered but Not Received",
+            "1.3 Damaged Products",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R07",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 274.28354200037575,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "6.1 Warranty Period",
+            "7.5 Refunds"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R08",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 286.18899999946734,
+          "top3": [
+            "1.6 Partial Refunds",
+            "7.3 Duplicate Charges",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R09",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 270.72204100022645,
+          "top3": [
+            "1.9 Refund Payment Method",
+            "7.5 Refunds",
+            "1.5 Sale and Discounted Products"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R10",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 291.7625419995602,
+          "top3": [
+            "1.10 Refund Requests After 30 Days",
+            "5.3 Manufacturing Defects",
+            "1.1 Standard Refund Eligibility"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R11",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 3,
+          "returned": 10,
+          "ms": 266.47808399957285,
+          "top3": [
+            "7.2 Failed Payments",
+            "4.2 Cancellation After Payment",
+            "1.11 Duplicate Charges"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R12",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 248.4842080002636,
+          "top3": [
+            "3.2 Express Shipping",
+            "3.1 Standard Shipping",
+            "3.3 Order Processing"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R13",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 262.04641700041975,
+          "top3": [
+            "3.9 Delivered but Not Received",
+            "3.11 Shipping Escalation",
+            "3.4 Order Tracking"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R14",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 3,
+          "returned": 10,
+          "ms": 273.28637500068,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "3.9 Delivered but Not Received",
+            "3.8 Shipping Address Changes"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R15",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 263.53758400000515,
+          "top3": [
+            "3.10 International Shipping",
+            "1.7 Shipping Cost Refunds",
+            "3.6 Lost Shipments"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R16",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 2,
+          "returned": 10,
+          "ms": 256.42400000015186,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "4.1 Order Cancellation",
+            "4.3 Cancelled Orders"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R17",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 247.7331250001953,
+          "top3": [
+            "6.1 Warranty Period",
+            "2.1 Standard Returns",
+            "3.3 Order Processing"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R18",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 259.46316699992167,
+          "top3": [
+            "6.3 Warranty Exclusions",
+            "6.2 Warranty Coverage",
+            "6.1 Warranty Period"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R19",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 270.9359999998924,
+          "top3": [
+            "7.4 Pending Transactions",
+            "7.2 Failed Payments",
+            "7.3 Duplicate Charges"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R20",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 262.1783329996106,
+          "top3": [
+            "8.3 Account Lockout",
+            "8.1 Password Reset",
+            "8.6 Security Escalation"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R21",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 2,
+          "returned": 10,
+          "ms": 256.1221250007293,
+          "top3": [
+            "8.3 Account Lockout",
+            "8.5 Suspicious Account Activity",
+            "10.5 AI Limitations"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R22",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 246.3065000001734,
+          "top3": [
+            "9.2 Automatic Renewal",
+            "9.3 Subscription Cancellation",
+            "9.1 Subscription Plans"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R23",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 256.6384579995429,
+          "top3": [
+            "9.5 Free Trials",
+            "9.3 Subscription Cancellation",
+            "9.6 Billing Problems"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R24",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 252.2101249996922,
+          "top3": [
+            "10.4 Priority Levels",
+            "10.6 Insufficient Information",
+            "10.2 Human Escalation Conditions"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R25",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 259.4417500004056,
+          "top3": [
+            "10.5 AI Limitations",
+            "10.4 Priority Levels",
+            "8.4 Personal Information"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N01",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 247.81858299957094,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.3 Damaged Products",
+            "1.1 Standard Refund Eligibility"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N02",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 255.50608300000022,
+          "top3": [
+            "3.4 Order Tracking",
+            "3.3 Order Processing",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N03",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 250.82650000058493,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.3 Damaged Products",
+            "1.1 Standard Refund Eligibility"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N04",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 247.9795829995055,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "2.1 Standard Returns",
+            "2.3 Non-Returnable Products"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N05",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 256.5964579998763,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.13 Manager Approval",
+            "2.3 Non-Returnable Products"
+          ],
+          "stage_missing": []
+        }
+      ],
+      "summary": {
+        "n_answerable": 25,
+        "hit1": 18,
+        "hit3": 23,
+        "hit5": 23,
+        "mrr": 0.8,
+        "false_abstain": 0,
+        "n_unanswerable": 5,
+        "abstained": 0,
+        "median_ms": 259.45245850016363,
+        "stage_fallbacks": 0,
+        "hit3_by_type": {
+          "direct": [
+            7,
+            7
+          ],
+          "paraphrase": [
+            7,
+            9
+          ],
+          "scenario": [
+            9,
+            9
+          ]
+        }
+      }
+    },
+    "5. BM25 hybrid + reranker": {
+      "rows": [
+        {
+          "id": "R01",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 271.7855000000782,
+          "top3": [
+            "1.1 Standard Refund Eligibility",
+            "1.10 Refund Requests After 30 Days",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R02",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": null,
+          "returned": 10,
+          "ms": 280.1020000006247,
+          "top3": [
+            "3.5 Delayed Orders",
+            "3.3 Order Processing",
+            "3.2 Express Shipping"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R03",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 266.14458299991384,
+          "top3": [
+            "1.2 Products Not Normally Eligible for Refunds",
+            "2.3 Non-Returnable Products",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R04",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 276.1902909996934,
+          "top3": [
+            "5.1 Reporting Damage",
+            "1.3 Damaged Products",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R05",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": null,
+          "returned": 10,
+          "ms": 263.8912500005972,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "7.2 Failed Payments",
+            "1.9 Refund Payment Method"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R06",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 3,
+          "returned": 10,
+          "ms": 265.6597499999407,
+          "top3": [
+            "3.9 Delivered but Not Received",
+            "1.3 Damaged Products",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R07",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 281.7080000004353,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "6.1 Warranty Period",
+            "7.5 Refunds"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R08",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 291.738124999938,
+          "top3": [
+            "1.6 Partial Refunds",
+            "7.3 Duplicate Charges",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R09",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 274.0585409992491,
+          "top3": [
+            "1.9 Refund Payment Method",
+            "7.5 Refunds",
+            "1.5 Sale and Discounted Products"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R10",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 297.4240829998962,
+          "top3": [
+            "1.10 Refund Requests After 30 Days",
+            "5.3 Manufacturing Defects",
+            "1.1 Standard Refund Eligibility"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R11",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 3,
+          "returned": 10,
+          "ms": 269.1837080001278,
+          "top3": [
+            "7.2 Failed Payments",
+            "4.2 Cancellation After Payment",
+            "1.11 Duplicate Charges"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R12",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 249.96929099961562,
+          "top3": [
+            "3.2 Express Shipping",
+            "3.1 Standard Shipping",
+            "3.3 Order Processing"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R13",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 261.9311669996023,
+          "top3": [
+            "3.9 Delivered but Not Received",
+            "3.11 Shipping Escalation",
+            "3.4 Order Tracking"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R14",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 3,
+          "returned": 10,
+          "ms": 273.30574999996315,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "3.9 Delivered but Not Received",
+            "3.8 Shipping Address Changes"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R15",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 266.2869590003538,
+          "top3": [
+            "3.10 International Shipping",
+            "1.7 Shipping Cost Refunds",
+            "3.6 Lost Shipments"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R16",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 2,
+          "returned": 10,
+          "ms": 263.96808399931615,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "4.1 Order Cancellation",
+            "4.3 Cancelled Orders"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R17",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 253.75650000023597,
+          "top3": [
+            "6.1 Warranty Period",
+            "2.1 Standard Returns",
+            "3.3 Order Processing"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R18",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 264.333500000248,
+          "top3": [
+            "6.3 Warranty Exclusions",
+            "6.2 Warranty Coverage",
+            "6.1 Warranty Period"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R19",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 273.6361669994949,
+          "top3": [
+            "7.4 Pending Transactions",
+            "7.2 Failed Payments",
+            "7.3 Duplicate Charges"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R20",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 265.213790999951,
+          "top3": [
+            "8.3 Account Lockout",
+            "8.1 Password Reset",
+            "8.6 Security Escalation"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R21",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 2,
+          "returned": 10,
+          "ms": 257.8437080001095,
+          "top3": [
+            "8.3 Account Lockout",
+            "8.5 Suspicious Account Activity",
+            "10.5 AI Limitations"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R22",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 247.87033400025393,
+          "top3": [
+            "9.2 Automatic Renewal",
+            "9.3 Subscription Cancellation",
+            "9.1 Subscription Plans"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R23",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 258.2777500001612,
+          "top3": [
+            "9.5 Free Trials",
+            "9.3 Subscription Cancellation",
+            "9.6 Billing Problems"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R24",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 252.51524999930552,
+          "top3": [
+            "10.4 Priority Levels",
+            "10.6 Insufficient Information",
+            "10.2 Human Escalation Conditions"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R25",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 260.49795800008724,
+          "top3": [
+            "10.5 AI Limitations",
+            "10.4 Priority Levels",
+            "8.4 Personal Information"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N01",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 248.05691600067803,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.3 Damaged Products",
+            "1.1 Standard Refund Eligibility"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N02",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 259.6642090002206,
+          "top3": [
+            "3.4 Order Tracking",
+            "3.3 Order Processing",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N03",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 248.98900000061985,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.3 Damaged Products",
+            "1.1 Standard Refund Eligibility"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N04",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 248.66745800045464,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "2.1 Standard Returns",
+            "2.3 Non-Returnable Products"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N05",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 257.54412500009494,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.13 Manager Approval",
+            "2.3 Non-Returnable Products"
+          ],
+          "stage_missing": [
+            "hybrid"
+          ]
+        }
+      ],
+      "summary": {
+        "n_answerable": 25,
+        "hit1": 18,
+        "hit3": 23,
+        "hit5": 23,
+        "mrr": 0.8,
+        "false_abstain": 0,
+        "n_unanswerable": 5,
+        "abstained": 0,
+        "median_ms": 264.1507919997821,
+        "stage_fallbacks": 1,
+        "hit3_by_type": {
+          "direct": [
+            7,
+            7
+          ],
+          "paraphrase": [
+            7,
+            9
+          ],
+          "scenario": [
+            9,
+            9
+          ]
+        }
+      }
+    },
+    "6. All three": {
+      "rows": [
+        {
+          "id": "R01",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 275.4822500000955,
+          "top3": [
+            "1.1 Standard Refund Eligibility",
+            "1.10 Refund Requests After 30 Days",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R02",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": null,
+          "returned": 10,
+          "ms": 280.0492500000473,
+          "top3": [
+            "3.5 Delayed Orders",
+            "3.3 Order Processing",
+            "3.2 Express Shipping"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R03",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 267.99512500019773,
+          "top3": [
+            "1.2 Products Not Normally Eligible for Refunds",
+            "2.3 Non-Returnable Products",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R04",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 278.37279199957266,
+          "top3": [
+            "5.1 Reporting Damage",
+            "1.3 Damaged Products",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R05",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": null,
+          "returned": 10,
+          "ms": 263.4781249998923,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "7.2 Failed Payments",
+            "1.9 Refund Payment Method"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R06",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 3,
+          "returned": 10,
+          "ms": 261.0210830007418,
+          "top3": [
+            "3.9 Delivered but Not Received",
+            "1.3 Damaged Products",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R07",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 280.4196659999434,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "6.1 Warranty Period",
+            "7.5 Refunds"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R08",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 289.8101249993488,
+          "top3": [
+            "1.6 Partial Refunds",
+            "7.3 Duplicate Charges",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R09",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 271.2515840003107,
+          "top3": [
+            "1.9 Refund Payment Method",
+            "7.5 Refunds",
+            "1.5 Sale and Discounted Products"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R10",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 294.4454999997106,
+          "top3": [
+            "1.10 Refund Requests After 30 Days",
+            "5.3 Manufacturing Defects",
+            "1.1 Standard Refund Eligibility"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R11",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 3,
+          "returned": 10,
+          "ms": 271.3845420003054,
+          "top3": [
+            "7.2 Failed Payments",
+            "4.2 Cancellation After Payment",
+            "1.11 Duplicate Charges"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R12",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 247.35479100036173,
+          "top3": [
+            "3.2 Express Shipping",
+            "3.1 Standard Shipping",
+            "3.3 Order Processing"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R13",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 264.56141600010596,
+          "top3": [
+            "3.9 Delivered but Not Received",
+            "3.11 Shipping Escalation",
+            "3.4 Order Tracking"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R14",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 3,
+          "returned": 10,
+          "ms": 273.45641699957923,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "3.9 Delivered but Not Received",
+            "3.8 Shipping Address Changes"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R15",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 266.0741660001804,
+          "top3": [
+            "3.10 International Shipping",
+            "1.7 Shipping Cost Refunds",
+            "3.6 Lost Shipments"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R16",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 2,
+          "returned": 10,
+          "ms": 258.18004100074177,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "4.1 Order Cancellation",
+            "4.3 Cancelled Orders"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R17",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 253.4790409999914,
+          "top3": [
+            "6.1 Warranty Period",
+            "2.1 Standard Returns",
+            "3.3 Order Processing"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R18",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 263.198834000832,
+          "top3": [
+            "6.3 Warranty Exclusions",
+            "6.2 Warranty Coverage",
+            "6.1 Warranty Period"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R19",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 272.2350000003644,
+          "top3": [
+            "7.4 Pending Transactions",
+            "7.2 Failed Payments",
+            "7.3 Duplicate Charges"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R20",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 261.0410420002154,
+          "top3": [
+            "8.3 Account Lockout",
+            "8.1 Password Reset",
+            "8.6 Security Escalation"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R21",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 2,
+          "returned": 10,
+          "ms": 256.69495900001493,
+          "top3": [
+            "8.3 Account Lockout",
+            "8.5 Suspicious Account Activity",
+            "10.5 AI Limitations"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R22",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 248.44437499996275,
+          "top3": [
+            "9.2 Automatic Renewal",
+            "9.3 Subscription Cancellation",
+            "9.1 Subscription Plans"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R23",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 256.6635839993978,
+          "top3": [
+            "9.5 Free Trials",
+            "9.3 Subscription Cancellation",
+            "9.6 Billing Problems"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R24",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 252.74304100003064,
+          "top3": [
+            "10.4 Priority Levels",
+            "10.6 Insufficient Information",
+            "10.2 Human Escalation Conditions"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "R25",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 261.9567499996265,
+          "top3": [
+            "10.5 AI Limitations",
+            "10.4 Priority Levels",
+            "8.4 Personal Information"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N01",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 251.0325000002922,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.3 Damaged Products",
+            "1.1 Standard Refund Eligibility"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N02",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 258.3509159994719,
+          "top3": [
+            "3.4 Order Tracking",
+            "3.3 Order Processing",
+            "1.4 Wrong or Missing Items"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N03",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 249.8482500004684,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.3 Damaged Products",
+            "1.1 Standard Refund Eligibility"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N04",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 251.04845799978648,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "2.1 Standard Returns",
+            "2.3 Non-Returnable Products"
+          ],
+          "stage_missing": []
+        },
+        {
+          "id": "N05",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 258.5807499999646,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.13 Manager Approval",
+            "2.3 Non-Returnable Products"
+          ],
+          "stage_missing": [
+            "hybrid"
+          ]
+        }
+      ],
+      "summary": {
+        "n_answerable": 25,
+        "hit1": 18,
+        "hit3": 23,
+        "hit5": 23,
+        "mrr": 0.8,
+        "false_abstain": 0,
+        "n_unanswerable": 5,
+        "abstained": 0,
+        "median_ms": 262.57779200022924,
+        "stage_fallbacks": 1,
+        "hit3_by_type": {
+          "direct": [
+            7,
+            7
+          ],
+          "paraphrase": [
+            7,
+            9
+          ],
+          "scenario": [
+            9,
+            9
+          ]
+        }
+      }
+    }
+  }
+}

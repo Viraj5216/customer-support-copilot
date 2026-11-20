@@ -1,0 +1,30 @@
+{"id":"R01","type":"direct","question":"How many days do I have to ask for a refund after receiving my order?","gold_any":["1.1","2.1"],"answerable":true}
+{"id":"R02","type":"paraphrase","question":"I ordered three weeks ago but the parcel only arrived last week. Which date does the clock start from?","gold_any":["1.1"],"answerable":true}
+{"id":"R03","type":"paraphrase","question":"Can I get my money back for a gift card I bought by mistake?","gold_any":["1.2","2.3"],"answerable":true}
+{"id":"R04","type":"scenario","question":"My blender arrived with a shattered jar. How long do I have to tell you?","gold_any":["1.3","5.1","3.7"],"answerable":true}
+{"id":"R05","type":"paraphrase","question":"You sent me a different model from the one I paid for.","gold_any":["1.4"],"answerable":true}
+{"id":"R06","type":"paraphrase","question":"One of the three items in my package never showed up.","gold_any":["1.4"],"answerable":true}
+{"id":"R07","type":"direct","question":"If I bought it on sale, do I get the original price back or only what I paid?","gold_any":["1.5"],"answerable":true}
+{"id":"R08","type":"paraphrase","question":"The charger was missing from the box but I would like to keep the main unit. Can I get some money back?","gold_any":["1.6"],"answerable":true}
+{"id":"R09","type":"direct","question":"Can the refund go onto a different card from the one I paid with?","gold_any":["1.9","7.5"],"answerable":true}
+{"id":"R10","type":"scenario","question":"It is day 45 and my kettle stopped working because of a factory fault. Is there any way to get a refund?","gold_any":["1.10","5.3"],"answerable":true}
+{"id":"R11","type":"scenario","question":"I can see two identical payments on my bank statement for one order.","gold_any":["1.11","7.3"],"answerable":true}
+{"id":"R12","type":"direct","question":"How long does express delivery take?","gold_any":["3.2"],"answerable":true}
+{"id":"R13","type":"scenario","question":"The tracking page says delivered but nothing is at my door.","gold_any":["3.9"],"answerable":true}
+{"id":"R14","type":"paraphrase","question":"Can I send it to a different house now that it is already on its way?","gold_any":["3.8"],"answerable":true}
+{"id":"R15","type":"paraphrase","question":"Do I have to pay import taxes on something shipped from another country?","gold_any":["3.10"],"answerable":true}
+{"id":"R16","type":"scenario","question":"Can I cancel my order if it has already been shipped?","gold_any":["4.1","4.5"],"answerable":true}
+{"id":"R17","type":"direct","question":"How long does the warranty last?","gold_any":["6.1"],"answerable":true}
+{"id":"R18","type":"scenario","question":"Does the warranty cover my headphones after I dropped them?","gold_any":["6.3","5.4"],"answerable":true}
+{"id":"R19","type":"scenario","question":"I paid but my account shows a pending charge. Has the payment actually gone through?","gold_any":["7.4"],"answerable":true}
+{"id":"R20","type":"scenario","question":"I got locked out after typing the wrong password too many times.","gold_any":["8.3"],"answerable":true}
+{"id":"R21","type":"scenario","question":"Someone logged into my account and it was not me.","gold_any":["8.5","8.6"],"answerable":true}
+{"id":"R22","type":"direct","question":"Does my subscription renew automatically?","gold_any":["9.2"],"answerable":true}
+{"id":"R23","type":"paraphrase","question":"My free month ended and now I am being billed.","gold_any":["9.5"],"answerable":true}
+{"id":"R24","type":"direct","question":"What counts as a critical priority ticket?","gold_any":["10.4"],"answerable":true}
+{"id":"R25","type":"paraphrase","question":"Which things is the support assistant strictly forbidden from saying?","gold_any":["10.5"],"answerable":true}
+{"id":"N01","type":"no_answer","question":"Do you price match competitors?","gold_any":[],"answerable":false}
+{"id":"N02","type":"no_answer","question":"What are your store opening hours and phone number?","gold_any":[],"answerable":false}
+{"id":"N03","type":"no_answer","question":"Do you offer student discounts?","gold_any":[],"answerable":false}
+{"id":"N04","type":"no_answer","question":"Can you gift wrap my order?","gold_any":[],"answerable":false}
+{"id":"N05","type":"no_answer","question":"How do I become a seller on your platform?","gold_any":[],"answerable":false}
