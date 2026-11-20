@@ -300,10 +300,6 @@ Offline fake-provider cases exercise four gateway paths:
 3. The gateway switches back to the primary after recovery.
 4. A simulated HTTP 503 triggers fallback.
 
-### 50-case order scenario set
-
-A synthetic 50-case set covers product aliases and typos, order variants and statuses, exact and relative dates, follow-up references, ambiguity, unsupported products, and instruction-like text. Its expected outcomes are 35 `FOUND`, 10 `CLARIFY`, and 5 `NO_MATCH`. These are scenario labels, not a live-model accuracy score.
-
 The repository includes the focused order-ID test and Core 30 evaluation materials. Other local test and evaluation artifacts remain excluded.
 
 ## Core 30 Evaluation
