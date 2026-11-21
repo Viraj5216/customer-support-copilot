@@ -22,7 +22,6 @@ htmlcov/
 .deepeval/
 evaluation/results/runs/
 evaluation/*
-!evaluation/run_customer_support_eval.py
 
 # Local databases and vector stores
 data/*.db

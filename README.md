@@ -334,7 +334,7 @@ With the project environment configured and `GEMINI_API_KEY` set:
 
 ```bash
 python evals/validate_dataset.py
-python evaluation/run_customer_support_eval.py --core-30 --core-case-delay-seconds 17.5
+python evals/run_customer_support_eval.py --core-30 --core-case-delay-seconds 17.5
 ```
 
 ## Retrieval evaluation
