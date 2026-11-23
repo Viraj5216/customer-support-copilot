@@ -1,0 +1,15 @@
+{"id":"H01","type":"direct","question":"Who pays the postage when I send back an item just because I changed my mind?","gold_any":["2.2"],"answerable":true}
+{"id":"H02","type":"paraphrase","question":"After the returned item has been inspected, how soon is an approved refund normally initiated?","gold_any":["1.8"],"answerable":true}
+{"id":"H03","type":"scenario","question":"The item has a small defect but still works, and I would rather keep it. Could a partial refund be considered?","gold_any":["1.6","5.2"],"answerable":true}
+{"id":"H04","type":"scenario","question":"I bought this during a promotion and it was not marked final sale. Is the refund based on the full list price or the amount I paid?","gold_any":["1.5"],"answerable":true}
+{"id":"H05","type":"paraphrase","question":"What evidence might support ask me to provide if the product arrived damaged?","gold_any":["1.3","5.1","3.7"],"answerable":true}
+{"id":"H06","type":"direct","question":"Once an order is dispatched, how long does express shipping normally take?","gold_any":["3.2"],"answerable":true}
+{"id":"H07","type":"paraphrase","question":"How long after dispatch can it take for tracking details to show up?","gold_any":["3.4"],"answerable":true}
+{"id":"H08","type":"scenario","question":"The parcel is already with the carrier. Can the delivery address still be changed?","gold_any":["3.8"],"answerable":true}
+{"id":"H09","type":"scenario","question":"My order has entered fulfillment. Does paying mean cancellation is still possible?","gold_any":["4.2"],"answerable":true}
+{"id":"H10","type":"paraphrase","question":"If my card shows a pending authorization, does that prove the payment completed?","gold_any":["7.4"],"answerable":true}
+{"id":"U01","type":"no_answer","question":"Can I pay with Venmo at checkout?","gold_any":[],"answerable":false}
+{"id":"U02","type":"no_answer","question":"What is the street address of your nearest physical store?","gold_any":[],"answerable":false}
+{"id":"U03","type":"no_answer","question":"Does Acme Commerce have a loyalty-points program?","gold_any":[],"answerable":false}
+{"id":"U04","type":"no_answer","question":"Which delivery carriers does the company use?","gold_any":[],"answerable":false}
+{"id":"U05","type":"no_answer","question":"Who founded Acme Commerce?","gold_any":[],"answerable":false}

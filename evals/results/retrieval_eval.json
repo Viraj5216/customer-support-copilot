@@ -5,7 +5,13 @@
     "embedder": "all-MiniLM-L6-v2",
     "reranker": "cross-encoder/ms-marco-MiniLM-L-6-v2",
     "answerable": 25,
-    "unanswerable": 5
+    "unanswerable": 5,
+    "heldout_dataset": "evals/data/retrieval_holdout_15.jsonl",
+    "heldout_answerable": 10,
+    "heldout_unanswerable": 5,
+    "reranker_min_score": -10.73,
+    "threshold_tuned_on": "evals/data/retrieval_30.jsonl",
+    "threshold_selection": "highest hundredth-step cutoff with zero false abstentions on the answerable tuning questions"
   },
   "results": {
     "1. Semantic only (current default)": {
@@ -16,12 +22,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 8.018499999707274,
+          "ms": 8.568458011723123,
           "top3": [
             "1.1 Standard Refund Eligibility",
             "1.8 Refund Processing",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -30,12 +37,13 @@
           "answerable": true,
           "rank": null,
           "returned": 8,
-          "ms": 6.114458999945782,
+          "ms": 6.692167007713579,
           "top3": [
             "3.5 Delayed Orders",
             "3.3 Order Processing",
             "3.4 Order Tracking"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -44,12 +52,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.075833999602764,
+          "ms": 5.839916993863881,
           "top3": [
             "1.2 Products Not Normally Eligible for Refunds",
             "2.3 Non-Returnable Products",
             "1.9 Refund Payment Method"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -58,12 +67,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 5,
-          "ms": 6.648165999649791,
+          "ms": 6.573250007932074,
           "top3": [
             "1.3 Damaged Products",
             "5.1 Reporting Damage",
             "3.7 Damaged Shipments"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -72,8 +82,9 @@
           "answerable": true,
           "rank": null,
           "returned": 0,
-          "ms": 5.681333000211453,
+          "ms": 6.526874989503995,
           "top3": [],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -82,12 +93,13 @@
           "answerable": true,
           "rank": 3,
           "returned": 4,
-          "ms": 5.949875000624161,
+          "ms": 6.478958996012807,
           "top3": [
             "2.3 Non-Returnable Products",
             "3.7 Damaged Shipments",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -96,12 +108,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.530499999826134,
+          "ms": 7.11008399957791,
           "top3": [
             "1.5 Sale and Discounted Products",
             "1.2 Products Not Normally Eligible for Refunds",
             "5.2 Available Resolutions"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -110,12 +123,13 @@
           "answerable": true,
           "rank": 5,
           "returned": 10,
-          "ms": 6.557917000463931,
+          "ms": 6.54950000171084,
           "top3": [
             "5.2 Available Resolutions",
             "1.7 Shipping Cost Refunds",
             "3.7 Damaged Shipments"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -124,12 +138,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.316875000266009,
+          "ms": 6.400208992999978,
           "top3": [
             "1.9 Refund Payment Method",
             "7.5 Refunds",
             "1.2 Products Not Normally Eligible for Refunds"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -138,12 +153,13 @@
           "answerable": true,
           "rank": 3,
           "returned": 10,
-          "ms": 6.284416000198689,
+          "ms": 6.504875011160038,
           "top3": [
             "5.2 Available Resolutions",
             "1.1 Standard Refund Eligibility",
             "1.10 Refund Requests After 30 Days"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -152,12 +168,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 6,
-          "ms": 5.951125000137836,
+          "ms": 6.089665999752469,
           "top3": [
             "1.11 Duplicate Charges",
             "7.3 Duplicate Charges",
             "7.2 Failed Payments"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -166,12 +183,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.414916999347042,
+          "ms": 6.22387501061894,
           "top3": [
             "3.2 Express Shipping",
             "3.3 Order Processing",
             "3.1 Standard Shipping"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -180,12 +198,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.028916999639478,
+          "ms": 5.895624999538995,
           "top3": [
             "3.9 Delivered but Not Received",
             "3.4 Order Tracking",
             "3.5 Delayed Orders"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -194,12 +213,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 3,
-          "ms": 6.883000000016182,
+          "ms": 6.263749994104728,
           "top3": [
             "3.8 Shipping Address Changes",
             "1.3 Damaged Products",
             "3.5 Delayed Orders"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -208,10 +228,11 @@
           "answerable": true,
           "rank": 1,
           "returned": 1,
-          "ms": 6.107958000029612,
+          "ms": 6.338709004921839,
           "top3": [
             "3.10 International Shipping"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -220,12 +241,13 @@
           "answerable": true,
           "rank": 2,
           "returned": 10,
-          "ms": 6.30229199941823,
+          "ms": 6.525749995489605,
           "top3": [
             "4.2 Cancellation After Payment",
             "4.1 Order Cancellation",
             "4.3 Cancelled Orders"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -234,12 +256,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 6,
-          "ms": 5.499916999724519,
+          "ms": 4.835542000364512,
           "top3": [
             "6.1 Warranty Period",
             "6.3 Warranty Exclusions",
             "6.2 Warranty Coverage"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -248,12 +271,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.111084000622213,
+          "ms": 6.677500001387671,
           "top3": [
             "6.3 Warranty Exclusions",
             "6.2 Warranty Coverage",
             "1.3 Damaged Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -262,12 +286,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.2972080004328745,
+          "ms": 6.580125002074055,
           "top3": [
             "7.4 Pending Transactions",
             "9.6 Billing Problems",
             "1.11 Duplicate Charges"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -276,12 +301,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 3,
-          "ms": 6.466708000516519,
+          "ms": 5.844625004101545,
           "top3": [
             "8.3 Account Lockout",
             "8.1 Password Reset",
             "8.6 Security Escalation"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -290,12 +316,13 @@
           "answerable": true,
           "rank": 2,
           "returned": 4,
-          "ms": 5.6682499998714775,
+          "ms": 5.83320799341891,
           "top3": [
             "8.3 Account Lockout",
             "8.6 Security Escalation",
             "8.2 Account Verification"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -304,12 +331,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 5.729333000090264,
+          "ms": 6.227833990124054,
           "top3": [
             "9.2 Automatic Renewal",
             "9.1 Subscription Plans",
             "9.3 Subscription Cancellation"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -318,12 +346,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.27562499994383,
+          "ms": 5.761500011431053,
           "top3": [
             "9.5 Free Trials",
             "9.6 Billing Problems",
             "9.7 Subscription Escalation"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -332,12 +361,13 @@
           "answerable": true,
           "rank": 5,
           "returned": 7,
-          "ms": 5.958749999990687,
+          "ms": 6.203290991834365,
           "top3": [
             "10.2 Human Escalation Conditions",
             "8.5 Suspicious Account Activity",
             "10.6 Insufficient Information"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -346,12 +376,13 @@
           "answerable": true,
           "rank": null,
           "returned": 5,
-          "ms": 6.591708999621915,
+          "ms": 5.879708012798801,
           "top3": [
             "8.4 Personal Information",
             "10.1 Purpose",
             "10.7 Response Tone"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -360,8 +391,9 @@
           "answerable": false,
           "rank": null,
           "returned": 0,
-          "ms": 5.963957999483682,
+          "ms": 6.312583005637862,
           "top3": [],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -370,8 +402,9 @@
           "answerable": false,
           "rank": null,
           "returned": 0,
-          "ms": 5.843500000082713,
+          "ms": 5.934790999162942,
           "top3": [],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -380,8 +413,9 @@
           "answerable": false,
           "rank": null,
           "returned": 0,
-          "ms": 6.175707999318547,
+          "ms": 6.385583008523099,
           "top3": [],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -390,8 +424,9 @@
           "answerable": false,
           "rank": null,
           "returned": 0,
-          "ms": 5.449749999570486,
+          "ms": 6.025833994499408,
           "top3": [],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -400,8 +435,9 @@
           "answerable": false,
           "rank": null,
           "returned": 0,
-          "ms": 5.607791000329598,
+          "ms": 6.079124999814667,
           "top3": [],
+          "reranker_abstained": false,
           "stage_missing": []
         }
       ],
@@ -414,7 +450,8 @@
         "false_abstain": 1,
         "n_unanswerable": 5,
         "abstained": 5,
-        "median_ms": 6.112771500283998,
+        "reranker_abstained": 0,
+        "median_ms": 6.288166499871295,
         "stage_fallbacks": 0,
         "hit3_by_type": {
           "direct": [
@@ -440,12 +477,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.4023330005511525,
+          "ms": 6.95416699454654,
           "top3": [
             "1.1 Standard Refund Eligibility",
             "1.8 Refund Processing",
             "1.10 Refund Requests After 30 Days"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -454,12 +492,13 @@
           "answerable": true,
           "rank": null,
           "returned": 6,
-          "ms": 6.631082999774662,
+          "ms": 6.396875003702007,
           "top3": [
             "3.5 Delayed Orders",
             "3.3 Order Processing",
             "3.4 Order Tracking"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -468,12 +507,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 7.149916000344092,
+          "ms": 6.534000000101514,
           "top3": [
             "1.2 Products Not Normally Eligible for Refunds",
             "2.3 Non-Returnable Products",
             "1.5 Sale and Discounted Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -482,12 +522,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 4,
-          "ms": 6.508208000013838,
+          "ms": 6.618041996262036,
           "top3": [
             "5.1 Reporting Damage",
             "1.3 Damaged Products",
             "3.7 Damaged Shipments"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -496,8 +537,9 @@
           "answerable": true,
           "rank": null,
           "returned": 0,
-          "ms": 6.540667000081157,
+          "ms": 6.127374988864176,
           "top3": [],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -506,11 +548,12 @@
           "answerable": true,
           "rank": null,
           "returned": 2,
-          "ms": 6.372167000336049,
+          "ms": 7.222416999866255,
           "top3": [
             "3.9 Delivered but Not Received",
             "2.3 Non-Returnable Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -519,12 +562,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.066208000447659,
+          "ms": 6.6795409948099405,
           "top3": [
             "1.5 Sale and Discounted Products",
             "1.2 Products Not Normally Eligible for Refunds",
             "7.5 Refunds"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -533,12 +577,13 @@
           "answerable": true,
           "rank": 4,
           "returned": 10,
-          "ms": 6.821334000051138,
+          "ms": 6.882708999910392,
           "top3": [
             "1.7 Shipping Cost Refunds",
             "3.7 Damaged Shipments",
             "1.3 Damaged Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -547,12 +592,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.109625000135566,
+          "ms": 6.331500000669621,
           "top3": [
             "7.5 Refunds",
             "1.9 Refund Payment Method",
             "1.2 Products Not Normally Eligible for Refunds"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -561,12 +607,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.005542000821151,
+          "ms": 7.142415997805074,
           "top3": [
             "1.10 Refund Requests After 30 Days",
             "1.1 Standard Refund Eligibility",
             "5.3 Manufacturing Defects"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -575,12 +622,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 4,
-          "ms": 6.469957999797771,
+          "ms": 6.884917005663738,
           "top3": [
             "1.11 Duplicate Charges",
             "7.3 Duplicate Charges",
             "7.2 Failed Payments"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -589,12 +637,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.305375000010827,
+          "ms": 4.726667000795715,
           "top3": [
             "3.2 Express Shipping",
             "3.3 Order Processing",
             "3.1 Standard Shipping"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -603,12 +652,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.150125000203843,
+          "ms": 6.194666013470851,
           "top3": [
             "3.9 Delivered but Not Received",
             "3.4 Order Tracking",
             "3.5 Delayed Orders"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -617,12 +667,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 3,
-          "ms": 6.543666999277775,
+          "ms": 6.325542010017671,
           "top3": [
             "3.8 Shipping Address Changes",
             "3.5 Delayed Orders",
             "3.7 Damaged Shipments"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -631,10 +682,11 @@
           "answerable": true,
           "rank": 1,
           "returned": 1,
-          "ms": 6.142625000393309,
+          "ms": 6.46687499829568,
           "top3": [
             "3.10 International Shipping"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -643,12 +695,13 @@
           "answerable": true,
           "rank": 2,
           "returned": 10,
-          "ms": 6.208416999470501,
+          "ms": 6.417291995603591,
           "top3": [
             "4.2 Cancellation After Payment",
             "4.1 Order Cancellation",
             "4.3 Cancelled Orders"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -657,12 +710,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.097041999964858,
+          "ms": 5.620750001980923,
           "top3": [
             "6.1 Warranty Period",
             "6.5 Warranty Resolution",
             "6.3 Warranty Exclusions"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -671,12 +725,13 @@
           "answerable": true,
           "rank": 7,
           "returned": 10,
-          "ms": 5.91233400064084,
+          "ms": 6.231125007616356,
           "top3": [
             "1.3 Damaged Products",
             "5.3 Manufacturing Defects",
             "3.7 Damaged Shipments"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -685,12 +740,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 8,
-          "ms": 6.634916999246343,
+          "ms": 6.868792013847269,
           "top3": [
             "7.4 Pending Transactions",
             "7.2 Failed Payments",
             "9.6 Billing Problems"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -699,12 +755,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 3,
-          "ms": 6.309124999461346,
+          "ms": 6.902709006681107,
           "top3": [
             "8.3 Account Lockout",
             "8.1 Password Reset",
             "8.6 Security Escalation"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -713,11 +770,12 @@
           "answerable": true,
           "rank": 1,
           "returned": 2,
-          "ms": 6.133417000455665,
+          "ms": 6.092541996622458,
           "top3": [
             "8.5 Suspicious Account Activity",
             "8.2 Account Verification"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -726,12 +784,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 5.555124999773398,
+          "ms": 6.276291998801753,
           "top3": [
             "9.2 Automatic Renewal",
             "9.1 Subscription Plans",
             "9.3 Subscription Cancellation"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -740,12 +799,13 @@
           "answerable": true,
           "rank": 3,
           "returned": 7,
-          "ms": 6.888083000376355,
+          "ms": 6.051999996998347,
           "top3": [
             "9.7 Subscription Escalation",
             "9.6 Billing Problems",
             "9.5 Free Trials"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -754,12 +814,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 6,
-          "ms": 5.920833999880415,
+          "ms": 5.179499989026226,
           "top3": [
             "10.4 Priority Levels",
             "10.2 Human Escalation Conditions",
             "10.6 Insufficient Information"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -768,12 +829,13 @@
           "answerable": true,
           "rank": 4,
           "returned": 9,
-          "ms": 6.2084999999569845,
+          "ms": 6.487874998128973,
           "top3": [
             "10.1 Purpose",
             "10.7 Response Tone",
             "10.6 Insufficient Information"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -782,8 +844,9 @@
           "answerable": false,
           "rank": null,
           "returned": 0,
-          "ms": 5.643708000206971,
+          "ms": 6.1444169987225905,
           "top3": [],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -792,8 +855,9 @@
           "answerable": false,
           "rank": null,
           "returned": 0,
-          "ms": 5.956291999609675,
+          "ms": 6.167332991026342,
           "top3": [],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -802,8 +866,9 @@
           "answerable": false,
           "rank": null,
           "returned": 0,
-          "ms": 6.091582999943057,
+          "ms": 6.222208001418039,
           "top3": [],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -812,8 +877,9 @@
           "answerable": false,
           "rank": null,
           "returned": 0,
-          "ms": 6.097749999753432,
+          "ms": 6.056708996766247,
           "top3": [],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -822,8 +888,9 @@
           "answerable": false,
           "rank": null,
           "returned": 0,
-          "ms": 6.782792000194604,
+          "ms": 6.330750009510666,
           "top3": [],
+          "reranker_abstained": false,
           "stage_missing": []
         }
       ],
@@ -836,7 +903,8 @@
         "false_abstain": 1,
         "n_unanswerable": 5,
         "abstained": 5,
-        "median_ms": 6.208458499713743,
+        "reranker_abstained": 0,
+        "median_ms": 6.3311250050901435,
         "stage_fallbacks": 0,
         "hit3_by_type": {
           "direct": [
@@ -862,12 +930,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 13.943165999990015,
+          "ms": 10.516333000850864,
           "top3": [
             "1.1 Standard Refund Eligibility",
             "1.8 Refund Processing",
             "2.1 Standard Returns"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -876,12 +945,13 @@
           "answerable": true,
           "rank": 5,
           "returned": 10,
-          "ms": 8.59633300024143,
+          "ms": 8.497542003169656,
           "top3": [
             "3.5 Delayed Orders",
             "3.9 Delivered but Not Received",
             "3.2 Express Shipping"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -890,12 +960,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 8.017500000278233,
+          "ms": 7.561083999462426,
           "top3": [
             "1.2 Products Not Normally Eligible for Refunds",
             "2.3 Non-Returnable Products",
             "1.5 Sale and Discounted Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -904,12 +975,13 @@
           "answerable": true,
           "rank": 3,
           "returned": 10,
-          "ms": 6.967708999582101,
+          "ms": 7.961416995385662,
           "top3": [
             "3.5 Delayed Orders",
             "1.7 Shipping Cost Refunds",
             "1.3 Damaged Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -918,12 +990,13 @@
           "answerable": true,
           "rank": null,
           "returned": 10,
-          "ms": 6.967499999518623,
+          "ms": 8.182749996194616,
           "top3": [
             "1.5 Sale and Discounted Products",
             "9.5 Free Trials",
             "7.2 Failed Payments"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -932,12 +1005,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 7.642999999916356,
+          "ms": 7.603999998536892,
           "top3": [
             "1.4 Wrong or Missing Items",
             "3.7 Damaged Shipments",
             "2.3 Non-Returnable Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -946,12 +1020,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.81166599952121,
+          "ms": 7.8796250018058345,
           "top3": [
             "1.5 Sale and Discounted Products",
             "9.1 Subscription Plans",
             "1.9 Refund Payment Method"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -960,12 +1035,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 7.87804099945788,
+          "ms": 7.859082994400524,
           "top3": [
             "1.6 Partial Refunds",
             "1.7 Shipping Cost Refunds",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -974,12 +1050,13 @@
           "answerable": true,
           "rank": 3,
           "returned": 10,
-          "ms": 7.36662500003149,
+          "ms": 7.701042006374337,
           "top3": [
             "1.5 Sale and Discounted Products",
             "1.2 Products Not Normally Eligible for Refunds",
             "1.9 Refund Payment Method"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -988,12 +1065,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 7.626167000125861,
+          "ms": 8.316166000440717,
           "top3": [
             "1.10 Refund Requests After 30 Days",
             "1.1 Standard Refund Eligibility",
             "1.3 Damaged Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1002,12 +1080,13 @@
           "answerable": true,
           "rank": 6,
           "returned": 10,
-          "ms": 7.4717919997056015,
+          "ms": 7.503000000724569,
           "top3": [
             "7.2 Failed Payments",
             "4.2 Cancellation After Payment",
             "7.5 Refunds"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1016,12 +1095,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 7.8923749997557024,
+          "ms": 6.778874987503514,
           "top3": [
             "3.2 Express Shipping",
             "3.1 Standard Shipping",
             "3.3 Order Processing"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1030,12 +1110,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 7.335584000429662,
+          "ms": 7.667707992368378,
           "top3": [
             "3.9 Delivered but Not Received",
             "3.4 Order Tracking",
             "3.5 Delayed Orders"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1044,12 +1125,13 @@
           "answerable": true,
           "rank": null,
           "returned": 10,
-          "ms": 7.619582999723207,
+          "ms": 7.929415995022282,
           "top3": [
             "4.2 Cancellation After Payment",
             "1.1 Standard Refund Eligibility",
             "3.6 Lost Shipments"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1058,12 +1140,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 7.056791000650264,
+          "ms": 7.804500011843629,
           "top3": [
             "3.10 International Shipping",
             "1.7 Shipping Cost Refunds",
             "1.9 Refund Payment Method"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1072,12 +1155,13 @@
           "answerable": true,
           "rank": 2,
           "returned": 10,
-          "ms": 7.317582999348815,
+          "ms": 7.419999994453974,
           "top3": [
             "4.2 Cancellation After Payment",
             "4.1 Order Cancellation",
             "4.5 Cancellation Exceptions"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1086,12 +1170,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 7.763124999655702,
+          "ms": 6.752208006219007,
           "top3": [
             "6.1 Warranty Period",
             "6.3 Warranty Exclusions",
             "6.2 Warranty Coverage"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1100,12 +1185,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 7.024541999271605,
+          "ms": 7.729707998805679,
           "top3": [
             "6.3 Warranty Exclusions",
             "6.2 Warranty Coverage",
             "6.1 Warranty Period"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1114,12 +1200,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 7.426000000123167,
+          "ms": 7.508209004299715,
           "top3": [
             "7.4 Pending Transactions",
             "1.11 Duplicate Charges",
             "7.2 Failed Payments"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1128,12 +1215,13 @@
           "answerable": true,
           "rank": 2,
           "returned": 10,
-          "ms": 7.847875000152271,
+          "ms": 7.986666008946486,
           "top3": [
             "8.1 Password Reset",
             "8.3 Account Lockout",
             "8.4 Personal Information"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1142,12 +1230,13 @@
           "answerable": true,
           "rank": 3,
           "returned": 10,
-          "ms": 7.8616669998154975,
+          "ms": 7.649250008398667,
           "top3": [
             "8.3 Account Lockout",
             "8.2 Account Verification",
             "8.6 Security Escalation"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1156,12 +1245,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.821957999818551,
+          "ms": 7.305000006454065,
           "top3": [
             "9.2 Automatic Renewal",
             "9.3 Subscription Cancellation",
             "9.1 Subscription Plans"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1170,12 +1260,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 6.9217090003803605,
+          "ms": 7.335834001423791,
           "top3": [
             "9.5 Free Trials",
             "1.11 Duplicate Charges",
             "6.1 Warranty Period"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1184,12 +1275,13 @@
           "answerable": true,
           "rank": 3,
           "returned": 10,
-          "ms": 7.09416700010479,
+          "ms": 7.671333005419001,
           "top3": [
             "8.5 Suspicious Account Activity",
             "10.2 Human Escalation Conditions",
             "10.4 Priority Levels"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1198,12 +1290,13 @@
           "answerable": true,
           "rank": null,
           "returned": 10,
-          "ms": 7.256958000652958,
+          "ms": 7.434790997649543,
           "top3": [
             "8.4 Personal Information",
             "10.1 Purpose",
             "10.7 Response Tone"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1212,12 +1305,13 @@
           "answerable": false,
           "rank": null,
           "returned": 10,
-          "ms": 7.2675000001254375,
+          "ms": 7.064666991936974,
           "top3": [
             "1.5 Sale and Discounted Products",
             "9.1 Subscription Plans",
             "1.2 Products Not Normally Eligible for Refunds"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1226,12 +1320,13 @@
           "answerable": false,
           "rank": null,
           "returned": 10,
-          "ms": 6.952916999580339,
+          "ms": 7.754707999993116,
           "top3": [
             "6.4 Warranty Claims",
             "3.4 Order Tracking",
             "1.1 Standard Refund Eligibility"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1240,12 +1335,13 @@
           "answerable": false,
           "rank": null,
           "returned": 10,
-          "ms": 7.078916999489593,
+          "ms": 7.761792003293522,
           "top3": [
             "1.5 Sale and Discounted Products",
             "5.2 Available Resolutions",
             "1.3 Damaged Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1254,12 +1350,13 @@
           "answerable": false,
           "rank": null,
           "returned": 10,
-          "ms": 7.023957999990671,
+          "ms": 6.869417004054412,
           "top3": [
             "2.3 Non-Returnable Products",
             "1.2 Products Not Normally Eligible for Refunds",
             "2.1 Standard Returns"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1268,12 +1365,13 @@
           "answerable": false,
           "rank": null,
           "returned": 10,
-          "ms": 7.423292000567017,
+          "ms": 7.434125000145286,
           "top3": [
             "9.5 Free Trials",
             "1.2 Products Not Normally Eligible for Refunds",
             "2.1 Standard Returns"
           ],
+          "reranker_abstained": false,
           "stage_missing": [
             "hybrid"
           ]
@@ -1288,7 +1386,8 @@
         "false_abstain": 0,
         "n_unanswerable": 5,
         "abstained": 0,
-        "median_ms": 7.351104500230576,
+        "reranker_abstained": 0,
+        "median_ms": 7.669520498893689,
         "stage_fallbacks": 1,
         "hit3_by_type": {
           "direct": [
@@ -1314,12 +1413,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 348.1411669999943,
+          "ms": 363.1806659977883,
           "top3": [
             "1.1 Standard Refund Eligibility",
             "1.10 Refund Requests After 30 Days",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1328,12 +1428,13 @@
           "answerable": true,
           "rank": null,
           "returned": 10,
-          "ms": 274.9526669995248,
+          "ms": 276.7827089992352,
           "top3": [
             "3.5 Delayed Orders",
             "3.3 Order Processing",
             "3.2 Express Shipping"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1342,12 +1443,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 263.2237919997351,
+          "ms": 277.43745800398756,
           "top3": [
             "1.2 Products Not Normally Eligible for Refunds",
             "2.3 Non-Returnable Products",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1356,12 +1458,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 272.6692500000354,
+          "ms": 276.52825000404846,
           "top3": [
             "5.1 Reporting Damage",
             "1.3 Damaged Products",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1370,12 +1473,13 @@
           "answerable": true,
           "rank": null,
           "returned": 10,
-          "ms": 258.66995900014444,
+          "ms": 256.77437499689404,
           "top3": [
             "1.5 Sale and Discounted Products",
             "7.2 Failed Payments",
             "1.9 Refund Payment Method"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1384,12 +1488,13 @@
           "answerable": true,
           "rank": 3,
           "returned": 10,
-          "ms": 254.3785409998236,
+          "ms": 259.4510829949286,
           "top3": [
             "3.9 Delivered but Not Received",
             "1.3 Damaged Products",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1398,12 +1503,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 274.28354200037575,
+          "ms": 278.08904099219944,
           "top3": [
             "1.5 Sale and Discounted Products",
             "6.1 Warranty Period",
             "7.5 Refunds"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1412,12 +1518,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 286.18899999946734,
+          "ms": 290.25654098950326,
           "top3": [
             "1.6 Partial Refunds",
             "7.3 Duplicate Charges",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1426,12 +1533,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 270.72204100022645,
+          "ms": 268.0632080009673,
           "top3": [
             "1.9 Refund Payment Method",
             "7.5 Refunds",
             "1.5 Sale and Discounted Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1440,12 +1548,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 291.7625419995602,
+          "ms": 290.1281249942258,
           "top3": [
             "1.10 Refund Requests After 30 Days",
             "5.3 Manufacturing Defects",
             "1.1 Standard Refund Eligibility"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1454,12 +1563,13 @@
           "answerable": true,
           "rank": 3,
           "returned": 10,
-          "ms": 266.47808399957285,
+          "ms": 262.5245000090217,
           "top3": [
             "7.2 Failed Payments",
             "4.2 Cancellation After Payment",
             "1.11 Duplicate Charges"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1468,12 +1578,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 248.4842080002636,
+          "ms": 245.2740000007907,
           "top3": [
             "3.2 Express Shipping",
             "3.1 Standard Shipping",
             "3.3 Order Processing"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1482,12 +1593,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 262.04641700041975,
+          "ms": 262.0852499967441,
           "top3": [
             "3.9 Delivered but Not Received",
             "3.11 Shipping Escalation",
             "3.4 Order Tracking"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1496,12 +1608,13 @@
           "answerable": true,
           "rank": 3,
           "returned": 10,
-          "ms": 273.28637500068,
+          "ms": 273.56900001177564,
           "top3": [
             "4.2 Cancellation After Payment",
             "3.9 Delivered but Not Received",
             "3.8 Shipping Address Changes"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1510,12 +1623,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 263.53758400000515,
+          "ms": 267.9901249939576,
           "top3": [
             "3.10 International Shipping",
             "1.7 Shipping Cost Refunds",
             "3.6 Lost Shipments"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1524,12 +1638,13 @@
           "answerable": true,
           "rank": 2,
           "returned": 10,
-          "ms": 256.42400000015186,
+          "ms": 262.450499998522,
           "top3": [
             "4.2 Cancellation After Payment",
             "4.1 Order Cancellation",
             "4.3 Cancelled Orders"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1538,12 +1653,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 247.7331250001953,
+          "ms": 248.50750000041444,
           "top3": [
             "6.1 Warranty Period",
             "2.1 Standard Returns",
             "3.3 Order Processing"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1552,12 +1668,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 259.46316699992167,
+          "ms": 259.5756250084378,
           "top3": [
             "6.3 Warranty Exclusions",
             "6.2 Warranty Coverage",
             "6.1 Warranty Period"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1566,12 +1683,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 270.9359999998924,
+          "ms": 271.3813340087654,
           "top3": [
             "7.4 Pending Transactions",
             "7.2 Failed Payments",
             "7.3 Duplicate Charges"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1580,12 +1698,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 262.1783329996106,
+          "ms": 260.68900000245776,
           "top3": [
             "8.3 Account Lockout",
             "8.1 Password Reset",
             "8.6 Security Escalation"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1594,12 +1713,13 @@
           "answerable": true,
           "rank": 2,
           "returned": 10,
-          "ms": 256.1221250007293,
+          "ms": 254.0677500073798,
           "top3": [
             "8.3 Account Lockout",
             "8.5 Suspicious Account Activity",
             "10.5 AI Limitations"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1608,12 +1728,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 246.3065000001734,
+          "ms": 245.20687499898486,
           "top3": [
             "9.2 Automatic Renewal",
             "9.3 Subscription Cancellation",
             "9.1 Subscription Plans"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1622,12 +1743,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 256.6384579995429,
+          "ms": 283.7336660013534,
           "top3": [
             "9.5 Free Trials",
             "9.3 Subscription Cancellation",
             "9.6 Billing Problems"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1636,12 +1758,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 252.2101249996922,
+          "ms": 252.27545799862128,
           "top3": [
             "10.4 Priority Levels",
             "10.6 Insufficient Information",
             "10.2 Human Escalation Conditions"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1650,12 +1773,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 259.4417500004056,
+          "ms": 257.3327499994775,
           "top3": [
             "10.5 AI Limitations",
             "10.4 Priority Levels",
             "8.4 Personal Information"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1663,13 +1787,10 @@
           "type": "no_answer",
           "answerable": false,
           "rank": null,
-          "returned": 10,
-          "ms": 247.81858299957094,
-          "top3": [
-            "1.5 Sale and Discounted Products",
-            "1.3 Damaged Products",
-            "1.1 Standard Refund Eligibility"
-          ],
+          "returned": 0,
+          "ms": 249.03395799628925,
+          "top3": [],
+          "reranker_abstained": true,
           "stage_missing": []
         },
         {
@@ -1677,13 +1798,10 @@
           "type": "no_answer",
           "answerable": false,
           "rank": null,
-          "returned": 10,
-          "ms": 255.50608300000022,
-          "top3": [
-            "3.4 Order Tracking",
-            "3.3 Order Processing",
-            "1.4 Wrong or Missing Items"
-          ],
+          "returned": 0,
+          "ms": 263.61841599282343,
+          "top3": [],
+          "reranker_abstained": true,
           "stage_missing": []
         },
         {
@@ -1692,12 +1810,13 @@
           "answerable": false,
           "rank": null,
           "returned": 10,
-          "ms": 250.82650000058493,
+          "ms": 251.01258300128393,
           "top3": [
             "1.5 Sale and Discounted Products",
             "1.3 Damaged Products",
             "1.1 Standard Refund Eligibility"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1706,12 +1825,13 @@
           "answerable": false,
           "rank": null,
           "returned": 10,
-          "ms": 247.9795829995055,
+          "ms": 245.87754100502934,
           "top3": [
             "4.2 Cancellation After Payment",
             "2.1 Standard Returns",
             "2.3 Non-Returnable Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1720,12 +1840,13 @@
           "answerable": false,
           "rank": null,
           "returned": 10,
-          "ms": 256.5964579998763,
+          "ms": 254.00479200470727,
           "top3": [
             "1.5 Sale and Discounted Products",
             "1.13 Manager Approval",
             "2.3 Non-Returnable Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         }
       ],
@@ -1737,8 +1858,9 @@
         "mrr": 0.8,
         "false_abstain": 0,
         "n_unanswerable": 5,
-        "abstained": 0,
-        "median_ms": 259.45245850016363,
+        "abstained": 2,
+        "reranker_abstained": 2,
+        "median_ms": 262.26787499763304,
         "stage_fallbacks": 0,
         "hit3_by_type": {
           "direct": [
@@ -1764,12 +1886,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 271.7855000000782,
+          "ms": 277.6929999963613,
           "top3": [
             "1.1 Standard Refund Eligibility",
             "1.10 Refund Requests After 30 Days",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1778,12 +1901,13 @@
           "answerable": true,
           "rank": null,
           "returned": 10,
-          "ms": 280.1020000006247,
+          "ms": 283.915166000952,
           "top3": [
             "3.5 Delayed Orders",
             "3.3 Order Processing",
             "3.2 Express Shipping"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1792,12 +1916,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 266.14458299991384,
+          "ms": 274.16549999907147,
           "top3": [
             "1.2 Products Not Normally Eligible for Refunds",
             "2.3 Non-Returnable Products",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1806,12 +1931,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 276.1902909996934,
+          "ms": 293.7284590007039,
           "top3": [
             "5.1 Reporting Damage",
             "1.3 Damaged Products",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1820,12 +1946,13 @@
           "answerable": true,
           "rank": null,
           "returned": 10,
-          "ms": 263.8912500005972,
+          "ms": 266.6819590085652,
           "top3": [
             "1.5 Sale and Discounted Products",
             "7.2 Failed Payments",
             "1.9 Refund Payment Method"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1834,12 +1961,13 @@
           "answerable": true,
           "rank": 3,
           "returned": 10,
-          "ms": 265.6597499999407,
+          "ms": 275.10583300318103,
           "top3": [
             "3.9 Delivered but Not Received",
             "1.3 Damaged Products",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1848,12 +1976,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 281.7080000004353,
+          "ms": 299.4210829929216,
           "top3": [
             "1.5 Sale and Discounted Products",
             "6.1 Warranty Period",
             "7.5 Refunds"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1862,12 +1991,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 291.738124999938,
+          "ms": 334.4639169954462,
           "top3": [
             "1.6 Partial Refunds",
             "7.3 Duplicate Charges",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1876,12 +2006,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 274.0585409992491,
+          "ms": 337.76141599810217,
           "top3": [
             "1.9 Refund Payment Method",
             "7.5 Refunds",
             "1.5 Sale and Discounted Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1890,12 +2021,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 297.4240829998962,
+          "ms": 406.03891700448,
           "top3": [
             "1.10 Refund Requests After 30 Days",
             "5.3 Manufacturing Defects",
             "1.1 Standard Refund Eligibility"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1904,12 +2036,13 @@
           "answerable": true,
           "rank": 3,
           "returned": 10,
-          "ms": 269.1837080001278,
+          "ms": 420.9623329952592,
           "top3": [
             "7.2 Failed Payments",
             "4.2 Cancellation After Payment",
             "1.11 Duplicate Charges"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1918,12 +2051,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 249.96929099961562,
+          "ms": 414.7965000011027,
           "top3": [
             "3.2 Express Shipping",
             "3.1 Standard Shipping",
             "3.3 Order Processing"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1932,12 +2066,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 261.9311669996023,
+          "ms": 424.68137499236036,
           "top3": [
             "3.9 Delivered but Not Received",
             "3.11 Shipping Escalation",
             "3.4 Order Tracking"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1946,12 +2081,13 @@
           "answerable": true,
           "rank": 3,
           "returned": 10,
-          "ms": 273.30574999996315,
+          "ms": 450.26379098999314,
           "top3": [
             "4.2 Cancellation After Payment",
             "3.9 Delivered but Not Received",
             "3.8 Shipping Address Changes"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1960,12 +2096,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 266.2869590003538,
+          "ms": 437.13716699858196,
           "top3": [
             "3.10 International Shipping",
             "1.7 Shipping Cost Refunds",
             "3.6 Lost Shipments"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1974,12 +2111,13 @@
           "answerable": true,
           "rank": 2,
           "returned": 10,
-          "ms": 263.96808399931615,
+          "ms": 401.25220800109673,
           "top3": [
             "4.2 Cancellation After Payment",
             "4.1 Order Cancellation",
             "4.3 Cancelled Orders"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -1988,12 +2126,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 253.75650000023597,
+          "ms": 367.7521249919664,
           "top3": [
             "6.1 Warranty Period",
             "2.1 Standard Returns",
             "3.3 Order Processing"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2002,12 +2141,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 264.333500000248,
+          "ms": 393.27829198737163,
           "top3": [
             "6.3 Warranty Exclusions",
             "6.2 Warranty Coverage",
             "6.1 Warranty Period"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2016,12 +2156,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 273.6361669994949,
+          "ms": 389.0597919962602,
           "top3": [
             "7.4 Pending Transactions",
             "7.2 Failed Payments",
             "7.3 Duplicate Charges"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2030,12 +2171,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 265.213790999951,
+          "ms": 367.3879580019275,
           "top3": [
             "8.3 Account Lockout",
             "8.1 Password Reset",
             "8.6 Security Escalation"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2044,12 +2186,13 @@
           "answerable": true,
           "rank": 2,
           "returned": 10,
-          "ms": 257.8437080001095,
+          "ms": 360.3510420070961,
           "top3": [
             "8.3 Account Lockout",
             "8.5 Suspicious Account Activity",
             "10.5 AI Limitations"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2058,12 +2201,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 247.87033400025393,
+          "ms": 349.54562499478925,
           "top3": [
             "9.2 Automatic Renewal",
             "9.3 Subscription Cancellation",
             "9.1 Subscription Plans"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2072,12 +2216,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 258.2777500001612,
+          "ms": 357.35291699529625,
           "top3": [
             "9.5 Free Trials",
             "9.3 Subscription Cancellation",
             "9.6 Billing Problems"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2086,12 +2231,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 252.51524999930552,
+          "ms": 350.4956660035532,
           "top3": [
             "10.4 Priority Levels",
             "10.6 Insufficient Information",
             "10.2 Human Escalation Conditions"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2100,12 +2246,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 260.49795800008724,
+          "ms": 359.3201250041602,
           "top3": [
             "10.5 AI Limitations",
             "10.4 Priority Levels",
             "8.4 Personal Information"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2113,13 +2260,10 @@
           "type": "no_answer",
           "answerable": false,
           "rank": null,
-          "returned": 10,
-          "ms": 248.05691600067803,
-          "top3": [
-            "1.5 Sale and Discounted Products",
-            "1.3 Damaged Products",
-            "1.1 Standard Refund Eligibility"
-          ],
+          "returned": 0,
+          "ms": 365.7951249915641,
+          "top3": [],
+          "reranker_abstained": true,
           "stage_missing": []
         },
         {
@@ -2127,13 +2271,10 @@
           "type": "no_answer",
           "answerable": false,
           "rank": null,
-          "returned": 10,
-          "ms": 259.6642090002206,
-          "top3": [
-            "3.4 Order Tracking",
-            "3.3 Order Processing",
-            "1.4 Wrong or Missing Items"
-          ],
+          "returned": 0,
+          "ms": 369.24595800519455,
+          "top3": [],
+          "reranker_abstained": true,
           "stage_missing": []
         },
         {
@@ -2142,12 +2283,13 @@
           "answerable": false,
           "rank": null,
           "returned": 10,
-          "ms": 248.98900000061985,
+          "ms": 389.1455419943668,
           "top3": [
             "1.5 Sale and Discounted Products",
             "1.3 Damaged Products",
             "1.1 Standard Refund Eligibility"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2156,12 +2298,13 @@
           "answerable": false,
           "rank": null,
           "returned": 10,
-          "ms": 248.66745800045464,
+          "ms": 350.71495799638797,
           "top3": [
             "4.2 Cancellation After Payment",
             "2.1 Standard Returns",
             "2.3 Non-Returnable Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2170,12 +2313,13 @@
           "answerable": false,
           "rank": null,
           "returned": 10,
-          "ms": 257.54412500009494,
+          "ms": 357.36037499736995,
           "top3": [
             "1.5 Sale and Discounted Products",
             "1.13 Manager Approval",
             "2.3 Non-Returnable Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": [
             "hybrid"
           ]
@@ -2189,8 +2333,9 @@
         "mrr": 0.8,
         "false_abstain": 0,
         "n_unanswerable": 5,
-        "abstained": 0,
-        "median_ms": 264.1507919997821,
+        "abstained": 2,
+        "reranker_abstained": 2,
+        "median_ms": 359.83558350562816,
         "stage_fallbacks": 1,
         "hit3_by_type": {
           "direct": [
@@ -2216,12 +2361,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 275.4822500000955,
+          "ms": 393.12449999852106,
           "top3": [
             "1.1 Standard Refund Eligibility",
             "1.10 Refund Requests After 30 Days",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2230,12 +2376,13 @@
           "answerable": true,
           "rank": null,
           "returned": 10,
-          "ms": 280.0492500000473,
+          "ms": 399.99154199904297,
           "top3": [
             "3.5 Delayed Orders",
             "3.3 Order Processing",
             "3.2 Express Shipping"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2244,12 +2391,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 267.99512500019773,
+          "ms": 376.081875001546,
           "top3": [
             "1.2 Products Not Normally Eligible for Refunds",
             "2.3 Non-Returnable Products",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2258,12 +2406,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 278.37279199957266,
+          "ms": 386.0324999986915,
           "top3": [
             "5.1 Reporting Damage",
             "1.3 Damaged Products",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2272,12 +2421,13 @@
           "answerable": true,
           "rank": null,
           "returned": 10,
-          "ms": 263.4781249998923,
+          "ms": 364.64012500073295,
           "top3": [
             "1.5 Sale and Discounted Products",
             "7.2 Failed Payments",
             "1.9 Refund Payment Method"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2286,12 +2436,13 @@
           "answerable": true,
           "rank": 3,
           "returned": 10,
-          "ms": 261.0210830007418,
+          "ms": 357.2150419931859,
           "top3": [
             "3.9 Delivered but Not Received",
             "1.3 Damaged Products",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2300,12 +2451,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 280.4196659999434,
+          "ms": 378.0301250080811,
           "top3": [
             "1.5 Sale and Discounted Products",
             "6.1 Warranty Period",
             "7.5 Refunds"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2314,12 +2466,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 289.8101249993488,
+          "ms": 381.8690839980263,
           "top3": [
             "1.6 Partial Refunds",
             "7.3 Duplicate Charges",
             "1.4 Wrong or Missing Items"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2328,12 +2481,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 271.2515840003107,
+          "ms": 365.9520000073826,
           "top3": [
             "1.9 Refund Payment Method",
             "7.5 Refunds",
             "1.5 Sale and Discounted Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2342,12 +2496,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 294.4454999997106,
+          "ms": 383.8217500015162,
           "top3": [
             "1.10 Refund Requests After 30 Days",
             "5.3 Manufacturing Defects",
             "1.1 Standard Refund Eligibility"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2356,12 +2511,13 @@
           "answerable": true,
           "rank": 3,
           "returned": 10,
-          "ms": 271.3845420003054,
+          "ms": 405.8576249954058,
           "top3": [
             "7.2 Failed Payments",
             "4.2 Cancellation After Payment",
             "1.11 Duplicate Charges"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2370,12 +2526,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 247.35479100036173,
+          "ms": 367.22100000770297,
           "top3": [
             "3.2 Express Shipping",
             "3.1 Standard Shipping",
             "3.3 Order Processing"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2384,12 +2541,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 264.56141600010596,
+          "ms": 409.3280829983996,
           "top3": [
             "3.9 Delivered but Not Received",
             "3.11 Shipping Escalation",
             "3.4 Order Tracking"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2398,12 +2556,13 @@
           "answerable": true,
           "rank": 3,
           "returned": 10,
-          "ms": 273.45641699957923,
+          "ms": 383.33299999067094,
           "top3": [
             "4.2 Cancellation After Payment",
             "3.9 Delivered but Not Received",
             "3.8 Shipping Address Changes"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2412,12 +2571,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 266.0741660001804,
+          "ms": 376.204999993206,
           "top3": [
             "3.10 International Shipping",
             "1.7 Shipping Cost Refunds",
             "3.6 Lost Shipments"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2426,12 +2586,13 @@
           "answerable": true,
           "rank": 2,
           "returned": 10,
-          "ms": 258.18004100074177,
+          "ms": 363.901208009338,
           "top3": [
             "4.2 Cancellation After Payment",
             "4.1 Order Cancellation",
             "4.3 Cancelled Orders"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2440,12 +2601,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 253.4790409999914,
+          "ms": 349.44895798980724,
           "top3": [
             "6.1 Warranty Period",
             "2.1 Standard Returns",
             "3.3 Order Processing"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2454,12 +2616,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 263.198834000832,
+          "ms": 364.7613749926677,
           "top3": [
             "6.3 Warranty Exclusions",
             "6.2 Warranty Coverage",
             "6.1 Warranty Period"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2468,12 +2631,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 272.2350000003644,
+          "ms": 369.24512500991113,
           "top3": [
             "7.4 Pending Transactions",
             "7.2 Failed Payments",
             "7.3 Duplicate Charges"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2482,12 +2646,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 261.0410420002154,
+          "ms": 349.77387500111945,
           "top3": [
             "8.3 Account Lockout",
             "8.1 Password Reset",
             "8.6 Security Escalation"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2496,12 +2661,13 @@
           "answerable": true,
           "rank": 2,
           "returned": 10,
-          "ms": 256.69495900001493,
+          "ms": 339.6039590006694,
           "top3": [
             "8.3 Account Lockout",
             "8.5 Suspicious Account Activity",
             "10.5 AI Limitations"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2510,12 +2676,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 248.44437499996275,
+          "ms": 326.93066701176576,
           "top3": [
             "9.2 Automatic Renewal",
             "9.3 Subscription Cancellation",
             "9.1 Subscription Plans"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2524,12 +2691,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 256.6635839993978,
+          "ms": 338.4920829994371,
           "top3": [
             "9.5 Free Trials",
             "9.3 Subscription Cancellation",
             "9.6 Billing Problems"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2538,12 +2706,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 252.74304100003064,
+          "ms": 333.11350000440143,
           "top3": [
             "10.4 Priority Levels",
             "10.6 Insufficient Information",
             "10.2 Human Escalation Conditions"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2552,12 +2721,13 @@
           "answerable": true,
           "rank": 1,
           "returned": 10,
-          "ms": 261.9567499996265,
+          "ms": 338.4697919973405,
           "top3": [
             "10.5 AI Limitations",
             "10.4 Priority Levels",
             "8.4 Personal Information"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2565,13 +2735,10 @@
           "type": "no_answer",
           "answerable": false,
           "rank": null,
-          "returned": 10,
-          "ms": 251.0325000002922,
-          "top3": [
-            "1.5 Sale and Discounted Products",
-            "1.3 Damaged Products",
-            "1.1 Standard Refund Eligibility"
-          ],
+          "returned": 0,
+          "ms": 329.9625829968136,
+          "top3": [],
+          "reranker_abstained": true,
           "stage_missing": []
         },
         {
@@ -2579,13 +2746,10 @@
           "type": "no_answer",
           "answerable": false,
           "rank": null,
-          "returned": 10,
-          "ms": 258.3509159994719,
-          "top3": [
-            "3.4 Order Tracking",
-            "3.3 Order Processing",
-            "1.4 Wrong or Missing Items"
-          ],
+          "returned": 0,
+          "ms": 340.83541699510533,
+          "top3": [],
+          "reranker_abstained": true,
           "stage_missing": []
         },
         {
@@ -2594,12 +2758,13 @@
           "answerable": false,
           "rank": null,
           "returned": 10,
-          "ms": 249.8482500004684,
+          "ms": 327.4276669981191,
           "top3": [
             "1.5 Sale and Discounted Products",
             "1.3 Damaged Products",
             "1.1 Standard Refund Eligibility"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2608,12 +2773,13 @@
           "answerable": false,
           "rank": null,
           "returned": 10,
-          "ms": 251.04845799978648,
+          "ms": 331.48587500909343,
           "top3": [
             "4.2 Cancellation After Payment",
             "2.1 Standard Returns",
             "2.3 Non-Returnable Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": []
         },
         {
@@ -2622,12 +2788,13 @@
           "answerable": false,
           "rank": null,
           "returned": 10,
-          "ms": 258.5807499999646,
+          "ms": 342.63879200443625,
           "top3": [
             "1.5 Sale and Discounted Products",
             "1.13 Manager Approval",
             "2.3 Non-Returnable Products"
           ],
+          "reranker_abstained": false,
           "stage_missing": [
             "hybrid"
           ]
@@ -2641,8 +2808,9 @@
         "mrr": 0.8,
         "false_abstain": 0,
         "n_unanswerable": 5,
-        "abstained": 0,
-        "median_ms": 262.57779200022924,
+        "abstained": 2,
+        "reranker_abstained": 2,
+        "median_ms": 364.7007499967003,
         "stage_fallbacks": 1,
         "hit3_by_type": {
           "direct": [
@@ -2656,6 +2824,1518 @@
           "scenario": [
             9,
             9
+          ]
+        }
+      }
+    }
+  },
+  "heldout_results": {
+    "1. Semantic only (current default)": {
+      "rows": [
+        {
+          "id": "H01",
+          "type": "direct",
+          "answerable": true,
+          "rank": 2,
+          "returned": 10,
+          "ms": 5.838042008690536,
+          "top3": [
+            "1.7 Shipping Cost Refunds",
+            "2.2 Return Shipping",
+            "3.7 Damaged Shipments"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H02",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.129790999693796,
+          "top3": [
+            "1.8 Refund Processing",
+            "1.1 Standard Refund Eligibility",
+            "2.4 Inspection"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H03",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 7.0500000001629815,
+          "top3": [
+            "1.6 Partial Refunds",
+            "5.3 Manufacturing Defects",
+            "5.2 Available Resolutions"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H04",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.131375004770234,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.2 Products Not Normally Eligible for Refunds",
+            "7.5 Refunds"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H05",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.18650000251364,
+          "top3": [
+            "1.3 Damaged Products",
+            "5.1 Reporting Damage",
+            "3.7 Damaged Shipments"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H06",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 5.979374996968545,
+          "top3": [
+            "3.2 Express Shipping",
+            "3.3 Order Processing",
+            "3.1 Standard Shipping"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H07",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.5919579938054085,
+          "top3": [
+            "3.4 Order Tracking",
+            "3.1 Standard Shipping",
+            "3.5 Delayed Orders"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H08",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 8,
+          "ms": 6.404583997209556,
+          "top3": [
+            "3.8 Shipping Address Changes",
+            "3.10 International Shipping",
+            "3.5 Delayed Orders"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H09",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.381457991665229,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "4.1 Order Cancellation",
+            "4.3 Cancelled Orders"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H10",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.312875004368834,
+          "top3": [
+            "7.4 Pending Transactions",
+            "7.2 Failed Payments",
+            "4.2 Cancellation After Payment"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U01",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 4,
+          "ms": 6.143207996501587,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "7.1 Accepted Payment Methods",
+            "1.9 Refund Payment Method"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U02",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 0,
+          "ms": 6.025000009685755,
+          "top3": [],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U03",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 2,
+          "ms": 6.657959005679004,
+          "top3": [
+            "7.1 Accepted Payment Methods",
+            "5.2 Available Resolutions"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U04",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 7,
+          "ms": 5.499042003066279,
+          "top3": [
+            "3.10 International Shipping",
+            "3.5 Delayed Orders",
+            "3.11 Shipping Escalation"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U05",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 1,
+          "ms": 5.385084004956298,
+          "top3": [
+            "7.1 Accepted Payment Methods"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        }
+      ],
+      "summary": {
+        "n_answerable": 10,
+        "hit1": 9,
+        "hit3": 10,
+        "hit5": 10,
+        "mrr": 0.95,
+        "false_abstain": 0,
+        "n_unanswerable": 5,
+        "abstained": 1,
+        "reranker_abstained": 0,
+        "median_ms": 6.143207996501587,
+        "stage_fallbacks": 0,
+        "hit3_by_type": {
+          "direct": [
+            2,
+            2
+          ],
+          "paraphrase": [
+            4,
+            4
+          ],
+          "scenario": [
+            4,
+            4
+          ]
+        }
+      }
+    },
+    "2. + section-aware embeddings": {
+      "rows": [
+        {
+          "id": "H01",
+          "type": "direct",
+          "answerable": true,
+          "rank": 2,
+          "returned": 10,
+          "ms": 6.400000012945384,
+          "top3": [
+            "1.7 Shipping Cost Refunds",
+            "2.2 Return Shipping",
+            "3.7 Damaged Shipments"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H02",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.891999990330078,
+          "top3": [
+            "1.8 Refund Processing",
+            "1.1 Standard Refund Eligibility",
+            "2.4 Inspection"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H03",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.584165996173397,
+          "top3": [
+            "1.6 Partial Refunds",
+            "5.3 Manufacturing Defects",
+            "1.4 Wrong or Missing Items"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H04",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.429458997445181,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.2 Products Not Normally Eligible for Refunds",
+            "7.5 Refunds"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H05",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.109833004302345,
+          "top3": [
+            "5.1 Reporting Damage",
+            "3.7 Damaged Shipments",
+            "1.3 Damaged Products"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H06",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.880959001136944,
+          "top3": [
+            "3.2 Express Shipping",
+            "3.1 Standard Shipping",
+            "3.3 Order Processing"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H07",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 9,
+          "ms": 6.547709010192193,
+          "top3": [
+            "3.4 Order Tracking",
+            "3.1 Standard Shipping",
+            "3.5 Delayed Orders"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H08",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 5,
+          "ms": 6.654874989180826,
+          "top3": [
+            "3.8 Shipping Address Changes",
+            "3.5 Delayed Orders",
+            "3.6 Lost Shipments"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H09",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 6.366750007146038,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "4.1 Order Cancellation",
+            "4.3 Cancelled Orders"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H10",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 5,
+          "ms": 6.875999999465421,
+          "top3": [
+            "7.4 Pending Transactions",
+            "7.2 Failed Payments",
+            "7.1 Accepted Payment Methods"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U01",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 2,
+          "ms": 6.775125002604909,
+          "top3": [
+            "7.1 Accepted Payment Methods",
+            "7.2 Failed Payments"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U02",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 0,
+          "ms": 6.594999998924322,
+          "top3": [],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U03",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 2,
+          "ms": 6.7016670072916895,
+          "top3": [
+            "7.1 Accepted Payment Methods",
+            "5.2 Available Resolutions"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U04",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 4,
+          "ms": 6.105874999775551,
+          "top3": [
+            "3.10 International Shipping",
+            "3.5 Delayed Orders",
+            "3.1 Standard Shipping"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U05",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 2,
+          "ms": 5.937124995398335,
+          "top3": [
+            "7.1 Accepted Payment Methods",
+            "5.2 Available Resolutions"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        }
+      ],
+      "summary": {
+        "n_answerable": 10,
+        "hit1": 9,
+        "hit3": 10,
+        "hit5": 10,
+        "mrr": 0.95,
+        "false_abstain": 0,
+        "n_unanswerable": 5,
+        "abstained": 1,
+        "reranker_abstained": 0,
+        "median_ms": 6.584165996173397,
+        "stage_fallbacks": 0,
+        "hit3_by_type": {
+          "direct": [
+            2,
+            2
+          ],
+          "paraphrase": [
+            4,
+            4
+          ],
+          "scenario": [
+            4,
+            4
+          ]
+        }
+      }
+    },
+    "3. + BM25 hybrid": {
+      "rows": [
+        {
+          "id": "H01",
+          "type": "direct",
+          "answerable": true,
+          "rank": 8,
+          "returned": 10,
+          "ms": 7.626834005350247,
+          "top3": [
+            "1.2 Products Not Normally Eligible for Refunds",
+            "2.3 Non-Returnable Products",
+            "3.8 Shipping Address Changes"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H02",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 8.159999997587875,
+          "top3": [
+            "1.8 Refund Processing",
+            "2.4 Inspection",
+            "7.5 Refunds"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H03",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 8.26150001375936,
+          "top3": [
+            "1.6 Partial Refunds",
+            "5.3 Manufacturing Defects",
+            "1.2 Products Not Normally Eligible for Refunds"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H04",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 7.314709000638686,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.2 Products Not Normally Eligible for Refunds",
+            "1.6 Partial Refunds"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H05",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 7.364542005234398,
+          "top3": [
+            "1.3 Damaged Products",
+            "3.7 Damaged Shipments",
+            "5.1 Reporting Damage"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H06",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 7.948625003336929,
+          "top3": [
+            "3.2 Express Shipping",
+            "3.3 Order Processing",
+            "3.1 Standard Shipping"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H07",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 7.797665995894931,
+          "top3": [
+            "3.4 Order Tracking",
+            "3.1 Standard Shipping",
+            "3.2 Express Shipping"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H08",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 7.7601660013897344,
+          "top3": [
+            "3.8 Shipping Address Changes",
+            "3.5 Delayed Orders",
+            "3.10 International Shipping"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H09",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 7.412916995235719,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "4.1 Order Cancellation",
+            "4.5 Cancellation Exceptions"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H10",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 8.231416999478824,
+          "top3": [
+            "7.4 Pending Transactions",
+            "4.2 Cancellation After Payment",
+            "7.2 Failed Payments"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U01",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 7.6830840116599575,
+          "top3": [
+            "7.1 Accepted Payment Methods",
+            "3.10 International Shipping",
+            "4.2 Cancellation After Payment"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U02",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 7.555917007266544,
+          "top3": [
+            "3.8 Shipping Address Changes",
+            "2.1 Standard Returns",
+            "3.11 Shipping Escalation"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U03",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 7.641625008545816,
+          "top3": [
+            "7.1 Accepted Payment Methods",
+            "5.2 Available Resolutions",
+            "9.5 Free Trials"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U04",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 6.778958995710127,
+          "top3": [
+            "3.5 Delayed Orders",
+            "3.1 Standard Shipping",
+            "3.10 International Shipping"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U05",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 7.225166991702281,
+          "top3": [
+            "7.1 Accepted Payment Methods",
+            "5.2 Available Resolutions",
+            "2.2 Return Shipping"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        }
+      ],
+      "summary": {
+        "n_answerable": 10,
+        "hit1": 9,
+        "hit3": 9,
+        "hit5": 9,
+        "mrr": 0.9125,
+        "false_abstain": 0,
+        "n_unanswerable": 5,
+        "abstained": 0,
+        "reranker_abstained": 0,
+        "median_ms": 7.641625008545816,
+        "stage_fallbacks": 0,
+        "hit3_by_type": {
+          "direct": [
+            1,
+            2
+          ],
+          "paraphrase": [
+            4,
+            4
+          ],
+          "scenario": [
+            4,
+            4
+          ]
+        }
+      }
+    },
+    "4. + reranker (no BM25)": {
+      "rows": [
+        {
+          "id": "H01",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 269.30904199252836,
+          "top3": [
+            "2.2 Return Shipping",
+            "1.7 Shipping Cost Refunds",
+            "1.4 Wrong or Missing Items"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H02",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 277.79566698882263,
+          "top3": [
+            "1.8 Refund Processing",
+            "2.4 Inspection",
+            "1.10 Refund Requests After 30 Days"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H03",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 288.23412499332335,
+          "top3": [
+            "1.6 Partial Refunds",
+            "1.2 Products Not Normally Eligible for Refunds",
+            "5.3 Manufacturing Defects"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H04",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 306.38341599842533,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.2 Products Not Normally Eligible for Refunds",
+            "2.3 Non-Returnable Products"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H05",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 269.37387500947807,
+          "top3": [
+            "1.3 Damaged Products",
+            "3.7 Damaged Shipments",
+            "1.12 Fraud and Abuse Indicators"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H06",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 269.4432090065675,
+          "top3": [
+            "3.2 Express Shipping",
+            "3.3 Order Processing",
+            "3.1 Standard Shipping"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H07",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 269.4300419971114,
+          "top3": [
+            "3.4 Order Tracking",
+            "3.5 Delayed Orders",
+            "3.1 Standard Shipping"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H08",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 273.28983299958054,
+          "top3": [
+            "3.8 Shipping Address Changes",
+            "3.11 Shipping Escalation",
+            "3.6 Lost Shipments"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H09",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 271.01795899216086,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "4.3 Cancelled Orders",
+            "4.1 Order Cancellation"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H10",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 275.1784579886589,
+          "top3": [
+            "7.4 Pending Transactions",
+            "7.2 Failed Payments",
+            "7.3 Duplicate Charges"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U01",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 257.75141699705273,
+          "top3": [
+            "7.1 Accepted Payment Methods",
+            "3.10 International Shipping",
+            "7.2 Failed Payments"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U02",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 0,
+          "ms": 262.7410409913864,
+          "top3": [],
+          "reranker_abstained": true,
+          "stage_missing": []
+        },
+        {
+          "id": "U03",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 290.25612499390263,
+          "top3": [
+            "7.1 Accepted Payment Methods",
+            "2.2 Return Shipping",
+            "5.2 Available Resolutions"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U04",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 288.7553750042571,
+          "top3": [
+            "3.10 International Shipping",
+            "3.1 Standard Shipping",
+            "3.5 Delayed Orders"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U05",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 250.81308399967384,
+          "top3": [
+            "7.1 Accepted Payment Methods",
+            "5.2 Available Resolutions",
+            "2.2 Return Shipping"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        }
+      ],
+      "summary": {
+        "n_answerable": 10,
+        "hit1": 10,
+        "hit3": 10,
+        "hit5": 10,
+        "mrr": 1.0,
+        "false_abstain": 0,
+        "n_unanswerable": 5,
+        "abstained": 1,
+        "reranker_abstained": 1,
+        "median_ms": 271.01795899216086,
+        "stage_fallbacks": 0,
+        "hit3_by_type": {
+          "direct": [
+            2,
+            2
+          ],
+          "paraphrase": [
+            4,
+            4
+          ],
+          "scenario": [
+            4,
+            4
+          ]
+        }
+      }
+    },
+    "5. BM25 hybrid + reranker": {
+      "rows": [
+        {
+          "id": "H01",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 380.0915839965455,
+          "top3": [
+            "2.2 Return Shipping",
+            "1.7 Shipping Cost Refunds",
+            "1.4 Wrong or Missing Items"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H02",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 396.9894999900134,
+          "top3": [
+            "1.8 Refund Processing",
+            "2.4 Inspection",
+            "1.10 Refund Requests After 30 Days"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H03",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 412.04954200657085,
+          "top3": [
+            "1.6 Partial Refunds",
+            "1.2 Products Not Normally Eligible for Refunds",
+            "5.3 Manufacturing Defects"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H04",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 512.7804160001688,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.2 Products Not Normally Eligible for Refunds",
+            "2.3 Non-Returnable Products"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H05",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 446.6521249996731,
+          "top3": [
+            "1.3 Damaged Products",
+            "3.7 Damaged Shipments",
+            "1.12 Fraud and Abuse Indicators"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H06",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 390.684208003222,
+          "top3": [
+            "3.2 Express Shipping",
+            "3.3 Order Processing",
+            "3.1 Standard Shipping"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H07",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 389.38724999025,
+          "top3": [
+            "3.4 Order Tracking",
+            "3.5 Delayed Orders",
+            "3.1 Standard Shipping"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H08",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 392.98533300461713,
+          "top3": [
+            "3.8 Shipping Address Changes",
+            "3.11 Shipping Escalation",
+            "3.6 Lost Shipments"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H09",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 393.5164169961354,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "4.3 Cancelled Orders",
+            "4.1 Order Cancellation"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H10",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 385.97587500407826,
+          "top3": [
+            "7.4 Pending Transactions",
+            "7.2 Failed Payments",
+            "7.3 Duplicate Charges"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U01",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 423.7251660088077,
+          "top3": [
+            "7.1 Accepted Payment Methods",
+            "3.10 International Shipping",
+            "7.2 Failed Payments"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U02",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 0,
+          "ms": 359.03420799877495,
+          "top3": [],
+          "reranker_abstained": true,
+          "stage_missing": []
+        },
+        {
+          "id": "U03",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 388.86474999890197,
+          "top3": [
+            "7.1 Accepted Payment Methods",
+            "2.2 Return Shipping",
+            "5.2 Available Resolutions"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U04",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 352.9179579927586,
+          "top3": [
+            "3.10 International Shipping",
+            "3.1 Standard Shipping",
+            "3.5 Delayed Orders"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U05",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 375.39904098957777,
+          "top3": [
+            "7.1 Accepted Payment Methods",
+            "5.2 Available Resolutions",
+            "2.2 Return Shipping"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        }
+      ],
+      "summary": {
+        "n_answerable": 10,
+        "hit1": 10,
+        "hit3": 10,
+        "hit5": 10,
+        "mrr": 1.0,
+        "false_abstain": 0,
+        "n_unanswerable": 5,
+        "abstained": 1,
+        "reranker_abstained": 1,
+        "median_ms": 390.684208003222,
+        "stage_fallbacks": 0,
+        "hit3_by_type": {
+          "direct": [
+            2,
+            2
+          ],
+          "paraphrase": [
+            4,
+            4
+          ],
+          "scenario": [
+            4,
+            4
+          ]
+        }
+      }
+    },
+    "6. All three": {
+      "rows": [
+        {
+          "id": "H01",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 363.6110829975223,
+          "top3": [
+            "2.2 Return Shipping",
+            "1.7 Shipping Cost Refunds",
+            "1.4 Wrong or Missing Items"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H02",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 375.7051249995129,
+          "top3": [
+            "1.8 Refund Processing",
+            "2.4 Inspection",
+            "1.10 Refund Requests After 30 Days"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H03",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 386.09637500485405,
+          "top3": [
+            "1.6 Partial Refunds",
+            "1.2 Products Not Normally Eligible for Refunds",
+            "5.3 Manufacturing Defects"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H04",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 412.78508299728855,
+          "top3": [
+            "1.5 Sale and Discounted Products",
+            "1.2 Products Not Normally Eligible for Refunds",
+            "2.3 Non-Returnable Products"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H05",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 358.43945799570065,
+          "top3": [
+            "1.3 Damaged Products",
+            "3.7 Damaged Shipments",
+            "1.12 Fraud and Abuse Indicators"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H06",
+          "type": "direct",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 357.7217090060003,
+          "top3": [
+            "3.2 Express Shipping",
+            "3.3 Order Processing",
+            "3.1 Standard Shipping"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H07",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 356.6159170004539,
+          "top3": [
+            "3.4 Order Tracking",
+            "3.5 Delayed Orders",
+            "3.1 Standard Shipping"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H08",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 363.84770800941624,
+          "top3": [
+            "3.8 Shipping Address Changes",
+            "3.11 Shipping Escalation",
+            "3.6 Lost Shipments"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H09",
+          "type": "scenario",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 356.53320800338406,
+          "top3": [
+            "4.2 Cancellation After Payment",
+            "4.3 Cancelled Orders",
+            "4.1 Order Cancellation"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "H10",
+          "type": "paraphrase",
+          "answerable": true,
+          "rank": 1,
+          "returned": 10,
+          "ms": 359.57645799499005,
+          "top3": [
+            "7.4 Pending Transactions",
+            "7.2 Failed Payments",
+            "7.3 Duplicate Charges"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U01",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 341.04820899665356,
+          "top3": [
+            "7.1 Accepted Payment Methods",
+            "3.10 International Shipping",
+            "7.2 Failed Payments"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U02",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 0,
+          "ms": 342.1538340044208,
+          "top3": [],
+          "reranker_abstained": true,
+          "stage_missing": []
+        },
+        {
+          "id": "U03",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 342.21245799562894,
+          "top3": [
+            "7.1 Accepted Payment Methods",
+            "2.2 Return Shipping",
+            "5.2 Available Resolutions"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U04",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 336.4431249938207,
+          "top3": [
+            "3.10 International Shipping",
+            "3.1 Standard Shipping",
+            "3.5 Delayed Orders"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        },
+        {
+          "id": "U05",
+          "type": "no_answer",
+          "answerable": false,
+          "rank": null,
+          "returned": 10,
+          "ms": 328.37874999677297,
+          "top3": [
+            "7.1 Accepted Payment Methods",
+            "5.2 Available Resolutions",
+            "2.2 Return Shipping"
+          ],
+          "reranker_abstained": false,
+          "stage_missing": []
+        }
+      ],
+      "summary": {
+        "n_answerable": 10,
+        "hit1": 10,
+        "hit3": 10,
+        "hit5": 10,
+        "mrr": 1.0,
+        "false_abstain": 0,
+        "n_unanswerable": 5,
+        "abstained": 1,
+        "reranker_abstained": 1,
+        "median_ms": 357.7217090060003,
+        "stage_fallbacks": 0,
+        "hit3_by_type": {
+          "direct": [
+            2,
+            2
+          ],
+          "paraphrase": [
+            4,
+            4
+          ],
+          "scenario": [
+            4,
+            4
           ]
         }
       }

@@ -339,18 +339,22 @@ python evals/run_customer_support_eval.py --core-30 --core-case-delay-seconds 17
 
 ## Retrieval evaluation
 
-The retrieval-only evaluation compares six retrieval configurations on the project's own 71-chunk policy file using 30 questions (25 answerable and 5 unanswerable). It measures retrieved policy sections only: no LLM is called, and these results do not score generated answers.
+This retrieval-only evaluation uses the project's 71-chunk policy knowledge base and makes no LLM calls. The original `retrieval_30.jsonl` set (25 answerable, 5 unanswerable) is used only to select the reranker score cutoff; a separate held-out set has 15 new questions (10 answerable, 5 unanswerable) and is used to report out-of-sample results. Gold labels were authored from the policy file.
+
+The reranker cutoff is **−10.73**. It was selected on `retrieval_30.jsonl` as the highest hundredth-step threshold with no false abstentions among its answerable questions. The held-out set was not used to tune it. Configure it with `RAG_RERANKER_MIN_SCORE`; the cutoff applies only when reranking is enabled, and the app's default remains semantic-only.
+
+### Tuning set: retrieval_30
 
 | Configuration | hit@1 | hit@3 | hit@5 | MRR | median ms |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Semantic only (current default) | 16/25 | 20/25 | 22/25 | 0.723 | 6 |
 | + section-aware embeddings | 17/25 | 19/25 | 21/25 | 0.739 | 6 |
-| + BM25 hybrid | 14/25 | 20/25 | 21/25 | 0.668 | 7 |
-| + reranker (no BM25) | 18/25 | 23/25 | 23/25 | 0.800 | 259 |
-| BM25 hybrid + reranker | 18/25 | 23/25 | 23/25 | 0.800 | 264 |
-| All three | 18/25 | 23/25 | 23/25 | 0.800 | 263 |
+| + BM25 hybrid | 14/25 | 20/25 | 21/25 | 0.668 | 8 |
+| + reranker (no BM25) | 18/25 | 23/25 | 23/25 | 0.800 | 262 |
+| BM25 hybrid + reranker | 18/25 | 23/25 | 23/25 | 0.800 | 360 |
+| All three | 18/25 | 23/25 | 23/25 | 0.800 | 365 |
 
-### hit@3 by question type
+### Tuning-set hit@3 by question type
 
 | Configuration | Direct | Paraphrase | Scenario |
 | --- | ---: | ---: | ---: |
@@ -361,43 +365,65 @@ The retrieval-only evaluation compares six retrieval configurations on the proje
 | BM25 hybrid + reranker | 7/7 | 7/9 | 9/9 |
 | All three | 7/7 | 7/9 | 9/9 |
 
-### Abstention
+### Tuning-set abstention
 
-| Configuration | Correctly returned nothing (unanswerable) | Answerable questions returning nothing |
+| Configuration | Correctly abstained on unanswerable | False abstentions on answerable |
 | --- | ---: | ---: |
 | Semantic only (current default) | 5/5 | 1/25 |
 | + section-aware embeddings | 5/5 | 1/25 |
 | + BM25 hybrid | 0/5 | 0/25 |
-| + reranker (no BM25) | 0/5 | 0/25 |
-| BM25 hybrid + reranker | 0/5 | 0/25 |
-| All three | 0/5 | 0/25 |
+| + reranker (no BM25) | 2/5 | 0/25 |
+| BM25 hybrid + reranker | 2/5 | 0/25 |
+| All three | 2/5 | 0/25 |
 
-Hybrid and reranker modes skip the distance cutoff, so they return results even for unanswerable questions; the semantic default correctly abstained for all unanswerable questions in this run.
+### Held-out results
+
+| Configuration | hit@1 | hit@3 | hit@5 | MRR | median ms |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Semantic only (current default) | 9/10 | 10/10 | 10/10 | 0.950 | 6 |
+| + section-aware embeddings | 9/10 | 10/10 | 10/10 | 0.950 | 7 |
+| + BM25 hybrid | 9/10 | 9/10 | 9/10 | 0.912 | 8 |
+| + reranker (no BM25) | 10/10 | 10/10 | 10/10 | 1.000 | 271 |
+| BM25 hybrid + reranker | 10/10 | 10/10 | 10/10 | 1.000 | 391 |
+| All three | 10/10 | 10/10 | 10/10 | 1.000 | 358 |
+
+#### Held-out hit@3 by question type
+
+| Configuration | Direct | Paraphrase | Scenario |
+| --- | ---: | ---: | ---: |
+| Semantic only (current default) | 2/2 | 4/4 | 4/4 |
+| + section-aware embeddings | 2/2 | 4/4 | 4/4 |
+| + BM25 hybrid | 1/2 | 4/4 | 4/4 |
+| + reranker (no BM25) | 2/2 | 4/4 | 4/4 |
+| BM25 hybrid + reranker | 2/2 | 4/4 | 4/4 |
+| All three | 2/2 | 4/4 | 4/4 |
+
+#### Held-out abstention
+
+| Configuration | Correctly abstained on unanswerable | False abstentions on answerable |
+| --- | ---: | ---: |
+| Semantic only (current default) | 1/5 | 0/10 |
+| + section-aware embeddings | 1/5 | 0/10 |
+| + BM25 hybrid | 0/5 | 0/10 |
+| + reranker (no BM25) | 1/5 | 0/10 |
+| BM25 hybrid + reranker | 1/5 | 0/10 |
+| All three | 1/5 | 0/10 |
 
 ### Findings
 
-- The reranker configuration raised hit@3 from 20/25 to 23/25, hit@1 from 16/25 to 18/25, and MRR from 0.723 to 0.800. The hit@3 gain was mostly on paraphrases (5/9 to 7/9); median retrieval time was about 260 ms per query versus 6 ms for the default.
-- The reranker's +3 questions at hit@3 is the only difference here that reaches three questions; with 25 author-written questions it is evidence for this knowledge base, not proof that it generalizes.
-- BM25 hybrid tied the default at hit@3 (20/25) and scored lower at hit@1 (14/25 versus 16/25) and hit@5 (21/25 versus 22/25). Section-aware embeddings had mixed results: hit@1 was 17/25 and MRR was 0.739, while hit@3 was 19/25 and hit@5 was 21/25. Neither configuration provided a consistent retrieval gain on this KB.
-- Configurations 4, 5, and 6 had identical per-question ranks and hit counts. The retriever passes the whole 71-chunk collection to the reranker, so the upstream retrieval stage does not change the final reranked order in this evaluation.
-- Hybrid and reranker configurations returned results for 0/5 unanswerable questions, while the default abstained correctly on 5/5. The default remains unchanged.
-- R05 was missed by every configuration. R02 was missed by every configuration except BM25 hybrid alone, which found it but missed R11, R14, and R25.
-- Hybrid fell back to the plain ranking for one question: N05, which is unanswerable and has no BM25 keyword match. No rerank fallback occurred in configurations 4, 5, or 6.
-
-### Known limitations
-
-This uses a small synthetic KB and 25 answerable questions, so one question is 4 percentage points and differences of 1–2 questions are not meaningful. The gold labels were written by the project author. Hit@k checks whether the retrieved policy section is present, not whether a final answer is correct. The reranker scores the whole collection for each query; that will not scale to a large KB without a candidate cap.
+- On the tuning set, the cutoff abstained on 2/5 unanswerable questions and none of the 25 answerable ones. On the held-out set, it abstained on 1/5 unanswerable questions with no false abstentions among the 10 answerable questions.
+- Held out, reranking raised hit@1 by one question (9/10 to 10/10), but hit@3 tied the semantic default at 10/10. It also took 271 ms per query versus 6 ms. The abstention rate matched the default at 1/5, so these results do not justify changing the default configuration.
+- The reranker cutoff does not apply to semantic-only or hybrid-only configurations. Hybrid and reranker modes skip the vector-distance cutoff; reranker-enabled configurations instead use the score cutoff above.
+- The threshold was selected on `retrieval_30.jsonl` and evaluated once on the separate held-out questions. Both sets are small, synthetic, and labeled by the project author; the held-out result is evidence for this KB, not proof of generalization. Hit@k checks retrieval of a gold policy section, not final answer quality. The cross-encoder scores the whole collection per query, so large KBs may need candidate capping.
 
 ### Reproduce
-
-With the project environment active, run:
 
 ```bash
 python evals/run_retrieval_eval.py --validate-only
 python evals/run_retrieval_eval.py
 ```
 
-The embedding and cross-encoder models are downloaded on first use to the default Hugging Face cache. The app also looks in that cache when its reranker is enabled: it loads the model with `local_files_only=True`, so the model must already be cached. Full run details are in the [retrieval evaluation report](evals/results/retrieval_eval.md).
+The first full run downloads the embedding and cross-encoder models. Later runs can use the cached models offline by setting `HF_HOME` to the cache location and `HF_HUB_OFFLINE=1`. The evaluation does not call an LLM. Full tuning and held-out rows are in the [retrieval evaluation report](evals/results/retrieval_eval.md).
 
 ## Local files and Git hygiene
 

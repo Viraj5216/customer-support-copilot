@@ -39,6 +39,7 @@ class Settings(BaseSettings):
     rag_hybrid_enabled: bool = False
     rag_reranker_enabled: bool = False
     rag_reranker_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    rag_reranker_min_score: float = -10.73
 
     langfuse_public_key: SecretStr | None = None
     langfuse_secret_key: SecretStr | None = None

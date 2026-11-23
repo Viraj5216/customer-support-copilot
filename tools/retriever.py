@@ -17,6 +17,26 @@ from tools.indexer import policy_index_metadata
 logger = logging.getLogger(__name__)
 
 
+def reranker_should_abstain(
+    chunks: list[dict[str, Any]],
+    minimum_score: float,
+) -> bool:
+    """Return whether the highest-scored reranked candidate is below threshold."""
+    if not chunks:
+        return False
+
+    score = chunks[0].get("rerank_score")
+    if score is None:
+        return False
+
+    try:
+        score = float(score)
+    except (TypeError, ValueError, OverflowError):
+        return True
+
+    return not math.isfinite(score) or score < minimum_score
+
+
 def build_retrieval_query(
     question: str,
     history: list[dict] | None = None,
@@ -512,11 +532,20 @@ class ChromaRetrieverService:
                 for item, score in zip(chunks, scores)
             ]
 
-            return sorted(
+            ranked = sorted(
                 ranked,
                 key=lambda item: item["rerank_score"],
                 reverse=True,
-            )[:limit]
+            )
+            minimum_score = getattr(
+                getattr(self, "settings", None),
+                "rag_reranker_min_score",
+                -math.inf,
+            )
+            if reranker_should_abstain(ranked, minimum_score):
+                return []
+
+            return ranked[:limit]
 
         except Exception as exc:
             logger.warning(

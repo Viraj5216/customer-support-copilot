@@ -26,6 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 DATASET = ROOT / "evals" / "data" / "retrieval_30.jsonl"
+HELDOUT_DATASET = ROOT / "evals" / "data" / "retrieval_holdout_15.jsonl"
 KB = ROOT / "data" / "company_knowledge_base.txt"
 OUT_DIR = ROOT / "evals" / "results"
 TOP_N = 10  # rank depth used for MRR; hit@k uses the first k of these
@@ -139,6 +140,7 @@ def run_config(service, cases: list[dict], hybrid: bool, rerank: bool) -> list[d
             "id": case["id"], "type": case["type"], "answerable": case["answerable"],
             "rank": rank, "returned": len(chunks), "ms": elapsed_ms,
             "top3": [c["subsection"] for c in chunks[:3]],
+            "reranker_abstained": bool(rerank and not chunks),
             "stage_missing": missing,
         })
     for stage, enabled in (("hybrid", hybrid), ("rerank", rerank)):
@@ -171,22 +173,17 @@ def summarize(rows: list[dict]) -> dict:
         "false_abstain": sum(1 for r in ans if r["returned"] == 0),
         "n_unanswerable": len(unans),
         "abstained": sum(1 for r in unans if r["returned"] == 0),
+        "reranker_abstained": sum(1 for r in rows if r["reranker_abstained"]),
         "median_ms": statistics.median(r["ms"] for r in rows),
         "stage_fallbacks": sum(1 for r in rows if r["stage_missing"]),
         "hit3_by_type": {k: v for k, v in by_type.items()},
     }
 
 
-def render_markdown(results: dict, meta: dict) -> str:
+def _append_results(lines: list[str], title: str, results: dict) -> None:
     base = next(iter(results.values()))["summary"]
-    lines = [
-        "# Retrieval evaluation (same policy file, different retrieval settings)", "",
-        f"- KB: `{meta['kb']}` ({meta['chunks']} chunks), embedding model `{meta['embedder']}`, "
-        f"reranker `{meta['reranker']}`",
-        f"- Questions: {meta['answerable']} answerable + {meta['unanswerable']} unanswerable. "
-        "A hit means a gold subsection is in the top k results.",
-        "- No LLM calls. Deterministic apart from model floating-point noise.", "",
-        "## Results", "",
+    lines += [
+        "", f"## {title}", "",
         "| Configuration | hit@1 | hit@3 | hit@5 | MRR | median ms |",
         "|---|---:|---:|---:|---:|---:|",
     ]
@@ -194,26 +191,55 @@ def render_markdown(results: dict, meta: dict) -> str:
         s, n = data["summary"], data["summary"]["n_answerable"]
         lines.append(f"| {name} | {s['hit1']}/{n} | {s['hit3']}/{n} | {s['hit5']}/{n} | "
                      f"{s['mrr']:.3f} | {s['median_ms']:.0f} |")
-    fell = {n: d["summary"]["stage_fallbacks"] for n, d in results.items() if d["summary"]["stage_fallbacks"]}
+
+    fell = {n: d["summary"]["stage_fallbacks"] for n, d in results.items()
+            if d["summary"]["stage_fallbacks"]}
     if fell:
         lines += ["", "Questions where an enabled stage silently fell back to the plain ranking: "
                   + ", ".join(f"{n} ({c})" for n, c in fell.items()) + "."]
-    lines += ["", "## hit@3 by question type", "",
+
+    lines += ["", "### hit@3 by question type", "",
               "| Configuration | " + " | ".join(sorted(base["hit3_by_type"])) + " |",
               "|---|" + "---:|" * len(base["hit3_by_type"])]
     for name, data in results.items():
         t = data["summary"]["hit3_by_type"]
         lines.append(f"| {name} | " + " | ".join(f"{t[k][0]}/{t[k][1]}" for k in sorted(t)) + " |")
-    lines += ["", "## Abstention (questions the KB cannot answer)", "",
-              "| Configuration | correctly returned nothing | answerable questions that returned nothing |",
-              "|---|---:|---:|"]
+
+    lines += ["", "### Abstention", "",
+              "| Configuration | correctly abstained on unanswerable | false abstentions on answerable | "
+              "reranker-cutoff abstentions |",
+              "|---|---:|---:|---:|"]
     for name, data in results.items():
         s = data["summary"]
         lines.append(f"| {name} | {s['abstained']}/{s['n_unanswerable']} | "
-                     f"{s['false_abstain']}/{s['n_answerable']} |")
-    lines += ["", "Note: only vector-only retrieval applies the distance cutoff. Hybrid and reranker "
-              "modes deliberately skip it, so they always return chunks and cannot abstain at the "
-              "retrieval layer.", "", "## Misses (answerable questions with no gold section in the top 5)", ""]
+                     f"{s['false_abstain']}/{s['n_answerable']} | {s['reranker_abstained']} |")
+
+
+def render_markdown(results: dict, heldout_results: dict, meta: dict) -> str:
+    lines = [
+        "# Retrieval evaluation (same policy file, different retrieval settings)", "",
+        f"- KB: `{meta['kb']}` ({meta['chunks']} chunks), embedding model `{meta['embedder']}`, "
+        f"reranker `{meta['reranker']}`",
+        f"- Tuning questions: {meta['answerable']} answerable + {meta['unanswerable']} unanswerable. "
+        f"Held-out questions: {meta['heldout_answerable']} answerable + "
+        f"{meta['heldout_unanswerable']} unanswerable. A hit means a gold subsection is in the top k results.",
+        "- No LLM calls. Deterministic apart from model floating-point noise.", "",
+        "## Abstention threshold", "",
+        f"The reranker minimum score is `{meta['reranker_min_score']:.2f}`. It was calibrated only on "
+        "`retrieval_30.jsonl`: the highest hundredth-step cutoff with zero false abstentions on the "
+        "answerable questions. The held-out questions were not used to select the threshold.",
+        f"On the tuning set, the reranker abstained on "
+        f"{results['4. + reranker (no BM25)']['summary']['abstained']}/"
+        f"{results['4. + reranker (no BM25)']['summary']['n_unanswerable']} unanswerable questions and "
+        f"falsely abstained on {results['4. + reranker (no BM25)']['summary']['false_abstain']}/"
+        f"{results['4. + reranker (no BM25)']['summary']['n_answerable']} answerable questions.",
+    ]
+
+    _append_results(lines, "Tuning set: retrieval_30", results)
+    _append_results(lines, "Held-out set", heldout_results)
+    lines += ["", "Note: vector-only retrieval keeps the distance cutoff; hybrid and reranker modes skip it. "
+              "Only the reranker path applies the calibrated score cutoff.",
+              "", "## Tuning-set misses (answerable questions with no gold section in the top 5)", ""]
     for name, data in results.items():
         misses = [r for r in data["rows"] if r["answerable"] and (r["rank"] is None or r["rank"] > 5)]
         text = ", ".join(f"{r['id']} (top: {', '.join(r['top3'][:2]) or 'nothing'})" for r in misses)
@@ -229,7 +255,18 @@ def main() -> int:
     args = parser.parse_args()
 
     cases = load_cases(args.dataset)
+    heldout_cases = load_cases(HELDOUT_DATASET)
     errors = validate(cases, args.kb)
+    errors.extend(validate(heldout_cases, args.kb))
+    if len(heldout_cases) != 15:
+        errors.append(f"held-out dataset must have 15 questions, found {len(heldout_cases)}")
+    if sum(case["answerable"] for case in heldout_cases) != 10:
+        errors.append("held-out dataset must have 10 answerable questions")
+    if sum(not case["answerable"] for case in heldout_cases) != 5:
+        errors.append("held-out dataset must have 5 unanswerable questions")
+    overlap = {case["id"] for case in cases} & {case["id"] for case in heldout_cases}
+    if overlap:
+        errors.append(f"held-out IDs overlap tuning dataset: {sorted(overlap)}")
     if errors:
         print("DATASET PROBLEMS:\n" + "\n".join(f" - {e}" for e in errors))
         return 1
@@ -245,6 +282,7 @@ def main() -> int:
     try:
         services = {}
         results = {}
+        heldout_results = {}
         reranker = None
         for name, section_aware, hybrid, rerank in CONFIGS:
             if section_aware not in services:
@@ -263,6 +301,13 @@ def main() -> int:
             print(f"running {name} ...")
             rows = run_config(services[section_aware], cases, hybrid, rerank)
             results[name] = {"rows": rows, "summary": summarize(rows)}
+            heldout_rows = run_config(
+                services[section_aware], heldout_cases, hybrid, rerank
+            )
+            heldout_results[name] = {
+                "rows": heldout_rows,
+                "summary": summarize(heldout_rows),
+            }
 
         defaults = Settings()
         meta = {
@@ -271,10 +316,17 @@ def main() -> int:
             "embedder": defaults.embedding_model_name, "reranker": defaults.rag_reranker_model,
             "answerable": sum(c["answerable"] for c in cases),
             "unanswerable": sum(not c["answerable"] for c in cases),
+            "heldout_dataset": str(HELDOUT_DATASET.relative_to(ROOT)),
+            "heldout_answerable": sum(c["answerable"] for c in heldout_cases),
+            "heldout_unanswerable": sum(not c["answerable"] for c in heldout_cases),
+            "reranker_min_score": defaults.rag_reranker_min_score,
+            "threshold_tuned_on": str(DATASET.relative_to(ROOT)),
+            "threshold_selection": "highest hundredth-step cutoff with zero false abstentions on the answerable tuning questions",
         }
         OUT_DIR.mkdir(parents=True, exist_ok=True)
-        (OUT_DIR / "retrieval_eval.json").write_text(json.dumps({"meta": meta, "results": results}, indent=2))
-        report = render_markdown(results, meta)
+        payload = {"meta": meta, "results": results, "heldout_results": heldout_results}
+        (OUT_DIR / "retrieval_eval.json").write_text(json.dumps(payload, indent=2))
+        report = render_markdown(results, heldout_results, meta)
         (OUT_DIR / "retrieval_eval.md").write_text(report)
         print("\n" + report)
         print(f"saved: {OUT_DIR / 'retrieval_eval.md'} and retrieval_eval.json")
