@@ -382,7 +382,7 @@ The reranker cutoff is **−10.73**. It was selected on `retrieval_30.jsonl` as 
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Semantic only (current default) | 9/10 | 10/10 | 10/10 | 0.950 | 6 |
 | + section-aware embeddings | 9/10 | 10/10 | 10/10 | 0.950 | 7 |
-| + BM25 hybrid | 9/10 | 9/10 | 9/10 | 0.912 | 8 |
+| + BM25 hybrid | 9/10 | 9/10 | 9/10 | 0.9125 | 8 |
 | + reranker (no BM25) | 10/10 | 10/10 | 10/10 | 1.000 | 271 |
 | BM25 hybrid + reranker | 10/10 | 10/10 | 10/10 | 1.000 | 391 |
 | All three | 10/10 | 10/10 | 10/10 | 1.000 | 358 |
