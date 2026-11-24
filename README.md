@@ -316,8 +316,13 @@ With the project environment configured and `GEMINI_API_KEY` set:
 
 ```bash
 python evals/validate_dataset.py
-python evals/run_customer_support_eval.py --core-30 --core-case-delay-seconds 17.5
+python evals/run_customer_support_eval.py --core-30 --dataset evals/data/core_30.jsonl --output-dir evals/results/runs --core-case-delay-seconds 17.5
+
+RUN_JSON="evals/results/runs/core_30_<RUN_ID>/results.json"
+python evals/run_customer_support_eval.py --judge-only "$RUN_JSON" --judge-delay-seconds 1
 ```
+
+The judge-only command reads the completed run and writes separate `core_30_judge_<RUN_ID>.json` and `.md` files beside it. It does not rerun the graph or change the original outcomes. By default the judge uses the run's primary model and prints a same-model caution; pass `--judge-model "$JUDGE_MODEL"` to use a different model.
 
 ## Retrieval evaluation
 

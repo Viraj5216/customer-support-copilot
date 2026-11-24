@@ -28,29 +28,8 @@ if str(ROOT) not in sys.path:
 # download or update models implicitly when run.
 os.environ.setdefault("HF_HUB_OFFLINE", "1")
 os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
-SOURCE_DATASET = Path.home() / "Downloads/customer_support_copilot_eval_dataset_v1.json"
-LOCAL_DATASET = ROOT / "evaluation/datasets/customer_support_copilot_eval_dataset_v1.json"
-CORRECTIONS = {
-    "FIL-034": ["ORD8001", "ORD8002", "ORD8005", "ORD8003", "ORD8004"],
-    "FIL-039": ["ORD7004"],
-    "AMB-048": ["ORD7002"],
-    "AMB-053": ["ORD7001"],
-}
-
-
-def _copy_corrected_dataset() -> Path:
-    source = SOURCE_DATASET if SOURCE_DATASET.exists() else LOCAL_DATASET
-    data = json.loads(source.read_text(encoding="utf-8"))
-    if len(data.get("cases", [])) != 100:
-        raise ValueError("Expected a 100-case dataset; no evaluation was run")
-    for case in data["cases"]:
-        if case["case_id"] in CORRECTIONS:
-            case["expected_order_ids"] = CORRECTIONS[case["case_id"]]
-            if case["case_id"] in {"AMB-048", "AMB-053"}:
-                case["expected_outcome"] = "FOUND"
-    LOCAL_DATASET.parent.mkdir(parents=True, exist_ok=True)
-    LOCAL_DATASET.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    return LOCAL_DATASET
+CORE30_DATASET = ROOT / "evals/data/core_30.jsonl"
+EVALUATION_OUTPUT_DIR = ROOT / "evals/results/runs"
 
 
 def _model_content(message: Any) -> str:
@@ -150,22 +129,392 @@ def _judge(gateway, model_name: str, case: dict, result: dict, order_ids: list[s
         model_name=model_name,
     )
     judgment = _json_from_text(_model_content(response))
+    if not isinstance(judgment.get("passed"), bool):
+        raise ValueError("Judge output must include a boolean passed field")
+    if not isinstance(judgment.get("grounded"), bool):
+        raise ValueError("Judge output must include a boolean grounded field")
     required = case.get("required_checks", [])
     checks = judgment.get("checks") or {}
+    if not isinstance(checks, dict):
+        raise ValueError("Judge output checks must be an object")
+    if any(
+        criterion in checks and not isinstance(checks[criterion], bool)
+        for criterion in required
+    ):
+        raise ValueError("Judge check values must be booleans")
     normalized_checks = {criterion: bool(checks.get(criterion, False)) for criterion in required}
     claims = judgment.get("unsupported_claims")
     if not isinstance(claims, list):
         raise ValueError("Judge omitted unsupported_claims list")
+    rationale = judgment.get("rationale")
+    if not isinstance(rationale, str):
+        raise ValueError("Judge output must include a rationale string")
     return {
-        "passed": bool(judgment.get("passed")) and all(normalized_checks.values()),
-        "grounded": bool(judgment.get("grounded")),
+        "passed": judgment["passed"] and all(normalized_checks.values()),
+        "grounded": judgment["grounded"],
         "checks": normalized_checks,
         "unsupported_claims": [str(x) for x in claims],
-        "rationale": str(judgment.get("rationale", "")),
+        "rationale": rationale,
         "latency_seconds": round(time.perf_counter() - started, 3),
         "prompt_tokens": int(token_usage[0] or 0),
         "completion_tokens": int(token_usage[1] or 0),
         "model_call": model_call,
+    }
+
+
+JUDGE_AREA_ORDER = ("policy", "eligibility", "policy_rules", "no_answer", "security")
+JUDGE_AREAS = set(JUDGE_AREA_ORDER)
+
+
+def _core30_requirements(case: dict) -> list[str]:
+    """Render Core 30 expectations as transparent judge criteria."""
+    expected = case.get("expect", {})
+    requirements = []
+    if expected.get("gold_any"):
+        requirements.append(
+            "Retrieved policy evidence should include at least one subsection from: "
+            + ", ".join(map(str, expected["gold_any"]))
+            + "."
+        )
+    if expected.get("must_match_any"):
+        requirements.append(
+            "The response should satisfy at least one of these dataset response patterns: "
+            + " | ".join(map(str, expected["must_match_any"]))
+            + "."
+        )
+    if expected.get("must_not_match"):
+        requirements.append(
+            "The response must not satisfy any of these forbidden dataset patterns: "
+            + " | ".join(map(str, expected["must_not_match"]))
+            + "."
+        )
+    if expected.get("forbidden_ids"):
+        requirements.append(
+            "The response must not disclose these forbidden order IDs: "
+            + ", ".join(map(str, expected["forbidden_ids"]))
+            + "."
+        )
+    return requirements
+
+
+def _core30_generation_model(payload: dict, fallback: str) -> str:
+    summary = payload.get("summary", {})
+    for candidate in (
+        summary.get("primary_model", {}).get("model")
+        if isinstance(summary.get("primary_model"), dict) else None,
+        payload.get("primary_model"),
+        payload.get("generation_model"),
+    ):
+        if isinstance(candidate, str) and candidate:
+            return candidate
+
+    def find_attempts(value):
+        if isinstance(value, dict):
+            attempts = value.get("attempts")
+            if isinstance(attempts, list):
+                for attempt in attempts:
+                    if isinstance(attempt, dict) and attempt.get("model"):
+                        yield str(attempt["model"])
+            for child in value.values():
+                yield from find_attempts(child)
+        elif isinstance(value, list):
+            for child in value:
+                yield from find_attempts(child)
+
+    return next(find_attempts(payload), fallback)
+
+
+def _core30_saved_result(row: dict) -> tuple[dict, list[str]]:
+    """Adapt persisted Core 30 response/evidence fields to ``_judge`` input."""
+    actual = row.get("actual") if isinstance(row.get("actual"), dict) else {}
+    response = (
+        row.get("assistant_response")
+        or actual.get("response")
+        or row.get("response")
+        or ""
+    )
+    evidence = (
+        actual.get("retrieved_evidence")
+        or row.get("policy_sources")
+        or row.get("retrieved_evidence")
+        or row.get("evidence")
+        or []
+    )
+    ids = row.get("order_ids") or actual.get("order_ids") or []
+    if ids and isinstance(ids[0], dict):
+        ids = _safe_order_ids(ids)
+    return {"response": response, "evidence": evidence}, [str(item) for item in ids]
+
+
+def _judge_provider_failure(error: Exception) -> dict | None:
+    """Return safe provider diagnostics for terminal judge gateway errors."""
+    from llm.gateway import _status_and_code, classify_error
+
+    status, code = _status_and_code(error)
+    disposition = classify_error(error)
+    error_type = getattr(error, "original_error_type", type(error).__name__)
+    is_provider = (
+        status is not None
+        or code is not None
+        or disposition in {"retry", "fallback"}
+        or any(token in str(error_type).casefold() for token in (
+            "googleapi", "resourceexhausted", "toomanyrequests", "serviceunavailable",
+            "connecterror", "timeout", "transporterror",
+        ))
+    )
+    if not is_provider:
+        return None
+    return {
+        "error_type": str(error_type),
+        "status": status,
+        "provider_error_code": code,
+        "retryable": disposition in {"retry", "fallback"},
+    }
+
+
+def _write_judge_files(json_path: Path, payload: dict) -> None:
+    temporary = json_path.with_suffix(json_path.suffix + ".tmp")
+    temporary.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2, default=str) + "\n",
+        encoding="utf-8",
+    )
+    temporary.replace(json_path)
+    md_path = json_path.with_suffix(".md")
+    summary = payload["summary"]
+    lines = [
+        "# Core 30 Saved-Response Judge",
+        "",
+        f"- Source run: `{payload['run_id']}`.",
+        f"- Judge model: `{payload['judge_model']}`; generation model: `{payload['generation_model']}`.",
+        f"- Judged: {summary['judged']}; passed: {summary['passed']}; failed: {summary['failed']}; inconclusive: {summary['inconclusive']}; skipped outside selected areas: {summary['skipped_area_count']}; already judged and reused: {summary['resumed_count']}.",
+        "- This judge report is separate from the original run; it does not change its case outcomes.",
+        "",
+        "## Results by area",
+        "",
+        "| Area | Passed | Failed | Inconclusive | Total |",
+        "|---|---:|---:|---:|---:|",
+    ]
+    for area in JUDGE_AREA_ORDER:
+        area_rows = [row for row in payload["cases"] if row["area"] == area]
+        passed = sum(row["status"] == "PASSED" for row in area_rows)
+        failed = sum(row["status"] == "FAILED" for row in area_rows)
+        inconclusive = sum(row["status"].startswith("INCONCLUSIVE") for row in area_rows)
+        lines.append(f"| {area} | {passed} | {failed} | {inconclusive} | {len(area_rows)} |")
+    lines += [
+        "",
+        "Groundedness is shown as not applicable for security/refusal cases; their existing judge checks and outcomes are unchanged.",
+        "",
+        "## Case judgments",
+        "",
+    ]
+    for row in payload["cases"]:
+        lines += [
+            f"### {row['case_id']} — {row['status']}",
+            "",
+            f"- Area: `{row['area']}`",
+            f"- Grounded: `{('N/A (security/refusal)' if row['area'] == 'security' else row['grounded'])}`",
+            f"- Unsupported claims: {json.dumps(row['unsupported_claims'], ensure_ascii=False)}",
+            f"- Checks: {json.dumps(row['checks'], ensure_ascii=False)}",
+            f"- Rationale: {row['rationale']}",
+        ]
+        if row.get("provider_failure"):
+            lines.append(f"- Provider failure: `{json.dumps(row['provider_failure'], ensure_ascii=False)}`")
+        if row.get("judge_error"):
+            lines.append(f"- Judge error: `{row['judge_error']}`")
+        lines.append("")
+    md_path.write_text("\n".join(lines), encoding="utf-8")
+
+
+def run_judge_only(
+    run_json: Path,
+    *,
+    judge_model: str | None = None,
+    judge_delay_seconds: float = 0.0,
+    dataset_path: Path = CORE30_DATASET,
+    gateway=None,
+    settings=None,
+    sleep=time.sleep,
+) -> tuple[Path, Path]:
+    """Judge saved Core 30 responses without constructing or invoking the graph."""
+    if judge_delay_seconds < 0:
+        raise ValueError("Judge delay must be non-negative")
+    from config import get_settings
+    from llm.gateway import LLMGateway
+    from llm.provider import get_chat_model
+
+    settings = settings or get_settings()
+    source_path = run_json.expanduser().resolve()
+    source = json.loads(source_path.read_text(encoding="utf-8"))
+    if source.get("suite") != "core_30" or source.get("state") != "completed":
+        raise ValueError("--judge-only requires a completed Core 30 results JSON")
+    cases = source.get("cases")
+    if not isinstance(cases, list):
+        raise ValueError("Core 30 results JSON has no cases list")
+
+    dataset_bytes = dataset_path.read_bytes()
+    if source.get("dataset_sha256") and hashlib.sha256(dataset_bytes).hexdigest() != source["dataset_sha256"]:
+        raise ValueError("Core 30 dataset has changed since this run was produced")
+    dataset_cases = {
+        case["id"]: case
+        for case in (json.loads(line) for line in dataset_bytes.decode("utf-8").splitlines() if line.strip())
+    }
+    generation_model = _core30_generation_model(source, settings.gemini_model)
+    selected_model = judge_model or generation_model
+    if selected_model == generation_model:
+        print(
+            f"WARNING: judge model matches generation model ({selected_model}); "
+            "the judge may favor its own output.",
+            flush=True,
+        )
+    if gateway is None:
+        fallback_model = settings.gemini_fallback_model
+        if fallback_model == selected_model:
+            fallback_model = (
+                settings.gemini_model
+                if settings.gemini_model != selected_model else None
+            )
+        judge_settings = settings.model_copy(update={
+            "gemini_model": selected_model,
+            "gemini_fallback_model": fallback_model,
+        })
+        gateway = LLMGateway(
+            judge_settings,
+            lambda name, timeout: get_chat_model(name, timeout),
+        )
+
+    run_id = str(source["run_id"])
+    judge_json = source_path.parent / f"core_30_judge_{run_id}.json"
+    existing = {}
+    if judge_json.exists():
+        old_payload = json.loads(judge_json.read_text(encoding="utf-8"))
+        if old_payload.get("run_id") != run_id:
+            raise ValueError("Existing judge file belongs to a different run")
+        if old_payload.get("judge_model") != selected_model:
+            raise ValueError(
+                "Existing judge file was produced by a different judge model; "
+                "use the same model to resume this run"
+            )
+        existing = {row["case_id"]: row for row in old_payload.get("cases", [])}
+
+    rows = dict(existing)
+    selected = [row for row in cases if row.get("area") in JUDGE_AREAS]
+    skipped_area_count = len(cases) - len(selected)
+    resumed_ids = {
+        case_id for case_id, row in existing.items()
+        if row.get("status") in {"PASSED", "FAILED"}
+    }
+    pending = [row for row in selected if row.get("case_id") not in resumed_ids]
+    start = time.perf_counter()
+
+    for offset, row in enumerate(pending):
+        case_id = row.get("case_id")
+        source_case = dataset_cases.get(case_id)
+        if source_case is None:
+            raise ValueError(f"Case {case_id} is absent from the Core 30 dataset")
+        saved_result, order_ids = _core30_saved_result(row)
+        query = source_case.get("message")
+        if query is None:
+            turns = source_case.get("turns") or []
+            query = turns[-1] if turns else ""
+        if not isinstance(saved_result.get("response"), str) or not saved_result["response"].strip():
+            rows[case_id] = {
+                "case_id": case_id, "area": row["area"],
+                "status": "INCONCLUSIVE_NO_SAVED_RESPONSE",
+                "grounded": None, "unsupported_claims": None, "checks": {},
+                "rationale": "No saved assistant response was available to judge.",
+            }
+        else:
+            judge_case = {
+                "case_id": case_id,
+                "query": query,
+                "expected_outcome": json.dumps(source_case.get("expect", {}), ensure_ascii=False),
+                "required_checks": _core30_requirements(source_case),
+                "notes": source_case.get("note", ""),
+            }
+            try:
+                judgment = _judge(gateway, selected_model, judge_case, saved_result, order_ids)
+                rows[case_id] = {
+                    "case_id": case_id,
+                    "area": row["area"],
+                    "status": "PASSED" if judgment["passed"] else "FAILED",
+                    "grounded": judgment["grounded"],
+                    "unsupported_claims": judgment["unsupported_claims"],
+                    "checks": judgment["checks"],
+                    "rationale": judgment["rationale"],
+                    "latency_seconds": judgment["latency_seconds"],
+                    "prompt_tokens": judgment["prompt_tokens"],
+                    "completion_tokens": judgment["completion_tokens"],
+                    "model_call": judgment["model_call"],
+                }
+            except Exception as exc:
+                provider_failure = _judge_provider_failure(exc)
+                rows[case_id] = {
+                    "case_id": case_id,
+                    "area": row["area"],
+                    "status": (
+                        "INCONCLUSIVE_PROVIDER_ERROR"
+                        if provider_failure else "INCONCLUSIVE_JUDGE_OUTPUT"
+                    ),
+                    "grounded": None,
+                    "unsupported_claims": None,
+                    "checks": {},
+                    "rationale": "No valid judgment was produced.",
+                    "provider_failure": provider_failure,
+                    "judge_error": None if provider_failure else type(exc).__name__,
+                }
+        payload = _judge_payload(
+            source, rows, selected, selected_model, generation_model,
+            skipped_area_count, resumed_ids, time.perf_counter() - start,
+        )
+        _write_judge_files(judge_json, payload)
+        if offset + 1 < len(pending) and judge_delay_seconds:
+            print(f"Waiting {judge_delay_seconds:.1f}s before next judge request", flush=True)
+            sleep(judge_delay_seconds)
+
+    payload = _judge_payload(
+        source, rows, selected, selected_model, generation_model,
+        skipped_area_count, resumed_ids, time.perf_counter() - start,
+    )
+    _write_judge_files(judge_json, payload)
+    print(
+        f"Judge totals: judged={payload['summary']['judged']} "
+        f"passed={payload['summary']['passed']} failed={payload['summary']['failed']} "
+        f"inconclusive={payload['summary']['inconclusive']} "
+        f"skipped_outside_selected_areas={skipped_area_count} "
+        f"resumed={len(resumed_ids)}",
+        flush=True,
+    )
+    return judge_json, judge_json.with_suffix(".md")
+
+
+def _judge_payload(source, rows, selected, judge_model, generation_model, skipped_area_count, resumed_ids, runtime):
+    ordered = [rows[row["case_id"]] for row in selected if row["case_id"] in rows]
+    counts = Counter(row["status"] for row in ordered)
+    return {
+        "suite": "core_30_judge",
+        "schema_version": 1,
+        "run_id": source["run_id"],
+        "source_run_json": source.get("run_id"),
+        "state": "completed" if len(ordered) == len(selected) else "running",
+        "judge_model": judge_model,
+        "generation_model": generation_model,
+        "summary": {
+            "judged": counts["PASSED"] + counts["FAILED"],
+            "passed": counts["PASSED"],
+            "failed": counts["FAILED"],
+            "inconclusive": sum(
+                count for status, count in counts.items()
+                if status.startswith("INCONCLUSIVE")
+            ),
+            "skipped_area_count": skipped_area_count,
+            "resumed_count": len(resumed_ids),
+            "runtime_seconds": round(runtime, 3),
+        },
+        "skipped_case_ids": [
+            row["case_id"] for row in source["cases"]
+            if row.get("area") not in JUDGE_AREAS
+        ],
+        "cases": ordered,
     }
 
 
@@ -579,6 +928,7 @@ def _core30_safe_value(value: Any, sensitive_tokens: list[str]):
 def run_core_30(
     dataset_path: Path,
     *,
+    output_dir: Path = EVALUATION_OUTPUT_DIR,
     resume_dir: Path | None = None,
     case_ids: set[str] | None = None,
     case_delay_seconds: float = 0.0,
@@ -619,7 +969,7 @@ def run_core_30(
         rows = {row["case_id"]: row for row in checkpoint.get("cases", [])}
         pending_provider_rows = {case_id: row for case_id, row in rows.items() if row.get("status") == "INCONCLUSIVE_PROVIDER_ERROR"}
     else:
-        run_dir = ROOT / "evaluation/results/runs" / f"core_30_{run_id}"
+        run_dir = output_dir.expanduser().resolve() / f"core_30_{run_id}"
         run_dir.mkdir(parents=True, exist_ok=False)
         rows = {}
         pending_provider_rows = {}
@@ -1247,43 +1597,38 @@ def run(
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--core-30", action="store_true", help="Run the supplied Core 30 JSONL suite")
+    parser.add_argument("--judge-only", type=Path, metavar="RUN_JSON", help="Judge saved responses/evidence from a completed Core 30 results JSON without running the graph")
+    parser.add_argument("--judge-model", help="Judge model (defaults to the run's primary generation model)")
+    parser.add_argument("--judge-delay-seconds", type=float, default=0.0, help="Wait between judge requests")
     parser.add_argument("--resume-run-dir", type=Path, help="Resume a Core 30 run from its results directory")
     parser.add_argument("--core-case-ids", nargs="+", help="Run only these Core 30 case IDs")
     parser.add_argument("--core-case-delay-seconds", type=float, default=0.0, help="Wait between selected Core 30 cases")
-    parser.add_argument("--dataset", type=Path, help="Dataset JSON (default: copy/correct the supplied Downloads dataset)")
-    parser.add_argument("--output-dir", type=Path, default=ROOT / "evaluation/results/runs")
-    parser.add_argument("--limit", type=int, help="Run only the first N cases for a pilot")
-    parser.add_argument("--case-delay-seconds", type=float)
-    parser.add_argument("--provider-retries", type=int)
-    parser.add_argument("--retry-initial-backoff-seconds", type=float)
-    parser.add_argument("--retry-max-backoff-seconds", type=float)
-    parser.add_argument("--request-timeout-seconds", type=float)
-    parser.add_argument("--total-deadline-seconds", type=float)
-    parser.add_argument("--resume", type=Path, help="Resume from a prior JSON checkpoint")
+    parser.add_argument("--dataset", type=Path, default=CORE30_DATASET, help="Core 30 JSONL dataset (default: evals/data/core_30.jsonl)")
+    parser.add_argument("--output-dir", type=Path, default=EVALUATION_OUTPUT_DIR, help="Core 30 run directory (default: evals/results/runs)")
     args = parser.parse_args()
+    if args.judge_only:
+        if args.core_30 or args.resume_run_dir or args.core_case_ids:
+            parser.error("--judge-only cannot be combined with Core 30 execution/resume options")
+        json_path, md_path = run_judge_only(
+            args.judge_only,
+            judge_model=args.judge_model,
+            judge_delay_seconds=args.judge_delay_seconds,
+            dataset_path=args.dataset,
+        )
+        print(f"Judge JSON report: {json_path}\nJudge Markdown report: {md_path}")
+        return 0
+    if not args.core_30:
+        parser.error("choose --core-30 to run the graph or --judge-only RUN_JSON to judge saved responses")
     if args.core_30:
-        dataset = args.dataset or ROOT / "evals/data/core_30.jsonl"
         json_path, md_path = run_core_30(
-            dataset,
+            args.dataset,
+            output_dir=args.output_dir,
             resume_dir=args.resume_run_dir,
             case_ids=set(args.core_case_ids) if args.core_case_ids else None,
             case_delay_seconds=args.core_case_delay_seconds,
         )
         print(f"JSON report: {json_path}\nMarkdown report: {md_path}")
         return 0
-    dataset = args.dataset or _copy_corrected_dataset()
-    json_path, md_path = run(
-        dataset, args.output_dir, args.limit,
-        case_delay_seconds=args.case_delay_seconds,
-        provider_retries=args.provider_retries,
-        retry_initial_backoff=args.retry_initial_backoff_seconds,
-        retry_max_backoff=args.retry_max_backoff_seconds,
-        request_timeout=args.request_timeout_seconds,
-        total_deadline=args.total_deadline_seconds,
-        resume_path=args.resume,
-    )
-    print(f"JSON report: {json_path}\nMarkdown report: {md_path}")
-    return 0
 
 
 if __name__ == "__main__":
