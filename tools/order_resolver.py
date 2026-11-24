@@ -770,9 +770,15 @@ def resolve_order_reference(
     if not selected and clarification_options is not None:
         choice = reference.get("clarification_choice")
 
-        if isinstance(choice, int) and not isinstance(choice, bool):
-            if 1 <= choice <= len(displayed):
+        if choice is not None:
+            if (
+                isinstance(choice, int)
+                and not isinstance(choice, bool)
+                and 1 <= choice <= len(displayed)
+            ):
                 selected = displayed[choice - 1]
+            else:
+                return _clarify(candidates) if candidates else _result("NO_MATCH")
 
     if requested in by_id and not selected and clarification_options is None:
         return _result("FOUND", [by_id[requested]])

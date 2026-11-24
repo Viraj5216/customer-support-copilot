@@ -258,49 +258,31 @@ BM25 hybrid retrieval, section-aware embeddings, and reranking are disabled by d
 
 ## Project Test Cases and Verification
 
-Testing focused on the real risks in this support workflow: getting a customer's order right, handling ambiguity safely, protecting customer data, and recovering when a model is unavailable.
+The offline tests cover gateway failover, deterministic order resolution, customer-data boundaries, fresh database seeding, and policy chunk indexing. The gatekeeper LLM interprets natural-language requests, including typos and relative dates; the resolver applies the resulting structured filters deterministically. The offline tests verify that deterministic matching step, not the LLM's interpretation quality.
 
-### Fresh-install checks
+### Fresh-install and indexing checks
 
-The fresh-install checks passed:
+Tests use temporary paths for generated databases, credentials, and a copied policy file:
 
-- Database seeding created four demo users and 13 sample orders.
-- Running the seed process a second time did not create duplicates.
-- The migration entry point correctly reused the seeding logic.
-- A fresh ChromaDB collection was created successfully.
-- The policy indexer processed 71 policy chunks.
+- `tests/test_seed_and_indexer.py` checks that seeding creates four users and 13 orders, a second seed adds no duplicates, the migration entry point reuses seeding, and the indexer prepares and upserts 71 policy chunks through a fake collection. It does not create or verify a real ChromaDB collection.
 
-### Order-resolution cases
+### Order resolution and safety
 
-The project-specific resolver cases cover:
+- `tests/test_order_id_normalization.py` checks common typed order-ID forms, unknown IDs, ambiguous bare numbers, customer scoping, and explicit-ID priority over descriptive filters.
+- `tests/test_order_resolver_behavior.py` checks partial product matching, explicit date ranges, sorted positions, current-order references, `FOUND`/`CLARIFY`/`NO_MATCH`/`INVALID_FILTER` outcomes, the four-option limit, and fail-closed clarification selection restricted to displayed customer-owned options.
+- `tests/test_agent_prompt_boundaries.py` checks that stored order and account identifiers are absent from the gatekeeper prompt, malformed gateway output does not yield an order reference, and a naive clock value is interpreted in the configured timezone.
+- `tests/test_core30_judge.py` checks judge-only saved-response input, valid and malformed judge output, provider errors, resume behavior, area filtering, model selection, and separate Markdown reporting for security refusals.
+- These tests do not verify that a live gatekeeper model correctly interprets every typo, relative-date phrase, or follow-up sentence.
 
-- Finding orders by product, variant, status, date, and order ID.
-- Interpreting typos, partial product names, relative dates, and follow-up references such as “the older one.”
-- Listing, filtering, sorting, and selecting relative positions such as the latest or third-oldest matching order.
-- Returning `FOUND`, `CLARIFY`, or `NO_MATCH` when a request is clear, ambiguous, or unsupported.
-- Capping clarification choices at four and requiring confirmation when a candidate is still ambiguous.
-- Ignoring duplicate or out-of-range model selections and using fast paths for clear requests.
+### Gateway and retrieval checks
 
-### Safety and failure cases
+- `tests/test_llm_gateway_failover.py` uses fake providers to check rate-limit fallback, cooldown skipping, recovery to the primary, and HTTP 503 fallback.
+- `tests/test_retrieval_abstention.py`, `tests/test_retriever.py`, and `tests/test_retriever_pipeline.py` cover reranker abstention, query history handling, lexical/vector fusion, reranking behavior, and retrieval cutoffs.
+- `tests/test_safe_information_routing.py` covers routing of safe information questions and existing security/action refusals.
 
-Regression cases also check that:
+### Verification status
 
-- A clarification can select only an option already shown and validated for the signed-in customer.
-- Order IDs and account identifiers are kept out of the resolver-matching prompt.
-- Instruction-like text in a user message or product name cannot expand the server-side order mapping.
-- Malformed structured output and model failures do not produce an unsafe order selection.
-- Date resolution requires a timezone-aware clock.
-
-### Model fallback scenarios
-
-Offline fake-provider cases exercise four gateway paths:
-
-1. A rate-limited primary model falls back to the secondary model.
-2. A primary model in cooldown is skipped.
-3. The gateway switches back to the primary after recovery.
-4. A simulated HTTP 503 triggers fallback.
-
-The repository includes the focused order-ID test and Core 30 evaluation materials. Other local test and evaluation artifacts remain excluded.
+Run the full suite from the project virtual environment with `.venv/bin/pytest -q`. The latest run reported **69 passed** with no collection errors or failures.
 
 ## Core 30 Evaluation
 
